@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>open_manipulator_with_tb3_description</name>
+  <version>0.1.1</version>
+  <description>
+    OpenManipulator 3D model description for visualization and simulation 
+  </description>
+  <license>Apache 2.0</license>
+  <author email="thlim@robotis.com">Darby Lim</author>
+  <maintainer email="pyo@robotis.com">Pyo</maintainer>
+  <url type="bugtracker">https://github.com/ROBOTIS-GIT/open_manipulator_with_tb3/issues</url>
+  <url type="repository">https://github.com/ROBOTIS-GIT/open_manipulator_with_tb3</url>
+  <url type="website">http://emanual.robotis.com/docs/en/platform/openmanipulator</url>
+  <buildtool_depend>catkin</buildtool_depend>
+  <exec_depend>joint_state_publisher</exec_depend>
+  <exec_depend>robot_state_publisher</exec_depend>
+  <exec_depend>xacro</exec_depend>
+  <exec_depend>urdf</exec_depend>
+</package>
