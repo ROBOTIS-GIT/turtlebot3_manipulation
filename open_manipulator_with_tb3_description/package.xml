@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package format="2">
   <name>open_manipulator_with_tb3_description</name>
-  <version>1.0.0</version>
+  <version>1.0.1</version>
   <description>
     OpenManipulator 3D model description for visualization and simulation 
   </description>
