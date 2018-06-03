@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package format="2">
   <name>open_manipulator_with_tb3_tools</name>
-  <version>1.0.0</version>
+  <version>1.0.1</version>
   <description>
     The tools package(including SLAM, Navigation, Manipulation) for OpenManipulator with TurtleBot3
   </description>
@@ -20,6 +20,7 @@
   <depend>geometry_msgs</depend>
   <depend>nav_msgs</depend>
   <depend>open_manipulator_msgs</depend>
+  <depend>open_manipulator_with_tb3_msgs</depend>
   <depend>ar_track_alvar_msgs</depend>
   <exec_depend>joint_state_publisher</exec_depend>
   <exec_depend>robot_state_publisher</exec_depend>

@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package format="2">
   <name>open_manipulator_with_tb3_waffle_pi_moveit</name>
-  <version>1.0.0</version>
+  <version>1.0.1</version>
   <description>
      An automatically generated packages including all the configurations and launch files for OpenManipulator with TurtleBot3 Waffle Pi by using MoveIt! Motion Planning Framework.
   </description>
