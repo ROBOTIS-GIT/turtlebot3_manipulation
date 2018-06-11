@@ -8,7 +8,7 @@
 |[![GitHub version](https://badge.fury.io/gh/ROBOTIS-GIT%2Fopen_manipulator_with_tb3.svg)](https://badge.fury.io/gh/ROBOTIS-GIT%2Fopen_manipulator_with_tb3)|[![Build Status](https://travis-ci.org/ROBOTIS-GIT/open_manipulator_with_tb3.svg?branch=kinetic-devel)](https://travis-ci.org/ROBOTIS-GIT/open_manipulator_with_tb3)|-|
 
 ## ROBOTIS e-Manual for OpenManipulator
-- [ROBOTIS e-Manual for OpenManipulator](http://emanual.robotis.com/docs/en/platform/openmanipulator/)
+- [ROBOTIS e-Manual for OpenManipulator with tb3](http://emanual.robotis.com/docs/en/platform/turtlebot3/manipulation/#manipulation)
 
 ## Wiki for open_manipulator_with_tb3 Packages
 - http://wiki.ros.org/open_manipulator_with_tb3 (metapackage)
