@@ -7,12 +7,12 @@
        ORDER MATTERS -->
   <arg name="planning_adapters" value="
                industrial_trajectory_filters/UniformSampleFilter
-               industrial_trajectory_filters/AddSmoothingFilter
+               industrial_trajectory_filters/AddSmoothingFilter 
                default_planner_request_adapters/AddTimeParameterization
-               default_planner_request_adapters/FixWorkspaceBounds
-               default_planner_request_adapters/FixStartStateBounds
-               default_planner_request_adapters/FixStartStateCollision
-               default_planner_request_adapters/FixStartStatePathConstraints" />
+				       default_planner_request_adapters/FixWorkspaceBounds
+				       default_planner_request_adapters/FixStartStateBounds
+				       default_planner_request_adapters/FixStartStateCollision
+				       default_planner_request_adapters/FixStartStatePathConstraints" />
 
   <arg name="start_state_max_bounds_error" value="0.1" />
 
@@ -20,9 +20,8 @@
   <param name="request_adapters" value="$(arg planning_adapters)" />
   <param name="start_state_max_bounds_error" value="$(arg start_state_max_bounds_error)" />
 
-  <param name="sample_duration" value="0.04" />
-
-  <rosparam command="load" file="$(find open_manipulator_with_tb3_waffle_pi_moveit)/config/ompl_planning.yaml"/>
-  <rosparam command="load" file="$(find open_manipulator_with_tb3_waffle_pi_moveit)/config/smoothing_filter_params.yaml"/>
+  <param name="sample_duration" value="0.010" />
+  <rosparam command="load" file="$(find open_manipulator_with_tb3_waffle_moveit)/config/ompl_planning.yaml"/>
+  <rosparam command="load" file="$(find open_manipulator_with_tb3_waffle_moveit)/config/smoothing_filter_params.yaml"/>
 
 </launch>
