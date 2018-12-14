@@ -1,4 +1,4 @@
-open_manipulator_with_tb3:
+om_with_tb3:
 # MoveIt-specific simulation settings
   moveit_sim_hw_interface:
     joint_model_group: controllers_initial_group_
@@ -10,7 +10,6 @@ open_manipulator_with_tb3:
 # Settings for ros_control hardware interface
   hardware_interface:
     joints:
-      - virtual_joint
       - joint1
       - joint2
       - joint3

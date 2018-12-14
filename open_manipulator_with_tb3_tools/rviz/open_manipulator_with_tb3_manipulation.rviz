@@ -4,11 +4,11 @@ Panels:
     Name: Displays
     Property Tree Widget:
       Expanded:
-        - /MotionPlanning1
         - /MotionPlanning1/Planning Request1
         - /TF1/Frames1
+        - /Camera1/Status1
       Splitter Ratio: 0.742560029
-    Tree Height: 156
+    Tree Height: 175
   - Class: rviz/Help
     Name: Help
   - Class: rviz/Views
@@ -22,7 +22,7 @@ Visualization Manager:
     - Alpha: 0.5
       Cell Size: 1
       Class: rviz/Grid
-      Color: 160; 160; 164
+      Color: 0; 0; 0
       Enabled: true
       Line Style:
         Line Width: 0.0299999993
@@ -37,9 +37,14 @@ Visualization Manager:
       Plane Cell Count: 10
       Reference Frame: <Fixed Frame>
       Value: true
-    - Class: moveit_rviz_plugin/MotionPlanning
+    - Acceleration_Scaling_Factor: 1
+      Class: moveit_rviz_plugin/MotionPlanning
       Enabled: true
       Move Group Namespace: ""
+      MoveIt_Allow_Approximate_IK: false
+      MoveIt_Allow_External_Program: false
+      MoveIt_Allow_Replanning: false
+      MoveIt_Allow_Sensor_Positioning: false
       MoveIt_Goal_Tolerance: 0
       MoveIt_Planning_Attempts: 10
       MoveIt_Planning_Time: 5
@@ -74,10 +79,16 @@ Visualization Manager:
             Show Axes: false
             Show Trail: false
             Value: true
+          base_scan:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
           camera_link:
             Alpha: 1
             Show Axes: false
             Show Trail: false
+            Value: true
           camera_rgb_frame:
             Alpha: 1
             Show Axes: false
@@ -96,12 +107,17 @@ Visualization Manager:
             Show Axes: false
             Show Trail: false
             Value: true
-          grip_link:
+          end_effector_link:
             Alpha: 1
             Show Axes: false
             Show Trail: false
             Value: true
-          grip_link_sub:
+          gripper_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          gripper_link_sub:
             Alpha: 1
             Show Axes: false
             Show Trail: false
@@ -165,7 +181,7 @@ Visualization Manager:
         Colliding Link Color: 255; 0; 0
         Goal State Alpha: 1
         Goal State Color: 250; 128; 0
-        Interactive Marker Size: 0
+        Interactive Marker Size: 0.0500000007
         Joint Violation Color: 255; 0; 255
         Planning Group: arm
         Query Goal State: true
@@ -199,10 +215,16 @@ Visualization Manager:
             Show Axes: false
             Show Trail: false
             Value: true
+          base_scan:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
           camera_link:
             Alpha: 1
             Show Axes: false
             Show Trail: false
+            Value: true
           camera_rgb_frame:
             Alpha: 1
             Show Axes: false
@@ -221,12 +243,17 @@ Visualization Manager:
             Show Axes: false
             Show Trail: false
             Value: true
-          grip_link:
+          end_effector_link:
             Alpha: 1
             Show Axes: false
             Show Trail: false
             Value: true
-          grip_link_sub:
+          gripper_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          gripper_link_sub:
             Alpha: 1
             Show Axes: false
             Show Trail: false
@@ -274,88 +301,94 @@ Visualization Manager:
         Show Robot Collision: false
         Show Robot Visual: true
       Value: true
+      Velocity_Scaling_Factor: 1
     - Class: rviz/TF
       Enabled: true
       Frame Timeout: 15
       Frames:
         All Enabled: false
-        ar_marker_8:
+        om_with_tb3/base_footprint:
+          Value: false
+        om_with_tb3/base_link:
+          Value: false
+        om_with_tb3/base_scan:
           Value: true
-        base_footprint:
-          Value: false
-        base_link:
-          Value: false
-        camera_link:
-          Value: false
-        camera_rgb_frame:
-          Value: false
-        camera_rgb_optical_frame:
+        om_with_tb3/camera_link:
           Value: true
-        caster_back_left_link:
+        om_with_tb3/camera_rgb_frame:
           Value: false
-        caster_back_right_link:
+        om_with_tb3/camera_rgb_optical_frame:
           Value: false
-        grip_link:
+        om_with_tb3/caster_back_left_link:
           Value: false
-        grip_link_sub:
+        om_with_tb3/caster_back_right_link:
           Value: false
-        imu_link:
+        om_with_tb3/end_effector_link:
+          Value: true
+        om_with_tb3/gripper_link:
           Value: false
-        link1:
+        om_with_tb3/gripper_link_sub:
           Value: false
-        link2:
+        om_with_tb3/imu_link:
           Value: false
-        link3:
+        om_with_tb3/link1:
           Value: false
-        link4:
+        om_with_tb3/link2:
           Value: false
-        link5:
+        om_with_tb3/link3:
           Value: false
-        odom:
+        om_with_tb3/link4:
           Value: false
-        wheel_left_link:
+        om_with_tb3/link5:
           Value: false
-        wheel_right_link:
-          Value: false
+        om_with_tb3/odom:
+          Value: true
+        om_with_tb3/wheel_left_link:
+          Value: true
+        om_with_tb3/wheel_right_link:
+          Value: true
       Marker Scale: 0.400000006
       Name: TF
       Show Arrows: true
       Show Axes: true
       Show Names: true
       Tree:
-        odom:
-          base_footprint:
-            base_link:
-              camera_link:
-                camera_rgb_frame:
-                  camera_rgb_optical_frame:
-                    ar_marker_8:
-                      {}
-              caster_back_left_link:
+        om_with_tb3/odom:
+          om_with_tb3/base_footprint:
+            om_with_tb3/base_link:
+              om_with_tb3/base_scan:
                 {}
-              caster_back_right_link:
+              om_with_tb3/camera_link:
+                om_with_tb3/camera_rgb_frame:
+                  om_with_tb3/camera_rgb_optical_frame:
+                    {}
+              om_with_tb3/caster_back_left_link:
                 {}
-              imu_link:
+              om_with_tb3/caster_back_right_link:
                 {}
-              link1:
-                link2:
-                  link3:
-                    link4:
-                      link5:
-                        grip_link:
+              om_with_tb3/imu_link:
+                {}
+              om_with_tb3/link1:
+                om_with_tb3/link2:
+                  om_with_tb3/link3:
+                    om_with_tb3/link4:
+                      om_with_tb3/link5:
+                        om_with_tb3/end_effector_link:
                           {}
-                        grip_link_sub:
+                        om_with_tb3/gripper_link:
                           {}
-              wheel_left_link:
+                        om_with_tb3/gripper_link_sub:
+                          {}
+              om_with_tb3/wheel_left_link:
                 {}
-              wheel_right_link:
+              om_with_tb3/wheel_right_link:
                 {}
       Update Interval: 0
       Value: true
     - Class: rviz/Camera
       Enabled: true
       Image Rendering: background and overlay
-      Image Topic: /camera/rgb/image_raw
+      Image Topic: /om_with_tb3/camera/rgb/image_raw
       Name: Camera
       Overlay Alpha: 0.5
       Queue Size: 2
@@ -375,7 +408,7 @@ Visualization Manager:
       Marker Topic: visualization_marker
       Name: Marker
       Namespaces:
-        basic_shapes: true
+        {}
       Queue Size: 100
       Value: true
     - Class: rviz/Image
@@ -392,9 +425,9 @@ Visualization Manager:
       Value: false
   Enabled: true
   Global Options:
-    Background Color: 48; 48; 48
+    Background Color: 223; 223; 223
     Default Light: true
-    Fixed Frame: odom
+    Fixed Frame: om_with_tb3/odom
     Frame Rate: 30
   Name: root
   Tools:
@@ -406,32 +439,32 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/XYOrbit
-      Distance: 1.4339242
+      Distance: 0.797597826
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.0599999987
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: 1.11167526
-        Y: 0.201450393
-        Z: 1.95205257e-06
+        X: -0.00984480977
+        Y: 0.265162438
+        Z: 1.98185489e-06
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.0500000007
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.00999999978
-      Pitch: 0.344797611
+      Pitch: 0.359797686
       Target Frame: base_footprint
       Value: XYOrbit (rviz)
-      Yaw: 6.23496246
+      Yaw: 0.746775568
     Saved: ~
 Window Geometry:
   Camera:
     collapsed: false
   Displays:
     collapsed: false
-  Height: 998
+  Height: 1056
   Help:
     collapsed: false
   Hide Left Dock: false
@@ -440,11 +473,11 @@ Window Geometry:
     collapsed: false
   MotionPlanning:
     collapsed: false
-  MotionPlanning - Slider:
+  MotionPlanning - Trajectory Slider:
     collapsed: false
-  QMainWindow State: 000000ff00000000fd0000000100000000000002a200000383fc0200000009fb000000100044006900730070006c0061007900730100000043000000df000000df00fffffffb0000000800480065006c00700000000342000000bb0000007800fffffffb0000000a0056006900650077007300000003b0000000b0000000b800fffffffb0000000c00430061006d0065007200610100000128000000b90000001800fffffffb0000001e004d006f00740069006f006e00200050006c0061006e006e0069006e00670100000374000001890000000000000000fb0000002e004d006f00740069006f006e0050006c0061006e006e0069006e00670020002d00200053006c00690064006500720000000000ffffffff0000004500fffffffb0000001c004d006f00740069006f006e0050006c0061006e006e0069006e006701000001e7000001df000001d400fffffffb0000000c00430061006d006500720061010000033b000000af0000000000000000fb0000000a0049006d006100670065000000033c000000ae0000001800ffffff000002430000038300000001000000020000000100000002fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
+  QMainWindow State: 000000ff00000000fd0000000100000000000002ad000003dafc020000000afb000000100044006900730070006c0061007900730100000028000000f0000000d700fffffffb0000000800480065006c00700000000342000000bb0000007300fffffffb0000000a0056006900650077007300000003b0000000b0000000ad00fffffffb0000000c00430061006d006500720061010000011e000001500000001600fffffffb0000001e004d006f00740069006f006e00200050006c0061006e006e0069006e00670100000374000001890000000000000000fb0000002e004d006f00740069006f006e0050006c0061006e006e0069006e00670020002d00200053006c00690064006500720000000000ffffffff0000000000000000fb0000001c004d006f00740069006f006e0050006c0061006e006e0069006e006701000002740000018e0000018300fffffffb0000000c00430061006d006500720061010000033b000000af0000000000000000fb0000000a0049006d006100670065000000033c000000ae0000001600fffffffb00000044004d006f00740069006f006e0050006c0061006e006e0069006e00670020002d0020005400720061006a006500630074006f0072007900200053006c00690064006500720000000000ffffffff0000004a00ffffff0000070c000003da00000001000000020000000100000002fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
   Views:
     collapsed: false
-  Width: 1259
-  X: 55
-  Y: 421
+  Width: 2495
+  X: 65
+  Y: 24

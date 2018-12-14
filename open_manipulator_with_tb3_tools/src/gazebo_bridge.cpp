@@ -92,7 +92,7 @@ void initSubscriber(ros::NodeHandle nh)
 
 int main(int argc, char **argv)
 {
-  ros::init(argc, argv, "gripper_bridge");
+  ros::init(argc, argv, "gazebo_bridge");
   ros::NodeHandle node_handle("");
 
   initPublisher(node_handle);

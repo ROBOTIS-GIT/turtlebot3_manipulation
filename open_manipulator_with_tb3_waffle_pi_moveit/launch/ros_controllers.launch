@@ -6,12 +6,12 @@
 
   <!-- Load the controllers -->
   <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false"
-    output="screen" ns="open_manipulator_with_tb3" args=""/>
+    output="screen" ns="om_with_tb3" args=""/>
 
   <!-- Convert joint states to TF transforms for rviz, etc -->
   <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"
     respawn="false" output="screen">
-    <remap from="/joint_states" to="open_manipulator_with_tb3/joint_states" />
+    <remap from="/joint_states" to="om_with_tb3/joint_states" />
   </node>
 
 </launch>
