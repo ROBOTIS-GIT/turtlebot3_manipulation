@@ -1,48 +1,56 @@
 <launch>
   <arg name="model" default="$(env TURTLEBOT3_MODEL)" doc="model type [waffle, waffle_pi]"/>
-  <arg name="use_gazebo"	   default="false"  />
-  <arg name="open_model"     default="true" />
-  <arg name="open_rviz"      default="true" />
-  <arg name="use_ar_marker"  default="false" />
-  <arg name="debug"          default="false" />
+  <arg name="use_gazebo"             default="true" />
+  <arg name="sample_duration"        default="0.030" />
+  <arg name="open_rviz"              default="true"  />
+<!--  <arg name="use_ar_marker"          default="false" />-->
+  <arg name="debug"                  default="false" />
 
-  <!-- Load the URDF, SRDF and other .yaml configuration files on the param server -->
+  <arg name="robot_name"       default="om_with_tb3"/>
+  <arg name="planning_group"   default="arm"/>
+
+  <group if="$(arg use_gazebo)">
+    <node name="gazebo_bridge" pkg="open_manipulator_with_tb3" type="open_manipulator_with_tb3_gazebo_bridge" output="screen" ns="$(arg robot_name)"/>
+  </group>
+
+  <!-- We do not have a robot connected, so publish fake joint states -->
+<!--  <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
+    <param name="/use_gui" value="false"/>
+    <rosparam param="source_list">["om_with_tb3/joint_states"]</rosparam>
+  </node>-->
+
+  <!-- Given the published joint states, publish tf for the robot links -->
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="true" output="screen" />
+
   <group if="$(eval model == 'pi')">
+    <!-- Load the URDF, SRDF and other .yaml configuration files on the param server -->
     <include file="$(find open_manipulator_with_tb3_waffle_pi_moveit)/launch/planning_context.launch">
       <arg name="load_robot_description" value="true"/>
     </include>
-  </group>
 
-  <group unless="$(eval model == 'pi')">
-    <include file="$(find open_manipulator_with_tb3_waffle_moveit)/launch/planning_context.launch">
-      <arg name="load_robot_description" value="true"/>
-    </include>
-  </group>
-
-  <group if="$(arg open_model)">
-    <include file="$(find open_manipulator_with_tb3_description)/launch/open_manipulator_with_tb3_model.launch">
-      <arg name="model"      value="$(arg model)" />
-      <arg name="use_gazebo" value="$(arg use_gazebo)" />
-      <arg name="open_rviz"  value="false" />
-    </include>
-  </group>
-
-  <!-- Run the main MoveIt executable without trajectory execution (we do not have controllers configured by default) -->
-  <group if="$(eval model == 'pi')">
+    <!-- Run the main MoveIt executable without trajectory execution (we do not have controllers configured by default) -->
     <include file="$(find open_manipulator_with_tb3_waffle_pi_moveit)/launch/move_group.launch">
       <arg name="allow_trajectory_execution" value="false"/>
       <arg name="fake_execution" value="false"/>
       <arg name="info" value="false"/>
       <arg name="debug" value="$(arg debug)"/>
+      <arg name="sample_duration" value="$(arg sample_duration)"/>
     </include>
   </group>
-  
+
   <group unless="$(eval model == 'pi')">
-      <include file="$(find open_manipulator_with_tb3_waffle_moveit)/launch/move_group.launch">
+    <!-- Load the URDF, SRDF and other .yaml configuration files on the param server -->
+    <include file="$(find open_manipulator_with_tb3_waffle_moveit)/launch/planning_context.launch">
+      <arg name="load_robot_description" value="true"/>
+    </include>
+
+    <!-- Run the main MoveIt executable without trajectory execution (we do not have controllers configured by default) -->
+    <include file="$(find open_manipulator_with_tb3_waffle_moveit)/launch/move_group.launch">
       <arg name="allow_trajectory_execution" value="false"/>
       <arg name="fake_execution" value="false"/>
       <arg name="info" value="false"/>
       <arg name="debug" value="$(arg debug)"/>
+      <arg name="sample_duration" value="$(arg sample_duration)"/>
     </include>
   </group>
 
@@ -50,16 +58,15 @@
     <node name="rviz" pkg="rviz" type="rviz" args="-d $(find open_manipulator_with_tb3_tools)/rviz/open_manipulator_with_tb3_manipulation.rviz"/>
   </group>
 
-  <!-- OpenManipultor Position controller-->
-  <include file="$(find open_manipulator_moveit_controller)/launch/open_manipulator_moveit_controller.launch">
-    <arg name="use_gazebo"     value="$(arg use_gazebo)"/>
-    <arg name="use_robot_name" value="open_manipulator_with_tb3"/>
-    <arg name="init_position"  value="false"/>
-  </include>
+  <node name="$(arg planning_group)" pkg="open_manipulator_with_tb3" type="open_manipulator_with_tb3_moveit_bridge" output="screen">
+    <param name="planning_group"      value="$(arg planning_group)"/>
+    <param name="use_gazebo"      value="$(arg use_gazebo)"/>
+    <remap from="$(arg planning_group)/joint_trajectory" to="$(arg robot_name)/joint_trajectory"/>
+  </node>
 
-  <group if="$(arg use_ar_marker)">
+<!--  <group if="$(arg use_ar_marker)">
     <include file="$(find open_manipulator_ar_markers)/launch/ar_pose.launch">
       <arg name="use_gazebo"     value="$(arg use_gazebo)"/>
     </include>
-  </group>
+  </group>-->
 </launch>

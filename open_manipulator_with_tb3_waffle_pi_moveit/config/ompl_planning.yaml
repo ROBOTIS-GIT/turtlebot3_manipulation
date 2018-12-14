@@ -148,8 +148,8 @@ arm:
     - SPARStwo
   projection_evaluator: joints(joint1,joint2)
   longest_valid_segment_fraction: 0.005
-gripper:
-  default_planner_config: ""
+mobile:
+  default_planner_config: RRTConnect
   planner_configs:
     - SBL
     - EST
@@ -174,5 +174,3 @@ gripper:
     - LazyPRMstar
     - SPARS
     - SPARStwo
-  projection_evaluator: joints(grip_joint,grip_joint_sub)
-  longest_valid_segment_fraction: 0.005

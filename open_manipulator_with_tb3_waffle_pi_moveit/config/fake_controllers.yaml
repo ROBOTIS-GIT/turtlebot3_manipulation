@@ -5,7 +5,8 @@ controller_list:
       - joint2
       - joint3
       - joint4
-  - name: fake_gripper_controller
+  - name: fake_mobile_controller
     joints:
-      - grip_joint
-      - grip_joint_sub
+      - virtual_joint
+      - wheel_left_joint
+      - wheel_right_joint

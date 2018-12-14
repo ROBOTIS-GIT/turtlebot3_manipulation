@@ -24,7 +24,8 @@
 
 #include <open_manipulator_msgs/SetJointPosition.h>
 #include <open_manipulator_msgs/SetKinematicsPose.h>
-#include <open_manipulator_msgs/State.h>
+#include <open_manipulator_msgs/OpenManipulatorState.h>
+
 #include <open_manipulator_with_tb3_msgs/Place.h>
 
 #include <ar_track_alvar_msgs/AlvarMarkers.h>
@@ -106,7 +107,7 @@ bool initJointPosition()
   ros::service::waitForService(robot_name + "/set_joint_position");
   if (joint_position_command_client.call(msg))
   {
-    return msg.response.isPlanned;
+    return msg.response.is_planned;
   }
   else
   {
@@ -133,7 +134,7 @@ bool gripper(bool onoff)
   ros::service::waitForService(robot_name + "/set_gripper_position");
   if (gripper_position_command_client.call(msg))
   {
-    return msg.response.isPlanned;
+    return msg.response.is_planned;
   }
   else
   {
@@ -216,9 +217,9 @@ bool placeMsgCallback(open_manipulator_with_tb3_msgs::Place::Request &req,
   }
 }
 
-void armStateMsgCallback(const open_manipulator_msgs::State::ConstPtr &msg)
+void armStateMsgCallback(const open_manipulator_msgs::OpenManipulatorState::ConstPtr &msg)
 {
-  std::string get_arm_state = msg->robot;
+  std::string get_arm_state = msg->open_manipulator_moving_state;
 
   if (get_arm_state == msg->STOPPED)
     state.arm = STOPPED;
@@ -226,9 +227,9 @@ void armStateMsgCallback(const open_manipulator_msgs::State::ConstPtr &msg)
     state.arm = IS_MOVING;
 }
 
-void gripperStateMsgCallback(const open_manipulator_msgs::State::ConstPtr &msg)
+void gripperStateMsgCallback(const open_manipulator_msgs::OpenManipulatorState::ConstPtr &msg)
 {
-  std::string get_gripper_state = msg->robot;
+  std::string get_gripper_state = msg->open_manipulator_moving_state;
 
   if (get_gripper_state == msg->STOPPED)
     state.gripper = STOPPED;
@@ -292,7 +293,7 @@ void place()
         ros::service::waitForService(robot_name + "/set_kinematics_pose");
         if (kinematics_pose_command_client.call(eef_pose))
         {
-          if (eef_pose.response.isPlanned == true)
+          if (eef_pose.response.is_planned == true)
           {
             ROS_INFO("PLANNING IS SUCCESSED");
 
@@ -356,7 +357,7 @@ void place()
         ros::service::waitForService(robot_name + "/set_kinematics_pose");
         if (kinematics_pose_command_client.call(eef_pose))
         {
-          if (eef_pose.response.isPlanned == true)
+          if (eef_pose.response.is_planned == true)
           {
             ROS_INFO("PLANNING IS SUCCESSED");
 

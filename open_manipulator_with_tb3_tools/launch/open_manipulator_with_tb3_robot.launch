@@ -1,0 +1,16 @@
+<launch>
+  <arg name="robot_name" default="om_with_tb3"/>
+  <arg name="multi_robot_name" default="$(arg robot_name)"/>
+  <arg name="set_lidar_frame_id" default="base_scan"/>
+
+  <group ns="$(arg robot_name)">
+    <include file="$(find turtlebot3_bringup)/launch/turtlebot3_core.launch">
+      <arg name="multi_robot_name" value="$(arg multi_robot_name)"/>
+    </include>
+    <include file="$(find turtlebot3_bringup)/launch/turtlebot3_lidar.launch">
+      <arg name="set_frame_id" value="$(arg set_lidar_frame_id)"/>
+    </include>
+
+    <node pkg="turtlebot3_bringup" type="turtlebot3_diagnostics" name="turtlebot3_diagnostics" output="screen"/>
+  </group>
+</launch>
