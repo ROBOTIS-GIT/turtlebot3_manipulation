@@ -14,10 +14,6 @@
     </gazebo>
   </xacro:macro>
 
-  <!-- World -->
-  <gazebo reference="world">
-  </gazebo>
-
   <!-- Link1 -->
   <RefLink ref="link1"/>
 
