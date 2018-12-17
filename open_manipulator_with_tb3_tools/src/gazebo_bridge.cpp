@@ -24,13 +24,17 @@
 #include <trajectory_msgs/JointTrajectoryPoint.h>
 
 std::vector<ros::Publisher> gazebo_goal_joint_position_pub_;
+ros::Subscriber joint_trajectory_sub_, gripper_position_sub_;
 trajectory_msgs::JointTrajectory joint_trajectory_;
 bool is_moving_;
 
 void jointTrajectoryCallback(const trajectory_msgs::JointTrajectory::ConstPtr& msg)
 {
-  joint_trajectory_ = *msg;
-  is_moving_ = true;
+  if (is_moving_ == false)
+  {
+    joint_trajectory_ = *msg;
+    is_moving_ = true;
+  }
 }
 
 void gripperPositionCallback(const std_msgs::Float64MultiArray::ConstPtr& msg)
@@ -47,8 +51,7 @@ void publishCallback(const ros::TimerEvent&)
   if (is_moving_ == true)
   {
     uint32_t position_cnt = joint_trajectory_.points[point_cnt].positions.size();
-
-    for (uint8_t index = 0; index < position_cnt; index)
+    for (uint8_t index = 0; index < position_cnt; index++)
     {
       std_msgs::Float64 positions;
       positions.data = joint_trajectory_.points[point_cnt].positions[index];
@@ -57,7 +60,7 @@ void publishCallback(const ros::TimerEvent&)
 
     point_cnt++;
 
-    if (point_cnt > joint_trajectory_.points.size())
+    if (point_cnt > joint_trajectory_.points.size()-1)
     {
       is_moving_ = false;
       point_cnt = 0;
@@ -85,9 +88,9 @@ void initPublisher(ros::NodeHandle nh)
 }
 
 void initSubscriber(ros::NodeHandle nh)
-{
-  ros::Subscriber joint_trajectory_sub_ = nh.subscribe("joint_trajectory", 100, jointTrajectoryCallback);
-  ros::Subscriber gripper_position_sub_ = nh.subscribe("gripper_position", 10, gripperPositionCallback);
+{  
+  joint_trajectory_sub_ = nh.subscribe("joint_trajectory", 100, jointTrajectoryCallback);
+  gripper_position_sub_ = nh.subscribe("gripper_position", 10, gripperPositionCallback);
 }
 
 int main(int argc, char **argv)
