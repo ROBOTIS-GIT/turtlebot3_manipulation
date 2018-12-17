@@ -1,7 +1,7 @@
 <launch>
   <arg name="model" default="$(env TURTLEBOT3_MODEL)" doc="model type [waffle, waffle_pi]"/>
   <arg name="use_gazebo"             default="true" />
-  <arg name="sample_duration"        default="0.030" />
+  <arg name="sample_duration"        default="0.010" />
   <arg name="open_rviz"              default="true"  />
 <!--  <arg name="use_ar_marker"          default="false" />-->
   <arg name="debug"                  default="false" />
@@ -21,12 +21,13 @@
     <include file="$(find open_manipulator_with_tb3_waffle_pi_moveit)/launch/planning_context.launch">
       <arg name="load_robot_description" value="true"/>
     </include>
+
     <include file="$(find open_manipulator_with_tb3_waffle_pi_moveit)/launch/move_group.launch">
       <arg name="allow_trajectory_execution" value="false"/>
       <arg name="fake_execution" value="false"/>
       <arg name="info" value="false"/>
       <arg name="debug" value="$(arg debug)"/>
-<!--      <arg name="sample_duration" value="$(arg sample_duration)"/>-->
+      <arg name="sample_duration" value="$(arg sample_duration)"/>
     </include>
   </group>
 

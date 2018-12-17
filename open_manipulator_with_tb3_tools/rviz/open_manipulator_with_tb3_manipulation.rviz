@@ -6,7 +6,6 @@ Panels:
       Expanded:
         - /MotionPlanning1/Planning Request1
         - /TF1/Frames1
-        - /Camera1/Status1
       Splitter Ratio: 0.742560029
     Tree Height: 175
   - Class: rviz/Help
@@ -347,7 +346,7 @@ Visualization Manager:
           Value: true
         om_with_tb3/wheel_right_link:
           Value: true
-      Marker Scale: 0.400000006
+      Marker Scale: 0.300000012
       Name: TF
       Show Arrows: true
       Show Axes: true
