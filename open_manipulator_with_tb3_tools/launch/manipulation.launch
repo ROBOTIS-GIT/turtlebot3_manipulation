@@ -1,7 +1,7 @@
 <launch>
   <arg name="model" default="$(env TURTLEBOT3_MODEL)" doc="model type [waffle, waffle_pi]"/>
   <arg name="use_gazebo"             default="true" />
-  <arg name="sample_duration"        default="0.010" />
+  <arg name="sample_duration"        default="0.005" />
   <arg name="open_rviz"              default="true"  />
 <!--  <arg name="use_ar_marker"          default="false" />-->
   <arg name="debug"                  default="false" />
