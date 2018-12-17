@@ -5,17 +5,15 @@
   <description>
      An automatically generated package with all the configuration and launch files for using the om_with_tb3 with the MoveIt! Motion Planning Framework
   </description>
+  <license>Apache 2.0</license>
   <author email="thlim@robotis.com">Darby Lim</author>
-  <maintainer email="thlim@robotis.com">Darby Lim</maintainer>
-
-  <license>BSD</license>
-
-  <url type="website">http://moveit.ros.org/</url>
-  <url type="bugtracker">https://github.com/ros-planning/moveit/issues</url>
-  <url type="repository">https://github.com/ros-planning/moveit</url>
+  <maintainer email="pyo@robotis.com">Pyo</maintainer>
+  <url type="website">http://wiki.ros.org/openmanipulator_with_tb3</url>
+  <url type="emanual">http://emanual.robotis.com/docs/en/platform/openmanipulator_with_tb3</url>
+  <url type="repository">https://github.com/ROBOTIS-GIT/openmanipulator_with_tb3</url>
+  <url type="bugtracker">https://github.com/ROBOTIS-GIT/openmanipulator_with_tb3/issues</url>
 
   <buildtool_depend>catkin</buildtool_depend>
-
   <run_depend>moveit_ros_move_group</run_depend>
   <run_depend>moveit_fake_controller_manager</run_depend>
   <run_depend>moveit_kinematics</run_depend>
