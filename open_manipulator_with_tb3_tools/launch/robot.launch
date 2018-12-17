@@ -1,4 +1,5 @@
 <launch>
+  <arg name="model" default="$(env TURTLEBOT3_MODEL)" doc="model type [waffle, waffle_pi]"/>
   <arg name="use_robot_name" default="om_with_tb3"/>
   <arg name="multi_robot_name" default="$(arg use_robot_name)"/>
   <arg name="set_lidar_frame_id" default="base_scan"/>
