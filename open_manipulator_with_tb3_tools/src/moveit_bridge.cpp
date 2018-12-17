@@ -188,8 +188,27 @@ void MoveItBridge::displayPlannedPathMsgCallback(const moveit_msgs::DisplayTraje
 {
   ROS_INFO("Get Planned Path");
 
-  trajectory_msgs::JointTrajectory jnt_tra = msg->trajectory[0].joint_trajectory;
-  joint_trajectory_pub_.publish(jnt_tra);
+  trajectory_msgs::JointTrajectory jnt_tra;
+
+  if (use_gazebo_ == true)
+  {
+    jnt_tra = msg->trajectory[0].joint_trajectory;
+    joint_trajectory_pub_.publish(jnt_tra);
+  }
+  else
+  {
+    uint32_t all_points_size = msg->trajectory[0].joint_trajectory.points.size();
+    const uint8_t POINTS_STEP_SIZE = 5;
+    uint32_t steps = floor((double)all_points_size/(double)POINTS_STEP_SIZE);
+
+    for (uint32_t index = 0; index < all_points_size; index = index + steps)
+    {
+      jnt_tra.points.push_back(msg->trajectory[0].joint_trajectory.points[index]);
+    }
+
+    jnt_tra.points.push_back(msg->trajectory[0].joint_trajectory.points[all_points_size-1]);
+    joint_trajectory_pub_.publish(jnt_tra);
+  }
 }
 
 int main(int argc, char **argv)
