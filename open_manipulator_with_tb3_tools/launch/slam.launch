@@ -14,7 +14,7 @@
 
     <!-- Gmapping -->
     <node pkg="gmapping" type="slam_gmapping" name="turtlebot3_slam_gmapping" output="screen">
-      <remap from="$(arg use_robot_name)/scan"  to="$(arg use_robot_name)/$(arg scan_topic)"/>
+      <remap from="scan"  to="$(arg scan_topic)"/>
 
       <param name="base_frame" value="$(arg use_robot_name)/base_footprint"/>
       <param name="odom_frame" value="$(arg use_robot_name)/odom"/>

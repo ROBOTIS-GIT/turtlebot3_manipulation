@@ -1,6 +1,8 @@
 <launch>
   <!-- Arguments -->
   <arg name="use_robot_name"     default="om_with_tb3"/>
+  <arg name="scan_topic"     default="scan_filtered"/>
+
   <arg name="initial_pose_x" default="0.0"/>
   <arg name="initial_pose_y" default="0.0"/>
   <arg name="initial_pose_a" default="0.0"/>
@@ -41,5 +43,6 @@
     <param name="odom_frame_id"             value="$(arg use_robot_name)/odom"/>
     <param name="base_frame_id"             value="$(arg use_robot_name)/base_footprint"/>
 
+    <remap from="scan"  to="$(arg scan_topic)"/>
   </node>
 </launch>

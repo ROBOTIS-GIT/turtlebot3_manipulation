@@ -305,7 +305,7 @@ Visualization Manager:
       Radius: 0.0299999993
       Shaft Diameter: 0.100000001
       Shaft Length: 0.100000001
-      Topic: /move_base/NavfnROS/plan
+      Topic: /om_with_tb3/move_base/NavfnROS/plan
       Unreliable: false
       Value: true
     - Class: rviz/Group
@@ -316,7 +316,7 @@ Visualization Manager:
           Draw Behind: true
           Enabled: true
           Name: Costmap
-          Topic: /move_base/global_costmap/costmap
+          Topic: /om_with_tb3/move_base/global_costmap/costmap
           Unreliable: false
           Use Timestamp: false
           Value: true
@@ -340,7 +340,7 @@ Visualization Manager:
           Radius: 0.0299999993
           Shaft Diameter: 0.100000001
           Shaft Length: 0.100000001
-          Topic: /move_base/DWAPlannerROS/global_plan
+          Topic: /om_with_tb3/move_base/DWAPlannerROS/global_plan
           Unreliable: false
           Value: true
       Enabled: true
@@ -352,7 +352,7 @@ Visualization Manager:
           Color: 0; 0; 0
           Enabled: true
           Name: Polygon
-          Topic: /move_base/local_costmap/footprint
+          Topic: /om_with_tb3/move_base/local_costmap/footprint
           Unreliable: false
           Value: true
         - Alpha: 0.699999988
@@ -361,7 +361,7 @@ Visualization Manager:
           Draw Behind: false
           Enabled: true
           Name: Costmap
-          Topic: /move_base/local_costmap/costmap
+          Topic: /om_with_tb3/move_base/local_costmap/costmap
           Unreliable: false
           Use Timestamp: false
           Value: true
@@ -385,7 +385,7 @@ Visualization Manager:
           Radius: 0.0299999993
           Shaft Diameter: 0.100000001
           Shaft Length: 0.100000001
-          Topic: /move_base/DWAPlannerROS/local_plan
+          Topic: /om_with_tb3/move_base/DWAPlannerROS/local_plan
           Unreliable: false
           Value: true
       Enabled: true
@@ -426,8 +426,8 @@ Visualization Manager:
       Image Rendering: background and overlay
       Image Topic: /om_with_tb3/camera/rgb/image_raw
       Name: Camera
-      Overlay Alpha: 0.5
-      Queue Size: 2
+      Overlay Alpha: 1
+      Queue Size: 10000
       Transport Hint: raw
       Unreliable: false
       Value: true
@@ -455,13 +455,13 @@ Visualization Manager:
       Zoom Factor: 1
     - Class: rviz/Image
       Enabled: false
-      Image Topic: /camera/rgb/image_raw
+      Image Topic: /om_with_tb3/camera/rgb/image_raw
       Max Value: 1
       Median window: 5
       Min Value: 0
       Name: Image
       Normalize Range: true
-      Queue Size: 2
+      Queue Size: 10000
       Transport Hint: raw
       Unreliable: false
       Value: false
@@ -493,7 +493,7 @@ Visualization Manager:
   Value: true
   Views:
     Current:
-      Angle: -0.0249977857
+      Angle: -0.00999921747
       Class: rviz/TopDownOrtho
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.0599999987
@@ -503,11 +503,11 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.00999999978
-      Scale: 136.840042
+      Scale: 116.344116
       Target Frame: <Fixed Frame>
       Value: TopDownOrtho (rviz)
-      X: 0.134903997
-      Y: 1.91399944
+      X: 0.264774531
+      Y: 1.65137386
     Saved: ~
 Window Geometry:
   Camera:
@@ -529,5 +529,5 @@ Window Geometry:
   Views:
     collapsed: true
   Width: 1576
-  X: 805
+  X: 698
   Y: 24
