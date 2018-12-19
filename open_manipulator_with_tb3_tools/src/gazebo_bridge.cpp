@@ -20,19 +20,18 @@
 #include <std_msgs/Float64.h>
 #include <std_msgs/Float64MultiArray.h>
 
-#include <trajectory_msgs/JointTrajectory.h>
-#include <trajectory_msgs/JointTrajectoryPoint.h>
-
 std::vector<ros::Publisher> gazebo_goal_joint_position_pub_;
-ros::Subscriber joint_trajectory_sub_, gripper_position_sub_;
-trajectory_msgs::JointTrajectory joint_trajectory_;
+ros::Subscriber joint_trajectory_point_sub_, gripper_position_sub_;
+std_msgs::Float64MultiArray joint_trajectory_point_;
 bool is_moving_;
 
-void jointTrajectoryCallback(const trajectory_msgs::JointTrajectory::ConstPtr& msg)
+const float CONTROL_PERIOD = 0.001f;
+
+void jointTrajectoryPointCallback(const std_msgs::Float64MultiArray::ConstPtr& msg)
 {
   if (is_moving_ == false)
   {
-    joint_trajectory_ = *msg;
+    joint_trajectory_point_ = *msg;
     is_moving_ = true;
   }
 }
@@ -46,24 +45,45 @@ void gripperPositionCallback(const std_msgs::Float64MultiArray::ConstPtr& msg)
 
 void publishCallback(const ros::TimerEvent&)
 {
-  static uint32_t point_cnt = 0;
+  const uint8_t POINT_SIZE = 4 + 1; //Joint num + Time
+  static uint32_t points = 0;
+
+  static uint8_t wait_for_pub = 0;
+  static uint8_t loop_cnt = 0;
 
   if (is_moving_ == true)
   {
-    uint32_t position_cnt = joint_trajectory_.points[point_cnt].positions.size();
-    for (uint8_t index = 0; index < position_cnt; index++)
+    uint32_t all_points_cnt = joint_trajectory_point_.data.size();
+    uint8_t pub_cnt = 0;
+
+    if (loop_cnt < wait_for_pub)
     {
-      std_msgs::Float64 positions;
-      positions.data = joint_trajectory_.points[point_cnt].positions[index];
-      gazebo_goal_joint_position_pub_.at(index).publish(positions);
+      loop_cnt++;
+      return;
     }
-
-    point_cnt++;
-
-    if (point_cnt > joint_trajectory_.points.size()-1)
+    else
     {
-      is_moving_ = false;
-      point_cnt = 0;
+      for (uint32_t positions = points + 1; positions < (points + POINT_SIZE); positions++)
+      {
+        std_msgs::Float64 joint_position;
+        joint_position.data = joint_trajectory_point_.data[positions];
+
+        gazebo_goal_joint_position_pub_.at(pub_cnt).publish(joint_position);
+        pub_cnt++;
+      }
+
+      points = points + POINT_SIZE;
+      wait_for_pub = (joint_trajectory_point_.data[points] - joint_trajectory_point_.data[points - POINT_SIZE]) / CONTROL_PERIOD;
+
+      loop_cnt = 0;
+
+      if (points >= all_points_cnt)
+      {
+        joint_trajectory_point_.data.clear();
+        points = 0;
+        wait_for_pub = 0;
+        is_moving_ = false;
+      }
     }
   }
 }
@@ -89,7 +109,7 @@ void initPublisher(ros::NodeHandle nh)
 
 void initSubscriber(ros::NodeHandle nh)
 {  
-  joint_trajectory_sub_ = nh.subscribe("joint_trajectory", 100, jointTrajectoryCallback);
+  joint_trajectory_point_sub_ = nh.subscribe("joint_trajectory_point", 1000, jointTrajectoryPointCallback);
   gripper_position_sub_ = nh.subscribe("gripper_position", 10, gripperPositionCallback);
 }
 
@@ -101,7 +121,7 @@ int main(int argc, char **argv)
   initPublisher(node_handle);
   initSubscriber(node_handle);
 
-  ros::Timer publish_timer = node_handle.createTimer(ros::Duration(0.010f), publishCallback);
+  ros::Timer publish_timer = node_handle.createTimer(ros::Duration(CONTROL_PERIOD), publishCallback);
 
   ros::spin();
   return 0;

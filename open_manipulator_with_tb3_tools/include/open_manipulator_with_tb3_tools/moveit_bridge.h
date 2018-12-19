@@ -38,6 +38,7 @@
 
 #include <std_msgs/String.h>
 #include <std_msgs/Float64.h>
+#include <std_msgs/Float64MultiArray.h>
 #include <geometry_msgs/PoseStamped.h>
 
 #include "open_manipulator_msgs/OpenManipulatorState.h"
@@ -60,7 +61,7 @@ class MoveItBridge
   bool use_gazebo_;
 
   // ROS Publisher
-  ros::Publisher joint_trajectory_pub_;
+  ros::Publisher joint_trajectory_point_pub_;
 
   // ROS Subscribers
   ros::Subscriber display_planned_path_sub_;

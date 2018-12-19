@@ -37,12 +37,12 @@ MoveItBridge::~MoveItBridge()
 
 void MoveItBridge::initPublisher()
 {
-  joint_trajectory_pub_ = priv_nh_.advertise<trajectory_msgs::JointTrajectory>("joint_trajectory", 100);
+  joint_trajectory_point_pub_ = priv_nh_.advertise<std_msgs::Float64MultiArray>("joint_trajectory_point", 1000);
 }
 
 void MoveItBridge::initSubscriber()
 {
-  display_planned_path_sub_ = nh_.subscribe("/move_group/display_planned_path", 100,
+  display_planned_path_sub_ = nh_.subscribe("move_group/display_planned_path", 100,
                                             &MoveItBridge::displayPlannedPathMsgCallback, this);
 }
 
@@ -188,26 +188,38 @@ void MoveItBridge::displayPlannedPathMsgCallback(const moveit_msgs::DisplayTraje
 {
   ROS_INFO("Get Planned Path");
 
-  trajectory_msgs::JointTrajectory jnt_tra;
+  trajectory_msgs::JointTrajectory jnt_tra = msg->trajectory[0].joint_trajectory;
+  std_msgs::Float64MultiArray jnt_tra_pts;
 
   if (use_gazebo_ == true)
   {
-    jnt_tra = msg->trajectory[0].joint_trajectory;
-    joint_trajectory_pub_.publish(jnt_tra);
+    for (std::vector<uint32_t>::size_type i = 0; i < jnt_tra.points.size(); i++)
+    {
+      jnt_tra_pts.data.push_back(jnt_tra.points[i].time_from_start.toSec());
+      for (std::vector<uint32_t>::size_type j = 0; j < jnt_tra.points[i].positions.size(); j++)
+      {
+        jnt_tra_pts.data.push_back(jnt_tra.points[i].positions[j]);
+      }
+    }
+
+    joint_trajectory_point_pub_.publish(jnt_tra_pts);
   }
   else
   {
-    uint32_t all_points_size = msg->trajectory[0].joint_trajectory.points.size();
-    const uint8_t POINTS_STEP_SIZE = 5;
+    uint32_t all_points_size = jnt_tra.points.size();
+    const uint8_t POINTS_STEP_SIZE = 10;
     uint32_t steps = floor((double)all_points_size/(double)POINTS_STEP_SIZE);
 
-    for (uint32_t index = 0; index < all_points_size; index = index + steps)
+    for (uint32_t i = 0; i < all_points_size; i = i + steps)
     {
-      jnt_tra.points.push_back(msg->trajectory[0].joint_trajectory.points[index]);
+      jnt_tra_pts.data.push_back(jnt_tra.points[i].time_from_start.toSec());
+      for (std::vector<uint32_t>::size_type j = 0; j < jnt_tra.points[i].positions.size(); j++)
+      {
+        jnt_tra_pts.data.push_back(jnt_tra.points[i].positions[j]);
+      }
     }
 
-    jnt_tra.points.push_back(msg->trajectory[0].joint_trajectory.points[all_points_size-1]);
-    joint_trajectory_pub_.publish(jnt_tra);
+    joint_trajectory_point_pub_.publish(jnt_tra_pts);
   }
 }
 
