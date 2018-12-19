@@ -12,7 +12,7 @@
   <arg name="scan_topic"     default="scan_filtered"/>
   <arg name="initial_pose_x" default="0.0"/>
   <arg name="initial_pose_y" default="0.0"/>
-  <arg name="initial_pose_a" default="1.57"/>
+  <arg name="initial_pose_a" default="0.0"/>
 
   <group ns = "$(arg use_robot_name)">
     <node pkg="laser_filters" type="scan_to_scan_filter_chain" name="laser_filter" output="screen" >
@@ -32,12 +32,12 @@
     <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
       <param name="base_local_planner" value="dwa_local_planner/DWAPlannerROS" />
 
-      <rosparam file="$(find open_manipulator_with_tb3_tools)/config/costmap_common_params_$(arg model).yaml" command="load" ns="global_costmap" />
-      <rosparam file="$(find open_manipulator_with_tb3_tools)/config/costmap_common_params_$(arg model).yaml" command="load" ns="local_costmap" />
+      <rosparam file="$(find open_manipulator_with_tb3_tools)/config/costmap_common_params.yaml" command="load" ns="global_costmap" />
+      <rosparam file="$(find open_manipulator_with_tb3_tools)/config/costmap_common_params.yaml" command="load" ns="local_costmap" />
       <rosparam file="$(find open_manipulator_with_tb3_tools)/config/local_costmap_params.yaml" command="load" />
       <rosparam file="$(find open_manipulator_with_tb3_tools)/config/global_costmap_params.yaml" command="load" />
       <rosparam file="$(find open_manipulator_with_tb3_tools)/config/move_base_params.yaml" command="load" />
-      <rosparam file="$(find open_manipulator_with_tb3_tools)/config/dwa_local_planner_params_$(arg model).yaml" command="load" />
+      <rosparam file="$(find open_manipulator_with_tb3_tools)/config/dwa_local_planner_params.yaml" command="load" />
     </node>
 
     <group if="$(arg use_ar_marker)">
