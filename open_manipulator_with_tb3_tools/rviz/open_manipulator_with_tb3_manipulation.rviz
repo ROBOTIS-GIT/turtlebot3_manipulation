@@ -82,6 +82,14 @@ Visualization Manager:
             Show Axes: false
             Show Trail: false
             Value: true
+          camera_depth_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          camera_depth_optical_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
           camera_link:
             Alpha: 1
             Show Axes: false
@@ -218,6 +226,14 @@ Visualization Manager:
             Show Axes: false
             Show Trail: false
             Value: true
+          camera_depth_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          camera_depth_optical_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
           camera_link:
             Alpha: 1
             Show Axes: false
@@ -311,6 +327,10 @@ Visualization Manager:
           Value: false
         om_with_tb3/base_scan:
           Value: true
+        om_with_tb3/camera_depth_frame:
+          Value: true
+        om_with_tb3/camera_depth_optical_frame:
+          Value: true
         om_with_tb3/camera_link:
           Value: true
         om_with_tb3/camera_rgb_frame:
@@ -357,6 +377,9 @@ Visualization Manager:
               om_with_tb3/base_scan:
                 {}
               om_with_tb3/camera_link:
+                om_with_tb3/camera_depth_frame:
+                  om_with_tb3/camera_depth_optical_frame:
+                    {}
                 om_with_tb3/camera_rgb_frame:
                   om_with_tb3/camera_rgb_optical_frame:
                     {}
@@ -402,13 +425,13 @@ Visualization Manager:
         Value: true
       Zoom Factor: 1
     - Class: rviz/Marker
-      Enabled: true
-      Marker Topic: visualization_marker
+      Enabled: false
+      Marker Topic: /om_with_tb3/visualization_marker
       Name: Marker
       Namespaces:
         {}
       Queue Size: 100
-      Value: true
+      Value: false
     - Class: rviz/Image
       Enabled: false
       Image Topic: /om_with_tb3/camera/rgb/image_raw
@@ -437,7 +460,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/XYOrbit
-      Distance: 0.617659748
+      Distance: 0.944110394
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.0599999987
         Stereo Focal Distance: 1
@@ -452,10 +475,10 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.00999999978
-      Pitch: 0.289797097
+      Pitch: 0.384797037
       Target Frame: base_footprint
       Value: XYOrbit (rviz)
-      Yaw: 1.05677366
+      Yaw: 0.786773443
     Saved: ~
 Window Geometry:
   Camera:
@@ -477,5 +500,5 @@ Window Geometry:
   Views:
     collapsed: false
   Width: 1506
-  X: 780
-  Y: 43
+  X: 977
+  Y: 49
