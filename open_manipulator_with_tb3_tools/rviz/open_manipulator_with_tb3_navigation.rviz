@@ -11,7 +11,6 @@ Panels:
         - /Local Map1/Polygon1
         - /Local Map1/Costmap1
         - /Local Map1/Planner1
-        - /Camera1
       Splitter Ratio: 0.412008286
     Tree Height: 487
   - Class: rviz/Selection
@@ -77,6 +76,14 @@ Visualization Manager:
           Show Axes: false
           Show Trail: false
           Value: true
+        camera_depth_frame:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        camera_depth_optical_frame:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
         camera_link:
           Alpha: 1
           Show Axes: false
@@ -165,8 +172,6 @@ Visualization Manager:
       Frame Timeout: 15
       Frames:
         All Enabled: false
-        ar_marker_8:
-          Value: true
         map:
           Value: true
         om_with_tb3/base_footprint:
@@ -175,6 +180,10 @@ Visualization Manager:
           Value: false
         om_with_tb3/base_scan:
           Value: false
+        om_with_tb3/camera_depth_frame:
+          Value: true
+        om_with_tb3/camera_depth_optical_frame:
+          Value: true
         om_with_tb3/camera_link:
           Value: false
         om_with_tb3/camera_rgb_frame:
@@ -222,10 +231,12 @@ Visualization Manager:
                 om_with_tb3/base_scan:
                   {}
                 om_with_tb3/camera_link:
+                  om_with_tb3/camera_depth_frame:
+                    om_with_tb3/camera_depth_optical_frame:
+                      {}
                   om_with_tb3/camera_rgb_frame:
                     om_with_tb3/camera_rgb_optical_frame:
-                      ar_marker_8:
-                        {}
+                      {}
                 om_with_tb3/caster_back_left_link:
                   {}
                 om_with_tb3/caster_back_right_link:
@@ -474,7 +485,7 @@ Visualization Manager:
       Marker Topic: /om_with_tb3/visualization_marker
       Name: Marker
       Namespaces:
-        basic_shapes: true
+        {}
       Queue Size: 100
       Value: true
   Enabled: true
@@ -533,5 +544,5 @@ Window Geometry:
   Views:
     collapsed: true
   Width: 1576
-  X: 698
+  X: 950
   Y: 24
