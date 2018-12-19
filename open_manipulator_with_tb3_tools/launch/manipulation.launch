@@ -2,6 +2,7 @@
   <arg name="model" default="$(env TURTLEBOT3_MODEL)" doc="model type [waffle, waffle_pi]"/>
   <arg name="use_robot_name"         default="om_with_tb3"/>
   <arg name="use_gazebo"             default="true" />
+  <arg name="use_ar_marker"          default="false" />
 
   <arg name="planning_group"         default="arm" />
   <arg name="sample_duration"        default="0.050" />
@@ -17,7 +18,7 @@
     <rosparam param="source_list">["om_with_tb3/joint_states"]</rosparam>
   </node>
 
-  <group if="$(eval model == 'waffle_pi')">
+  <group if="$(eval model == 'pi')">
     <include file="$(find open_manipulator_with_tb3_waffle_pi_moveit)/launch/planning_context.launch">
       <arg name="load_robot_description" value="true"/>
     </include>
@@ -31,7 +32,7 @@
     </include>
   </group>
 
-<!--  <group unless="$(eval model == 'waffle')">
+  <group unless="$(eval model == 'pi')">
     <include file="$(find open_manipulator_with_tb3_waffle_moveit)/launch/planning_context.launch">
       <arg name="load_robot_description" value="true"/>
     </include>
@@ -43,7 +44,7 @@
       <arg name="debug" value="$(arg debug)"/>
       <arg name="sample_duration" value="$(arg sample_duration)"/>
     </include>
-  </group>-->
+  </group>
 
   <group if="$(arg open_rviz)">
     <include file="$(find open_manipulator_with_tb3_waffle_pi_moveit)/launch/moveit_rviz.launch">
@@ -58,10 +59,12 @@
     <remap from="$(arg planning_group)/joint_trajectory_point" to="$(arg use_robot_name)/joint_trajectory_point"/>
   </node>
 
-  <group ns = "$(arg use_robot_name)">
-    <include file="$(find open_manipulator_ar_markers)/launch/ar_pose.launch">
-      <arg name="use_gazebo"	    value="$(arg use_gazebo)" />
-      <arg name="use_robot_name"  value="$(arg use_robot_name)"/>
-    </include>
-  </group>
+  <group if="$(arg use_ar_marker)">
+    <group ns = "$(arg use_robot_name)">
+      <include file="$(find open_manipulator_ar_markers)/launch/ar_pose.launch">
+        <arg name="use_gazebo"	    value="$(arg use_gazebo)" />
+        <arg name="use_robot_name"  value="$(arg use_robot_name)"/>
+      </include>
+    </group>
+ </group>
 </launch>

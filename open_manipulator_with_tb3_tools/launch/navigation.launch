@@ -5,6 +5,8 @@
   <arg name="use_gazebo"	   default="true" />
   <arg name="open_rviz"      default="true" />
 
+  <arg name="use_ar_marker"          default="true" />
+
   <arg name="map_file"       default="$(find open_manipulator_with_tb3_tools)/maps/map.yaml"/>
 
   <arg name="scan_topic"     default="scan_filtered"/>
@@ -38,10 +40,12 @@
       <rosparam file="$(find open_manipulator_with_tb3_tools)/config/dwa_local_planner_params_$(arg model).yaml" command="load" />
     </node>
 
-    <include file="$(find open_manipulator_ar_markers)/launch/ar_pose.launch">
-      <arg name="use_gazebo"	    value="$(arg use_gazebo)" />
-      <arg name="use_robot_name"  value="$(arg use_robot_name)"/>
-    </include>
+    <group if="$(arg use_ar_marker)">
+      <include file="$(find open_manipulator_ar_markers)/launch/ar_pose.launch">
+        <arg name="use_gazebo"	    value="$(arg use_gazebo)" />
+        <arg name="use_robot_name"  value="$(arg use_robot_name)"/>
+      </include>
+    </group>
   </group>
 
   <group if="$(arg open_rviz)">
