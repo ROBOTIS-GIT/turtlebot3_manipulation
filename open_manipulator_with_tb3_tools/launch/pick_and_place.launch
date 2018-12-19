@@ -1,5 +1,6 @@
 <launch>
-  <arg name="use_robot_name"  default="open_manipulator_with_tb3"/>
+  <arg name="model" default="$(env TURTLEBOT3_MODEL)" doc="model type [waffle, waffle_pi]"/>
+  <arg name="use_robot_name"  default="om_with_tb3"/>
 
   <arg name="marker_id"       default="8"/>
 

@@ -6,8 +6,6 @@
   <arg name="planning_group"         default="arm" />
   <arg name="sample_duration"        default="0.050" />
 
-<!--  <arg name="use_ar_marker"          default="false" />-->
-
   <arg name="open_rviz"              default="true"  />
   <arg name="debug"                  default="false" />
 
@@ -60,9 +58,10 @@
     <remap from="$(arg planning_group)/joint_trajectory_point" to="$(arg use_robot_name)/joint_trajectory_point"/>
   </node>
 
-<!--  <group if="$(arg use_ar_marker)">
+  <group ns = "$(arg use_robot_name)">
     <include file="$(find open_manipulator_ar_markers)/launch/ar_pose.launch">
-      <arg name="use_gazebo"     value="$(arg use_gazebo)"/>
+      <arg name="use_gazebo"	    value="$(arg use_gazebo)" />
+      <arg name="use_robot_name"  value="$(arg use_robot_name)"/>
     </include>
-  </group>-->
+  </group>
 </launch>

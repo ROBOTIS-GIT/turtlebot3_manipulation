@@ -37,9 +37,13 @@
       <rosparam file="$(find open_manipulator_with_tb3_tools)/config/move_base_params.yaml" command="load" />
       <rosparam file="$(find open_manipulator_with_tb3_tools)/config/dwa_local_planner_params_$(arg model).yaml" command="load" />
     </node>
+
+    <include file="$(find open_manipulator_ar_markers)/launch/ar_pose.launch">
+      <arg name="use_gazebo"	    value="$(arg use_gazebo)" />
+      <arg name="use_robot_name"  value="$(arg use_robot_name)"/>
+    </include>
   </group>
 
-  <!-- Show in Rviz -->
   <group if="$(arg open_rviz)">
     <node name="rviz" pkg="rviz" type="rviz" args="-d $(find open_manipulator_with_tb3_tools)/rviz/open_manipulator_with_tb3_navigation.rviz" output="screen">
       <remap from="initialpose"  to="$(arg use_robot_name)/initialpose"/>
