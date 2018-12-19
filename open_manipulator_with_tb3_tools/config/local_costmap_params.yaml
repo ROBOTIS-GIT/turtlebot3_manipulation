@@ -1,6 +1,9 @@
 local_costmap:
-  global_frame: /odom
-  robot_base_frame: /base_footprint
+  global_frame: om_with_tb3/odom
+  robot_base_frame: om_with_tb3/base_footprint
+  scan:
+    topic: /om_with_tb3/scan_filtered
+    sensor_frame: /om_with_tb3/base_scan
 
   update_frequency: 10.0
   publish_frequency: 10.0
