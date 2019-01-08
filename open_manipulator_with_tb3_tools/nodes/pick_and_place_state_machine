@@ -32,23 +32,24 @@ class getPoseOfTheObject(smach.State):
         smach.State.__init__(self, outcomes=['succeeded', 'aborted'],
                                     output_keys=['output_object_pose'])
 
-        self.mutex = threading.Lock()
+        # self.mutex = threading.Lock()
 
         self.namespace = rospy.get_param("~robot_name")
         self.marker_pose_sub = rospy.Subscriber(self.namespace + '/ar_pose_marker', AlvarMarkers, self.arMarkerMsgCallback)
-        self.OFFSET_FOR_OBJECT_HEIGHT = 0.150
+
+        self.OFFSET_FOR_GOAL_HEIGHT = 0.150
 
     def arMarkerMsgCallback(self, ar_marker_pose_msg):
-        self.mutex.acquire()
+        # self.mutex.acquire()
         if len(ar_marker_pose_msg.markers) == 0:
             self.ar_marker_pose = False
         else:            
             self.ar_marker_pose = AlvarMarker()
             self.ar_marker_pose = ar_marker_pose_msg.markers[0]
-        self.mutex.release()
+        # self.mutex.release()
 
     def execute(self, userdata):
-        self.mutex.acquire()
+        # self.mutex.acquire()
         if self.ar_marker_pose == False:
             rospy.logerr('Failed to get pose of the marker')
             return 'aborted'
@@ -58,7 +59,7 @@ class getPoseOfTheObject(smach.State):
  
             object_pose.position.x += 0.0
             object_pose.position.y  = 0.0
-            object_pose.position.z += self.OFFSET_FOR_OBJECT_HEIGHT
+            object_pose.position.z += self.OFFSET_FOR_GOAL_HEIGHT
 
             dist = math.sqrt((self.ar_marker_pose.pose.pose.position.x * self.ar_marker_pose.pose.pose.position.x) +
                         (self.ar_marker_pose.pose.pose.position.y * self.ar_marker_pose.pose.pose.position.y))
@@ -70,8 +71,6 @@ class getPoseOfTheObject(smach.State):
 
             roll = 0.0
             pitch = 0.0
-
-            rospy.loginfo('object_yaw = %f', yaw)
 
             cy = math.cos(yaw * 0.5)
             sy = math.sin(yaw * 0.5)
@@ -90,13 +89,78 @@ class getPoseOfTheObject(smach.State):
             return 'succeeded'
 
         self.marker_pose_sub
-        self.mutex.release()
+        # self.mutex.release()
 
-class getCloserToObject(smach.State):
+class getPoseOfTheBox(smach.State):
+    def __init__(self):
+        smach.State.__init__(self, outcomes=['succeeded', 'aborted'],
+                                    output_keys=['output_object_pose'])
+
+        # self.mutex = threading.Lock()
+
+        self.namespace = rospy.get_param("~robot_name")
+        self.marker_pose_sub = rospy.Subscriber(self.namespace + '/ar_pose_marker', AlvarMarkers, self.arMarkerMsgCallback)
+
+        self.OFFSET_FOR_STRETCH = 0.070
+        self.OFFSET_FOR_GOAL_HEIGHT = 0.200
+
+    def arMarkerMsgCallback(self, ar_marker_pose_msg):
+        # self.mutex.acquire()
+        if len(ar_marker_pose_msg.markers) == 0:
+            self.ar_marker_pose = False
+        else:            
+            self.ar_marker_pose = AlvarMarker()
+            self.ar_marker_pose = ar_marker_pose_msg.markers[0]
+        # self.mutex.release()
+
+    def execute(self, userdata):
+        # self.mutex.acquire()
+        if self.ar_marker_pose == False:
+            rospy.logerr('Failed to get pose of the marker')
+            return 'aborted'
+        else:
+            object_pose = Pose()
+            object_pose.position = self.ar_marker_pose.pose.pose.position
+ 
+            object_pose.position.x += self.OFFSET_FOR_STRETCH
+            object_pose.position.y  = 0.0
+            object_pose.position.z += self.OFFSET_FOR_GOAL_HEIGHT
+
+            dist = math.sqrt((self.ar_marker_pose.pose.pose.position.x * self.ar_marker_pose.pose.pose.position.x) +
+                        (self.ar_marker_pose.pose.pose.position.y * self.ar_marker_pose.pose.pose.position.y))
+
+            if self.ar_marker_pose.pose.pose.position.y > 0:
+                yaw = math.acos(self.ar_marker_pose.pose.pose.position.x / dist)
+            else:
+                yaw = (-1) * math.acos(self.ar_marker_pose.pose.pose.position.x / dist)
+
+            roll = 0.0
+            pitch = 0.0
+
+            cy = math.cos(yaw * 0.5)
+            sy = math.sin(yaw * 0.5)
+            cr = math.cos(roll * 0.5)
+            sr = math.sin(roll * 0.5)
+            cp = math.cos(pitch * 0.5)
+            sp = math.sin(pitch * 0.5)
+
+            object_pose.orientation.w = cy * cr * cp + sy * sr * sp
+            object_pose.orientation.x = cy * sr * cp - sy * cr * sp
+            object_pose.orientation.y = cy * cr * sp + sy * sr * cp
+            object_pose.orientation.z = sy * cr * cp - cy * sr * sp
+
+            userdata.output_object_pose = object_pose
+            rospy.loginfo('Succeeded to get pose of the object')
+            return 'succeeded'
+
+        self.marker_pose_sub
+        # self.mutex.release()
+
+class getCloserToGoal(smach.State):
     def __init__(self):
         smach.State.__init__(self, outcomes=['succeeded', 'failed'])
 
-        self.mutex = threading.Lock()
+        # self.mutex = threading.Lock()
 
         self.namespace = rospy.get_param("~robot_name")
         self.marker_pose_sub = rospy.Subscriber(self.namespace + '/ar_pose_marker', AlvarMarkers, self.arMarkerMsgCallback)
@@ -110,18 +174,18 @@ class getCloserToObject(smach.State):
         self.priv_heading = 0.0
 
     def arMarkerMsgCallback(self, ar_marker_pose_msg):
-        self.mutex.acquire()
+        # self.mutex.acquire()
         if len(ar_marker_pose_msg.markers) == 0:
             self.ar_marker_pose = False
         else:            
             self.ar_marker_pose = AlvarMarker()
             self.ar_marker_pose = ar_marker_pose_msg.markers[0]
-        self.mutex.release()
+        # self.mutex.release()
 
     def odomMsgCallback(self, odom_msg):
-        self.mutex.acquire()       
+        # self.mutex.acquire()       
         self.tb3_odom = odom_msg
-        self.mutex.release()
+        # self.mutex.release()
 
     def getDistanceFromRobot(self, goal):
         return goal.pose.pose.position.x
@@ -150,87 +214,6 @@ class getCloserToObject(smach.State):
             objective_function = (1.0 * abs(dist)) + (10.0 * abs(heading))        
 
             # rospy.logwarn('dist: %f, heading: %f, obj_func_result: %f', dist, heading, objective_function)
-
-            # dist tolerance: 0.170 meter, heading tolerance: +-0.09 rad (+-5.0 deg)
-            if objective_function >= 0.210:            
-                self.cmd_vel.linear.x  = (0.2 * dist) + (0.02 * (dist - self.priv_dist))
-                self.cmd_vel.linear.y  = 0.0 
-                self.cmd_vel.linear.z  = 0.0
-
-                self.cmd_vel.angular.x = 0.0  
-                self.cmd_vel.angular.y = 0.0 
-                self.cmd_vel.angular.z = (1.0 * heading) + (0.01 * (heading - self.priv_heading))
-            
-                self.cmd_vel_pub.publish(self.cmd_vel)
-            else:
-                self.cmd_vel.linear.x  = 0.0
-                self.cmd_vel.angular.z = 0.0
-            
-                self.cmd_vel_pub.publish(self.cmd_vel)  
-
-                return 'succeeded'
-
-            self.priv_dist = dist
-            self.priv_heading = heading
-
-class getCloserToBox(smach.State):
-    def __init__(self):
-        smach.State.__init__(self, outcomes=['succeeded', 'failed'])
-
-        self.mutex = threading.Lock()
-
-        self.namespace = rospy.get_param("~robot_name")
-        self.marker_pose_sub = rospy.Subscriber(self.namespace + '/ar_pose_marker', AlvarMarkers, self.arMarkerMsgCallback)
-        self.odom_sub = rospy.Subscriber(self.namespace + '/odom', Odometry, self.odomMsgCallback)
-        self.cmd_vel_pub = rospy.Publisher(self.namespace + '/cmd_vel', Twist, queue_size=10)
-        self.tb3_odom = Odometry()
-
-        self.cmd_vel = Twist()
-
-        self.priv_dist = 0.0
-        self.priv_heading = 0.0
-
-    def arMarkerMsgCallback(self, ar_marker_pose_msg):
-        self.mutex.acquire()
-        if len(ar_marker_pose_msg.markers) == 0:
-            self.ar_marker_pose = False
-        else:            
-            self.ar_marker_pose = AlvarMarker()
-            self.ar_marker_pose = ar_marker_pose_msg.markers[0]
-        self.mutex.release()
-
-    def odomMsgCallback(self, odom_msg):
-        self.mutex.acquire()       
-        self.tb3_odom = odom_msg
-        self.mutex.release()
-
-    def getDistanceFromRobot(self, goal):
-        return goal.pose.pose.position.x
-              
-    def getAngleBtwRobotAndMarker(self, goal):
-        return math.atan2(goal.pose.pose.position.y, goal.pose.pose.position.x)
-
-    def execute(self, userdata):
-        while 1:
-            # rospy.loginfo('ar_marker_pose.x : %f', self.ar_marker_pose.pose.pose.position.x)
-            # rospy.loginfo('ar_marker_pose.y : %f', self.ar_marker_pose.pose.pose.position.y)
-            # rospy.loginfo('ar_marker_pose.z : %f', self.ar_marker_pose.pose.pose.position.z)
-            # rospy.loginfo('ar_marker_pose.yaw : %f', math.degrees(self.getAngleBtwRobotAndMarker(self.ar_marker_pose)))
-
-            if self.ar_marker_pose == False:
-                rospy.loginfo('Failed to get pose of the marker')
-
-                self.cmd_vel.linear.x  = -0.04
-                self.cmd_vel.angular.z = 0.0
-            
-                self.cmd_vel_pub.publish(self.cmd_vel)
-                continue
-
-            dist    = self.getDistanceFromRobot(self.ar_marker_pose)            # meter
-            heading = self.getAngleBtwRobotAndMarker(self.ar_marker_pose)       # radian
-            objective_function = (1.0 * abs(dist)) + (10.0 * abs(heading))        
-
-            rospy.logwarn('dist: %f, heading: %f, obj_func_result: %f', dist, heading, objective_function)
 
             # dist tolerance: 0.170 meter, heading tolerance: +-0.09 rad (+-5.0 deg)
             if objective_function >= 0.210:            
@@ -308,7 +291,7 @@ def main():
                                                 goal=the_location_of_the_object),
                                 transitions={'succeeded':'GET_CLOSER_TO_OBJECT'})
                                                         
-        smach.StateMachine.add('GET_CLOSER_TO_OBJECT', getCloserToObject(),
+        smach.StateMachine.add('GET_CLOSER_TO_OBJECT', getCloserToGoal(),
                                 transitions={'succeeded':'PICK',
                                             'failed':'aborted'})
 
@@ -318,10 +301,10 @@ def main():
         the_location_of_the_point.target_pose.pose.position.x = -2.0
         the_location_of_the_point.target_pose.pose.position.y = 1.0
         the_location_of_the_point.target_pose.pose.position.z = 0.0
-        the_location_of_the_point.target_pose.pose.orientation.w = 0.0
+        the_location_of_the_point.target_pose.pose.orientation.w = 1.0
         the_location_of_the_point.target_pose.pose.orientation.x = 0.0
         the_location_of_the_point.target_pose.pose.orientation.y = 0.0
-        the_location_of_the_point.target_pose.pose.orientation.z = 1.0
+        the_location_of_the_point.target_pose.pose.orientation.z = 0.0
 
         the_location_of_the_right_room = MoveBaseGoal()
         the_location_of_the_right_room.target_pose.header.frame_id = "map"
@@ -363,7 +346,7 @@ def main():
                                                 goal=the_location_of_the_box),
                                 transitions={'succeeded':'GET_CLOSER_TO_BOX'})
                             
-        smach.StateMachine.add('GET_CLOSER_TO_BOX', getCloserToBox(),
+        smach.StateMachine.add('GET_CLOSER_TO_BOX', getCloserToGoal(),
                                 transitions={'succeeded':'PLACE',
                                             'failed':'aborted'})
 
@@ -372,8 +355,6 @@ def main():
 
         with pick_center:
             pick_center.userdata.planning_group = planning_group
-            pick_center.userdata.velocity_scale = 1.0
-            pick_center.userdata.accelerations_scale = 1.0
 
             def joint_position_request_cb(userdata, request):
                 joint = JointPosition()
@@ -466,6 +447,7 @@ def main():
                                     ServiceState(namespace + '/gripper',
                                                     SetJointPosition,
                                                     request_cb=gripper_request_cb,
+                                                    response_cb=gripper_response_cb,
                                                     input_keys=['input_planning_group',
                                                                 'input_gripper']),
                                    transitions={'succeeded':'GET_POSE_OF_THE_OBJECT'},
@@ -555,8 +537,6 @@ def main():
 
         with place_center:
             place_center.userdata.planning_group = planning_group
-            place_center.userdata.velocity_scale = 1.0
-            place_center.userdata.accelerations_scale = 1.0
 
             def joint_position_request_cb(userdata, request):
                 joint = JointPosition()
@@ -575,7 +555,44 @@ def main():
                     rospy.sleep(3.)
                     return 'succeeded'
 
-            place_center.userdata.init_position = [0.0, -0.65, 1.20, -0.54]
+            def eef_pose_request_cb(userdata, request):
+                eef = KinematicsPose()
+                eef.pose = userdata.input_pose
+                rospy.loginfo('eef.position.x : %f', eef.pose.position.x)
+                rospy.loginfo('eef.position.y : %f', eef.pose.position.y)
+                rospy.loginfo('eef.position.z : %f', eef.pose.position.z)
+                eef.max_velocity_scaling_factor = 1.0
+                eef.max_accelerations_scaling_factor = 1.0
+                eef.tolerance = userdata.input_tolerance
+
+                request.planning_group = userdata.input_planning_group
+                request.kinematics_pose = eef
+                return request
+
+            def close_to_box_response_cb(userdata, response):
+                if response.is_planned == False:
+                    pick_center.userdata.close_to_box_tolerance += 0.005
+                    rospy.logwarn('Set more tolerance[%f]', pick_center.userdata.close_to_box_tolerance)
+                    return 'aborted'
+                else:
+                    rospy.sleep(3.)
+                    return 'succeeded'
+
+            def gripper_request_cb(userdata, request):
+                joint = JointPosition()
+                joint.position = userdata.input_gripper
+                joint.max_velocity_scaling_factor = 1.0
+                joint.max_accelerations_scaling_factor = 1.0
+
+                request.planning_group = userdata.input_planning_group
+                request.joint_position = joint
+                return request
+
+            def gripper_response_cb(userdata, response):
+                rospy.sleep(1.)
+                return 'succeeded'
+
+            place_center.userdata.ready_position = [0.0, -1.05, 0.35, 0.70]
             smach.StateMachine.add('SET_INIT_POSITION',
                                     ServiceState(planning_group + '/moveit/set_joint_position',
                                                     SetJointPosition,
@@ -583,12 +600,54 @@ def main():
                                                     response_cb=joint_position_response_cb,
                                                     input_keys=['input_planning_group',
                                                                 'input_position']),
-                                   transitions={'succeeded':'CLOSE_TO_BOX'},
+                                   transitions={'succeeded':'GET_POSE_OF_THE_BOX'},
+                                   remapping={'input_planning_group':'planning_group',
+                                            'input_position':'ready_position'})
+
+            place_center.userdata.box_pose = Pose()
+            smach.StateMachine.add('GET_POSE_OF_THE_BOX', getPoseOfTheBox(),
+                                    transitions={'succeeded':'CLOSE_TO_BOX',
+                                                'aborted':'aborted'},
+                                    remapping={'output_object_pose':'box_pose'})
+                                
+            place_center.userdata.close_to_box_tolerance = 0.01
+            smach.StateMachine.add('CLOSE_TO_BOX',
+                                    ServiceState(planning_group + '/moveit/set_kinematics_pose',
+                                                    SetKinematicsPose,
+                                                    request_cb=eef_pose_request_cb,
+                                                    response_cb=close_to_box_response_cb,
+                                                    input_keys=['input_planning_group',
+                                                                'input_pose',
+                                                                'input_tolerance']),                                                    
+                                   transitions={'succeeded':'PLACE_OBJECT',
+                                                'aborted':'CLOSE_TO_BOX'},
+                                   remapping={'input_planning_group':'planning_group',
+                                            'input_pose':'box_pose',
+                                            'input_tolerance':'close_to_box_tolerance'})
+
+            place_center.userdata.open_gripper = [0.15]
+            smach.StateMachine.add('PLACE_OBJECT',
+                                    ServiceState(namespace + '/gripper',
+                                                    SetJointPosition,
+                                                    request_cb=gripper_request_cb,
+                                                    response_cb=gripper_response_cb,
+                                                    input_keys=['input_planning_group',
+                                                                'input_gripper']),
+                                   transitions={'succeeded':'SET_HOME_POSITION'},
+                                   remapping={'input_planning_group':'planning_group',
+                                            'input_gripper':'open_gripper'})
+
+            place_center.userdata.init_position = [0.0, -1.5707, 1.37, 0.2258]
+            smach.StateMachine.add('SET_HOME_POSITION',
+                                    ServiceState(planning_group + '/moveit/set_joint_position',
+                                                    SetJointPosition,
+                                                    request_cb=joint_position_request_cb,
+                                                    response_cb=joint_position_response_cb,
+                                                    input_keys=['input_planning_group',
+                                                                'input_position']),
+                                   transitions={'succeeded':'succeeded'},
                                    remapping={'input_planning_group':'planning_group',
                                             'input_position':'init_position'})
-
-            smach.StateMachine.add('CLOSE_TO_BOX', closeToBox(),
-                                    transitions={'succeeded':'succeeded'})
 
         smach.StateMachine.add('PLACE', place_center,
                                 transitions={'succeeded':'succeeded', 'aborted':'aborted'})
