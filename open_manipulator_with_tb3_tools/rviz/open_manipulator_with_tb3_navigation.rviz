@@ -4,7 +4,6 @@ Panels:
     Name: Displays
     Property Tree Widget:
       Expanded:
-        - /Global Options1
         - /TF1/Frames1
         - /Global Map1/Costmap1
         - /Global Map1/Planner1
@@ -35,7 +34,7 @@ Visualization Manager:
   Class: ""
   Displays:
     - Alpha: 0.5
-      Cell Size: 0.449999988
+      Cell Size: 1
       Class: rviz/Grid
       Color: 160; 160; 164
       Enabled: true
@@ -76,14 +75,6 @@ Visualization Manager:
           Show Axes: false
           Show Trail: false
           Value: true
-        camera_depth_frame:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        camera_depth_optical_frame:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
         camera_link:
           Alpha: 1
           Show Axes: false
@@ -180,10 +171,6 @@ Visualization Manager:
           Value: false
         om_with_tb3/base_scan:
           Value: false
-        om_with_tb3/camera_depth_frame:
-          Value: true
-        om_with_tb3/camera_depth_optical_frame:
-          Value: true
         om_with_tb3/camera_link:
           Value: false
         om_with_tb3/camera_rgb_frame:
@@ -231,9 +218,6 @@ Visualization Manager:
                 om_with_tb3/base_scan:
                   {}
                 om_with_tb3/camera_link:
-                  om_with_tb3/camera_depth_frame:
-                    om_with_tb3/camera_depth_optical_frame:
-                      {}
                   om_with_tb3/camera_rgb_frame:
                     om_with_tb3/camera_rgb_optical_frame:
                       {}
@@ -518,7 +502,7 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.00999999978
-      Scale: 116.344116
+      Scale: 109.786064
       Target Frame: <Fixed Frame>
       Value: TopDownOrtho (rviz)
       X: 0.264774531
