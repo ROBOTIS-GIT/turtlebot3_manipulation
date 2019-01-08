@@ -3,6 +3,7 @@
   <arg name="use_robot_name"         default="om_with_tb3"/>
   <arg name="use_gazebo"             default="true" />
   <arg name="use_ar_marker"          default="false" />
+  <arg name="marker_frame_id"        default="odom" />
 
   <arg name="planning_group"         default="arm" />
   <arg name="sample_duration"        default="0.050" />
@@ -15,10 +16,10 @@
   </group>
 
   <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
-    <rosparam param="source_list">["om_with_tb3/joint_states"]</rosparam>
+    <rosparam param="source_list" subst_value="true">["$(arg use_robot_name)/joint_states"]</rosparam>
   </node>
 
-  <group if="$(eval model == 'pi')">
+  <group unless="$(eval model == 'pi')">
     <include file="$(find open_manipulator_with_tb3_waffle_pi_moveit)/launch/planning_context.launch">
       <arg name="load_robot_description" value="true"/>
     </include>
@@ -32,7 +33,7 @@
     </include>
   </group>
 
-  <group unless="$(eval model == 'pi')">
+  <group if="$(eval model == 'pi')">
     <include file="$(find open_manipulator_with_tb3_waffle_moveit)/launch/planning_context.launch">
       <arg name="load_robot_description" value="true"/>
     </include>
@@ -47,7 +48,7 @@
   </group>
 
   <group if="$(arg open_rviz)">
-    <include file="$(find open_manipulator_with_tb3_waffle_pi_moveit)/launch/moveit_rviz.launch">
+    <include file="$(find open_manipulator_with_tb3_tools)/launch/moveit_rviz.launch">
       <arg name="config" value="false"/>
       <arg name="debug" value="$(arg debug)"/>
     </include>
@@ -59,11 +60,14 @@
     <remap from="$(arg planning_group)/joint_trajectory_point" to="$(arg use_robot_name)/joint_trajectory_point"/>
   </node>
 
+  <node name="gripper_server" pkg="open_manipulator_with_tb3_tools" type="open_manipulator_with_tb3_gripper_server" output="screen" ns="$(arg use_robot_name)"/>
+
   <group if="$(arg use_ar_marker)">
     <group ns = "$(arg use_robot_name)">
       <include file="$(find open_manipulator_ar_markers)/launch/ar_pose.launch">
         <arg name="use_gazebo"	    value="$(arg use_gazebo)" />
         <arg name="use_robot_name"  value="$(arg use_robot_name)"/>
+        <arg name="frame_id"        value="$(arg marker_frame_id)"/>
       </include>
     </group>
  </group>
