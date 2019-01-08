@@ -6,13 +6,14 @@
   <arg name="open_rviz"      default="true" />
 
   <arg name="use_ar_marker"          default="true" />
+  <arg name="marker_frame_id"        default="odom" />
 
   <arg name="map_file"       default="$(find open_manipulator_with_tb3_tools)/maps/map.yaml"/>
 
   <arg name="scan_topic"     default="scan_filtered"/>
   <arg name="initial_pose_x" default="0.0"/>
   <arg name="initial_pose_y" default="0.0"/>
-  <arg name="initial_pose_a" default="0.0"/>
+  <arg name="initial_pose_a" default="1.5708"/>
 
   <group ns = "$(arg use_robot_name)">
     <node pkg="laser_filters" type="scan_to_scan_filter_chain" name="laser_filter" output="screen" >
@@ -44,6 +45,7 @@
       <include file="$(find open_manipulator_ar_markers)/launch/ar_pose.launch">
         <arg name="use_gazebo"	    value="$(arg use_gazebo)" />
         <arg name="use_robot_name"  value="$(arg use_robot_name)"/>
+        <arg name="frame_id"        value="$(arg marker_frame_id)"/>
       </include>
     </group>
   </group>
