@@ -32,24 +32,19 @@ class getPoseOfTheObject(smach.State):
         smach.State.__init__(self, outcomes=['succeeded', 'aborted'],
                                     output_keys=['output_object_pose'])
 
-        # self.mutex = threading.Lock()
-
         self.namespace = rospy.get_param("~robot_name")
         self.marker_pose_sub = rospy.Subscriber(self.namespace + '/ar_pose_marker', AlvarMarkers, self.arMarkerMsgCallback)
 
         self.OFFSET_FOR_GOAL_HEIGHT = 0.150
 
     def arMarkerMsgCallback(self, ar_marker_pose_msg):
-        # self.mutex.acquire()
         if len(ar_marker_pose_msg.markers) == 0:
             self.ar_marker_pose = False
         else:            
             self.ar_marker_pose = AlvarMarker()
             self.ar_marker_pose = ar_marker_pose_msg.markers[0]
-        # self.mutex.release()
 
     def execute(self, userdata):
-        # self.mutex.acquire()
         if self.ar_marker_pose == False:
             rospy.logerr('Failed to get pose of the marker')
             return 'aborted'
@@ -89,14 +84,11 @@ class getPoseOfTheObject(smach.State):
             return 'succeeded'
 
         self.marker_pose_sub
-        # self.mutex.release()
 
 class getPoseOfTheBox(smach.State):
     def __init__(self):
         smach.State.__init__(self, outcomes=['succeeded', 'aborted'],
                                     output_keys=['output_object_pose'])
-
-        # self.mutex = threading.Lock()
 
         self.namespace = rospy.get_param("~robot_name")
         self.marker_pose_sub = rospy.Subscriber(self.namespace + '/ar_pose_marker', AlvarMarkers, self.arMarkerMsgCallback)
@@ -105,16 +97,13 @@ class getPoseOfTheBox(smach.State):
         self.OFFSET_FOR_GOAL_HEIGHT = 0.200
 
     def arMarkerMsgCallback(self, ar_marker_pose_msg):
-        # self.mutex.acquire()
         if len(ar_marker_pose_msg.markers) == 0:
             self.ar_marker_pose = False
         else:            
             self.ar_marker_pose = AlvarMarker()
             self.ar_marker_pose = ar_marker_pose_msg.markers[0]
-        # self.mutex.release()
 
     def execute(self, userdata):
-        # self.mutex.acquire()
         if self.ar_marker_pose == False:
             rospy.logerr('Failed to get pose of the marker')
             return 'aborted'
@@ -154,13 +143,10 @@ class getPoseOfTheBox(smach.State):
             return 'succeeded'
 
         self.marker_pose_sub
-        # self.mutex.release()
 
 class getCloserToGoal(smach.State):
     def __init__(self):
         smach.State.__init__(self, outcomes=['succeeded', 'failed'])
-
-        # self.mutex = threading.Lock()
 
         self.namespace = rospy.get_param("~robot_name")
         self.marker_pose_sub = rospy.Subscriber(self.namespace + '/ar_pose_marker', AlvarMarkers, self.arMarkerMsgCallback)
@@ -174,18 +160,14 @@ class getCloserToGoal(smach.State):
         self.priv_heading = 0.0
 
     def arMarkerMsgCallback(self, ar_marker_pose_msg):
-        # self.mutex.acquire()
         if len(ar_marker_pose_msg.markers) == 0:
             self.ar_marker_pose = False
         else:            
             self.ar_marker_pose = AlvarMarker()
             self.ar_marker_pose = ar_marker_pose_msg.markers[0]
-        # self.mutex.release()
 
-    def odomMsgCallback(self, odom_msg):
-        # self.mutex.acquire()       
+    def odomMsgCallback(self, odom_msg):       
         self.tb3_odom = odom_msg
-        # self.mutex.release()
 
     def getDistanceFromRobot(self, goal):
         return goal.pose.pose.position.x
@@ -236,14 +218,6 @@ class getCloserToGoal(smach.State):
 
             self.priv_dist = dist
             self.priv_heading = heading
-
-class closeToBox(smach.State):
-    def __init__(self):
-        smach.State.__init__(self, outcomes=['succeeded'])
-
-    def execute(self, userdata):
-        rospy.loginfo('Close to boxaaaaaaaaaaaaaaaaaaaaaaaaa')
-        return 'succeeded'
 
 def main():
     rospy.init_node('pick_and_place_state_machine')
@@ -393,7 +367,8 @@ def main():
                     rospy.logwarn('Set more tolerance[%f]', pick_center.userdata.align_arm_with_object_tolerance)
                     return 'aborted'
                 else:
-                    pick_center.userdata.object_pose.position.x += 0.030
+                    OFFSET_FOR_STRETCH = 0.030
+                    pick_center.userdata.object_pose.position.x += OFFSET_FOR_STRETCH
                     rospy.sleep(3.)
                     return 'succeeded'
 
@@ -403,7 +378,8 @@ def main():
                     rospy.logwarn('Set more tolerance[%f]', pick_center.userdata.close_to_object_tolerance)
                     return 'aborted'
                 else:
-                    pick_center.userdata.object_pose.position.z += 0.020
+                    OFFSET_FOR_OBJECT_HEIGHT = 0.020
+                    pick_center.userdata.object_pose.position.z += OFFSET_FOR_OBJECT_HEIGHT
                     rospy.sleep(3.)
                     return 'succeeded'
 
