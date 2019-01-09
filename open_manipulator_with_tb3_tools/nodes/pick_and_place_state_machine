@@ -46,7 +46,7 @@ class getPoseOfTheObject(smach.State):
 
     def execute(self, userdata):
         if self.ar_marker_pose == False:
-            rospy.logerr('Failed to get pose of the marker')
+            rospy.logwarn('Failed to get pose of the marker')
             return 'aborted'
         else:
             object_pose = Pose()
@@ -105,7 +105,7 @@ class getPoseOfTheBox(smach.State):
 
     def execute(self, userdata):
         if self.ar_marker_pose == False:
-            rospy.logerr('Failed to get pose of the marker')
+            rospy.logwarn('Failed to get pose of the marker')
             return 'aborted'
         else:
             object_pose = Pose()
