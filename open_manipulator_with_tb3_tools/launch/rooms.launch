@@ -28,7 +28,7 @@
     <arg name="use_gazebo"             value="$(arg use_gazebo)" />
     <arg name="open_rviz"              value="false"  />
     <arg name="use_ar_marker"          value="true" />
-    <arg name="marker_frame_id"        value="base_footprint" />
+    <arg name="marker_frame_id"        value="$(arg use_robot_name)/base_footprint" />
     <arg name="map_file"               value="$(arg map_file)" />
     <arg name="scan_topic"             value="$(arg scan_topic)" />
     <arg name="initial_pose_x"         value="$(arg initial_pose_x)"  />
