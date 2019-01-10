@@ -45,6 +45,7 @@
       <include file="$(find open_manipulator_ar_markers)/launch/ar_pose.launch">
         <arg name="use_gazebo"	    value="$(arg use_gazebo)" />
         <arg name="use_robot_name"  value="$(arg use_robot_name)"/>
+        <arg name="open_rviz"       value="false"/>
         <arg name="marker_frame_id" value="$(arg marker_frame_id)"/>
       </include>
     </group>
