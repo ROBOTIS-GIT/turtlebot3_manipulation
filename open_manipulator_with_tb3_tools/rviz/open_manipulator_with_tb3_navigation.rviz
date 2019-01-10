@@ -4,15 +4,14 @@ Panels:
     Name: Displays
     Property Tree Widget:
       Expanded:
-        - /Global Options1
         - /TF1/Frames1
         - /Global Map1/Costmap1
         - /Global Map1/Planner1
         - /Local Map1/Polygon1
         - /Local Map1/Costmap1
         - /Local Map1/Planner1
-      Splitter Ratio: 0.5
-    Tree Height: 499
+      Splitter Ratio: 0.412008286
+    Tree Height: 487
   - Class: rviz/Selection
     Name: Selection
   - Class: rviz/Tool Properties
@@ -30,12 +29,12 @@ Panels:
     Experimental: false
     Name: Time
     SyncMode: 0
-    SyncSource: LaserScan
+    SyncSource: Camera
 Visualization Manager:
   Class: ""
   Displays:
     - Alpha: 0.5
-      Cell Size: 0.449999988
+      Cell Size: 1
       Class: rviz/Grid
       Color: 160; 160; 164
       Enabled: true
@@ -99,12 +98,17 @@ Visualization Manager:
           Show Axes: false
           Show Trail: false
           Value: true
-        grip_link:
+        end_effector_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        grip_link_sub:
+        gripper_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        gripper_link_sub:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -149,8 +153,8 @@ Visualization Manager:
           Show Trail: false
           Value: true
       Name: RobotModel
-      Robot Description: robot_description
-      TF Prefix: ""
+      Robot Description: /om_with_tb3/robot_description
+      TF Prefix: om_with_tb3
       Update Interval: 0
       Value: true
       Visual Enabled: true
@@ -159,46 +163,48 @@ Visualization Manager:
       Frame Timeout: 15
       Frames:
         All Enabled: false
-        base_footprint:
-          Value: false
-        base_link:
-          Value: false
-        base_scan:
-          Value: false
-        camera_link:
-          Value: false
-        camera_rgb_frame:
-          Value: false
-        camera_rgb_optical_frame:
-          Value: false
-        caster_back_left_link:
-          Value: false
-        caster_back_right_link:
-          Value: false
-        grip_link:
-          Value: false
-        grip_link_sub:
-          Value: false
-        imu_link:
-          Value: false
-        link1:
-          Value: false
-        link2:
-          Value: false
-        link3:
-          Value: false
-        link4:
-          Value: false
-        link5:
-          Value: false
         map:
+          Value: true
+        om_with_tb3/base_footprint:
+          Value: true
+        om_with_tb3/base_link:
           Value: false
-        odom:
+        om_with_tb3/base_scan:
           Value: false
-        wheel_left_link:
+        om_with_tb3/camera_link:
           Value: false
-        wheel_right_link:
+        om_with_tb3/camera_rgb_frame:
           Value: false
+        om_with_tb3/camera_rgb_optical_frame:
+          Value: false
+        om_with_tb3/caster_back_left_link:
+          Value: false
+        om_with_tb3/caster_back_right_link:
+          Value: false
+        om_with_tb3/end_effector_link:
+          Value: true
+        om_with_tb3/gripper_link:
+          Value: false
+        om_with_tb3/gripper_link_sub:
+          Value: false
+        om_with_tb3/imu_link:
+          Value: false
+        om_with_tb3/link1:
+          Value: false
+        om_with_tb3/link2:
+          Value: false
+        om_with_tb3/link3:
+          Value: false
+        om_with_tb3/link4:
+          Value: false
+        om_with_tb3/link5:
+          Value: false
+        om_with_tb3/odom:
+          Value: true
+        om_with_tb3/wheel_left_link:
+          Value: true
+        om_with_tb3/wheel_right_link:
+          Value: true
       Marker Scale: 1
       Name: TF
       Show Arrows: true
@@ -206,33 +212,35 @@ Visualization Manager:
       Show Names: false
       Tree:
         map:
-          odom:
-            base_footprint:
-              base_link:
-                base_scan:
+          om_with_tb3/odom:
+            om_with_tb3/base_footprint:
+              om_with_tb3/base_link:
+                om_with_tb3/base_scan:
                   {}
-                camera_link:
-                  camera_rgb_frame:
-                    camera_rgb_optical_frame:
+                om_with_tb3/camera_link:
+                  om_with_tb3/camera_rgb_frame:
+                    om_with_tb3/camera_rgb_optical_frame:
                       {}
-                caster_back_left_link:
+                om_with_tb3/caster_back_left_link:
                   {}
-                caster_back_right_link:
+                om_with_tb3/caster_back_right_link:
                   {}
-                imu_link:
+                om_with_tb3/imu_link:
                   {}
-                link1:
-                  link2:
-                    link3:
-                      link4:
-                        link5:
-                          grip_link:
+                om_with_tb3/link1:
+                  om_with_tb3/link2:
+                    om_with_tb3/link3:
+                      om_with_tb3/link4:
+                        om_with_tb3/link5:
+                          om_with_tb3/end_effector_link:
                             {}
-                          grip_link_sub:
+                          om_with_tb3/gripper_link:
                             {}
-                wheel_left_link:
+                          om_with_tb3/gripper_link_sub:
+                            {}
+                om_with_tb3/wheel_left_link:
                   {}
-                wheel_right_link:
+                om_with_tb3/wheel_right_link:
                   {}
       Update Interval: 0
       Value: true
@@ -261,7 +269,7 @@ Visualization Manager:
       Size (Pixels): 3
       Size (m): 0.0299999993
       Style: Squares
-      Topic: /scan_filtered
+      Topic: /om_with_tb3/scan_filtered
       Unreliable: false
       Use Fixed Frame: true
       Use rainbow: true
@@ -272,7 +280,7 @@ Visualization Manager:
       Draw Behind: false
       Enabled: true
       Name: Map
-      Topic: /map
+      Topic: /om_with_tb3/map
       Unreliable: false
       Use Timestamp: false
       Value: true
@@ -296,7 +304,7 @@ Visualization Manager:
       Radius: 0.0299999993
       Shaft Diameter: 0.100000001
       Shaft Length: 0.100000001
-      Topic: /move_base/NavfnROS/plan
+      Topic: /om_with_tb3/move_base/NavfnROS/plan
       Unreliable: false
       Value: true
     - Class: rviz/Group
@@ -307,7 +315,7 @@ Visualization Manager:
           Draw Behind: true
           Enabled: true
           Name: Costmap
-          Topic: /move_base/global_costmap/costmap
+          Topic: /om_with_tb3/move_base/global_costmap/costmap
           Unreliable: false
           Use Timestamp: false
           Value: true
@@ -331,7 +339,7 @@ Visualization Manager:
           Radius: 0.0299999993
           Shaft Diameter: 0.100000001
           Shaft Length: 0.100000001
-          Topic: /move_base/DWAPlannerROS/global_plan
+          Topic: /om_with_tb3/move_base/DWAPlannerROS/global_plan
           Unreliable: false
           Value: true
       Enabled: true
@@ -343,7 +351,7 @@ Visualization Manager:
           Color: 0; 0; 0
           Enabled: true
           Name: Polygon
-          Topic: /move_base/local_costmap/footprint
+          Topic: /om_with_tb3/move_base/local_costmap/footprint
           Unreliable: false
           Value: true
         - Alpha: 0.699999988
@@ -352,7 +360,7 @@ Visualization Manager:
           Draw Behind: false
           Enabled: true
           Name: Costmap
-          Topic: /move_base/local_costmap/costmap
+          Topic: /om_with_tb3/move_base/local_costmap/costmap
           Unreliable: false
           Use Timestamp: false
           Value: true
@@ -376,7 +384,7 @@ Visualization Manager:
           Radius: 0.0299999993
           Shaft Diameter: 0.100000001
           Shaft Length: 0.100000001
-          Topic: /move_base/DWAPlannerROS/local_plan
+          Topic: /om_with_tb3/move_base/DWAPlannerROS/local_plan
           Unreliable: false
           Value: true
       Enabled: true
@@ -394,7 +402,7 @@ Visualization Manager:
       Shaft Length: 0.230000004
       Shaft Radius: 0.00999999978
       Shape: Arrow (Flat)
-      Topic: /particlecloud
+      Topic: /om_with_tb3/particlecloud
       Unreliable: false
       Value: true
     - Alpha: 1
@@ -415,10 +423,10 @@ Visualization Manager:
     - Class: rviz/Camera
       Enabled: true
       Image Rendering: background and overlay
-      Image Topic: /camera/rgb/image_raw
+      Image Topic: /om_with_tb3/camera/rgb/image_raw
       Name: Camera
       Overlay Alpha: 0.5
-      Queue Size: 2
+      Queue Size: 10000
       Transport Hint: raw
       Unreliable: false
       Value: true
@@ -446,19 +454,19 @@ Visualization Manager:
       Zoom Factor: 1
     - Class: rviz/Image
       Enabled: false
-      Image Topic: /camera/rgb/image_raw
+      Image Topic: /om_with_tb3/camera/rgb/image_raw
       Max Value: 1
       Median window: 5
       Min Value: 0
       Name: Image
       Normalize Range: true
-      Queue Size: 2
+      Queue Size: 10000
       Transport Hint: raw
       Unreliable: false
       Value: false
     - Class: rviz/Marker
       Enabled: true
-      Marker Topic: /visualization_marker
+      Marker Topic: /om_with_tb3/visualization_marker
       Name: Marker
       Namespaces:
         {}
@@ -484,7 +492,7 @@ Visualization Manager:
   Value: true
   Views:
     Current:
-      Angle: -0.00499762688
+      Angle: -0.00999921747
       Class: rviz/TopDownOrtho
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.0599999987
@@ -494,11 +502,11 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.00999999978
-      Scale: 120.16507
+      Scale: 109.786064
       Target Frame: <Fixed Frame>
       Value: TopDownOrtho (rviz)
-      X: 0.0912104398
-      Y: 2.0103693
+      X: 0.264774531
+      Y: 1.65137386
     Saved: ~
 Window Geometry:
   Camera:
@@ -510,7 +518,7 @@ Window Geometry:
   Hide Right Dock: true
   Image:
     collapsed: false
-  QMainWindow State: 000000ff00000000fd0000000400000000000001e5000003a0fc0200000008fb0000001200530065006c0065006300740069006f006e00000001e10000009b0000006600fffffffb0000001e0054006f006f006c002000500072006f007000650072007400690065007302000001ed000001df00000185000000a3fb000000120056006900650077007300200054006f006f02000001df000002110000018500000122fb000000200054006f006f006c002000500072006f0070006500720074006900650073003203000002880000011d000002210000017afb000000100044006900730070006c006100790073010000004300000236000000df00fffffffb0000000c00430061006d006500720061010000027f000001640000001800fffffffb0000000c00430061006d0065007200610000000317000000cc0000000000000000fb0000000a0049006d006100670065000000029d000001460000001800ffffff000000010000010f000003dffc0200000003fb0000001e0054006f006f006c002000500072006f00700065007200740069006500730100000041000000780000000000000000fb0000000a005600690065007700730000000027000003df000000b800fffffffb0000001200530065006c0065006300740069006f006e010000025a000000b200000000000000000000000200000490000000a9fc0100000001fb0000000a00560069006500770073030000004e00000080000002e10000019700000003000004a00000003efc0100000002fb0000000800540069006d00650000000000000004a00000022400fffffffb0000000800540069006d0065010000000000000450000000000000000000000314000003a000000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
+  QMainWindow State: 000000ff00000000fd000000040000000000000227000003bdfc0200000008fb0000001200530065006c0065006300740069006f006e00000001e10000009b0000006100fffffffb0000001e0054006f006f006c002000500072006f007000650072007400690065007302000001ed000001df00000185000000a3fb000000120056006900650077007300200054006f006f02000001df000002110000018500000122fb000000200054006f006f006c002000500072006f0070006500720074006900650073003203000002880000011d000002210000017afb000000100044006900730070006c006100790073010000002800000228000000d700fffffffb0000000c00430061006d00650072006101000002560000018f0000001600fffffffb0000000c00430061006d0065007200610000000317000000cc0000000000000000fb0000000a0049006d006100670065000000029f000001460000001600ffffff000000010000010f000003dffc0200000003fb0000001e0054006f006f006c002000500072006f00700065007200740069006500730100000041000000780000000000000000fb0000000a005600690065007700730000000027000003df000000ad00fffffffb0000001200530065006c0065006300740069006f006e010000025a000000b200000000000000000000000200000490000000a9fc0100000001fb0000000a00560069006500770073030000004e00000080000002e10000019700000003000004a00000003efc0100000002fb0000000800540069006d00650000000000000004a00000030000fffffffb0000000800540069006d00650100000000000004500000000000000000000003fb000003bd00000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
   Selection:
     collapsed: false
   Time:
@@ -519,6 +527,6 @@ Window Geometry:
     collapsed: false
   Views:
     collapsed: true
-  Width: 1279
-  X: 0
-  Y: 0
+  Width: 1576
+  X: 950
+  Y: 24
