@@ -1,14 +1,14 @@
-# OpenManipulator
-<img src="https://github.com/ROBOTIS-GIT/emanual/blob/master/assets/images/platform/openmanipulator/OpenManipulator.png">
-<img src="https://github.com/ROBOTIS-GIT/emanual/blob/master/assets/images/platform/openmanipulator/OpenManipulator_Chain_Capture.png" width="500">
+# OpenManipulator with TurtleBot3
+<img src="https://github.com/ROBOTIS-GIT/emanual/blob/master/assets/images/platform/turtlebot3/manipulation/tb3_with_opm_logo.png">
+<img src="https://github.com/ROBOTIS-GIT/emanual/blob/master/assets/images/platform/turtlebot3/manipulation/hardware_setup.png">
 
-## ROS Packages for OpenManipulator
+## ROS Packages for OpenManipulator with TurtleBot3
 |Version|Kinetic + Ubuntu Xenial|Melodic + Ubuntu Bionic|
 |:---:|:---:|:---:|
-|[![GitHub version](https://badge.fury.io/gh/ROBOTIS-GIT%2Fopen_manipulator_with_tb3.svg)](https://badge.fury.io/gh/ROBOTIS-GIT%2Fopen_manipulator_with_tb3)|[![Build Status](https://travis-ci.org/ROBOTIS-GIT/open_manipulator_with_tb3.svg?branch=kinetic-devel)](https://travis-ci.org/ROBOTIS-GIT/open_manipulator_with_tb3)|-|
+|[![GitHub version](https://badge.fury.io/gh/ROBOTIS-GIT%2Fopen_manipulator_with_tb3.svg)](https://badge.fury.io/gh/ROBOTIS-GIT%2Fopen_manipulator_with_tb3)|[![Build Status](https://travis-ci.org/ROBOTIS-GIT/open_manipulator_with_tb3.svg?branch=kinetic-devel)](https://travis-ci.org/ROBOTIS-GIT/open_manipulator_with_tb3)|[![Build Status](https://travis-ci.org/ROBOTIS-GIT/open_manipulator_with_tb3.svg?branch=melodic-devel)](https://travis-ci.org/ROBOTIS-GIT/open_manipulator_with_tb3)|
 
-## ROBOTIS e-Manual for OpenManipulator
-- [ROBOTIS e-Manual for OpenManipulator with tb3](http://emanual.robotis.com/docs/en/platform/turtlebot3/manipulation/#manipulation)
+## ROBOTIS e-Manual for OpenManipulator with TurtleBot3
+- [ROBOTIS e-Manual for OpenManipulator with TurtleBot3](http://emanual.robotis.com/docs/en/platform/turtlebot3/manipulation/#manipulation)
 
 ## Wiki for open_manipulator_with_tb3 Packages
 - http://wiki.ros.org/open_manipulator_with_tb3 (metapackage)
@@ -17,11 +17,14 @@
 - http://wiki.ros.org/open_manipulator_with_tb3_waffle_moveit
 - http://wiki.ros.org/open_manipulator_with_tb3_waffle_pi_moveit
 
-## Open Source related to OpenManipulator
+## Open Source related to OpenManipulator with TurtleBot3
+- [robotis_manipulator](https://github.com/ROBOTIS-GIT/robotis_manipulator)
 - [open_manipulator](https://github.com/ROBOTIS-GIT/open_manipulator)
 - [open_manipulator_msgs](https://github.com/ROBOTIS-GIT/open_manipulator_msgs)
 - [open_manipulator_simulations](https://github.com/ROBOTIS-GIT/open_manipulator_simulations)
 - [open_manipulator_perceptions](https://github.com/ROBOTIS-GIT/open_manipulator_perceptions)
+- [open_manipulator_processing](https://github.com/ROBOTIS-GIT/open_manipulator_processing)
+- [open_manipulator_friends](https://github.com/ROBOTIS-GIT/open_manipulator_friends)
 - [open_manipulator_with_tb3](https://github.com/ROBOTIS-GIT/open_manipulator_with_tb3)
 - [open_manipulator_with_tb3_msgs](https://github.com/ROBOTIS-GIT/open_manipulator_with_tb3_msgs)
 - [open_manipulator_with_tb3_simulations](https://github.com/ROBOTIS-GIT/open_manipulator_with_tb3_simulations)
@@ -36,11 +39,10 @@
 - [manipulator_h](https://github.com/ROBOTIS-GIT/ROBOTIS-MANIPULATOR-H)
 - [dynamixel_sdk](https://github.com/ROBOTIS-GIT/DynamixelSDK)
 - [dynamixel_workbench](https://github.com/ROBOTIS-GIT/dynamixel-workbench)
-- [robotis_math](https://github.com/ROBOTIS-GIT/ROBOTIS-Math)
 - [OpenCR-Hardware](https://github.com/ROBOTIS-GIT/OpenCR-Hardware)
 - [OpenCR](https://github.com/ROBOTIS-GIT/OpenCR)
 
-## Documents and Videos related to OpenManipulator
+## Documents and Videos related to OpenManipulator with TurtleBot3
 - [ROBOTIS e-Manual for OpenManipulator](http://emanual.robotis.com/docs/en/platform/openmanipulator/)
 - [ROBOTIS e-Manual for TurtleBot3](http://turtlebot3.robotis.com/)
 - [ROBOTIS e-Manual for ROBOTIS MANIPULATOR-H](http://emanual.robotis.com/docs/en/platform/manipulator_h/introduction/)
