@@ -58,7 +58,7 @@ class MoveItBridge
 
   // ROS Parameters
   std::string planning_group_;
-  bool use_gazebo_;
+  bool use_platform_;
 
   // ROS Publisher
   ros::Publisher joint_trajectory_point_pub_;
