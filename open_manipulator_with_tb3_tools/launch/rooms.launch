@@ -1,7 +1,7 @@
 <launch>
   <arg name="model" default="$(env TURTLEBOT3_MODEL)" doc="model type [waffle, waffle_pi]"/>
   <arg name="use_robot_name"         default="om_with_tb3"/>
-  <arg name="use_gazebo"             default="true" />
+  <arg name="use_platform"             default="true" />
 
   <arg name="planning_group"         default="arm" />
   <arg name="sample_duration"        default="0.050" />
@@ -15,7 +15,7 @@
 
   <include file="$(find open_manipulator_with_tb3_tools)/launch/manipulation.launch">
     <arg name="use_robot_name"         value="$(arg use_robot_name)"/>
-    <arg name="use_gazebo"             value="$(arg use_gazebo)" />
+    <arg name="use_platform"             value="$(arg use_platform)" />
     <arg name="use_ar_marker"          value="false" />
     <arg name="planning_group"         value="$(arg planning_group)" />
     <arg name="sample_duration"        value="$(arg sample_duration)" />
@@ -25,7 +25,7 @@
 
   <include file="$(find open_manipulator_with_tb3_tools)/launch/navigation.launch">
     <arg name="use_robot_name"         value="$(arg use_robot_name)"/>
-    <arg name="use_gazebo"             value="$(arg use_gazebo)" />
+    <arg name="use_platform"             value="$(arg use_platform)" />
     <arg name="open_rviz"              value="false"  />
     <arg name="use_ar_marker"          value="true" />
     <arg name="marker_frame_id"        value="$(arg use_robot_name)/base_footprint" />
