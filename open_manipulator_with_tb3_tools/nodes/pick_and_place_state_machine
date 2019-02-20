@@ -245,7 +245,7 @@ def main():
         the_location_of_the_object.target_pose.header.frame_id = "map"
         the_location_of_the_object.target_pose.header.stamp    = rospy.Time.now()
         the_location_of_the_object.target_pose.pose.position.x = -1.393
-        the_location_of_the_object.target_pose.pose.position.y = 3.545
+        the_location_of_the_object.target_pose.pose.position.y = 3.500
         the_location_of_the_object.target_pose.pose.position.z = 0.0
         the_location_of_the_object.target_pose.pose.orientation.w = 0.705
         the_location_of_the_object.target_pose.pose.orientation.x = 0.0

@@ -16,7 +16,7 @@
 
 /* Authors: Darby Lim, Hye-Jong KIM, Ryan Shim, Yong-Ho Na */
 
-#include "open_manipulator_with_tb3_tools//moveit_bridge.h"
+#include "open_manipulator_with_tb3_tools/moveit_bridge.h"
 
 MoveItBridge::MoveItBridge()
     :nh_(""),
@@ -24,7 +24,7 @@ MoveItBridge::MoveItBridge()
 {
   // Init parameter
   planning_group_ = priv_nh_.param<std::string>("planning_group", "manipulator");
-  use_gazebo_ = priv_nh_.param<bool>("use_gazebo", "false");
+  use_platform_ = priv_nh_.param<bool>("use_platform", "true");
 
   move_group_ = new moveit::planning_interface::MoveGroupInterface(planning_group_);
 }
@@ -191,7 +191,7 @@ void MoveItBridge::displayPlannedPathMsgCallback(const moveit_msgs::DisplayTraje
   trajectory_msgs::JointTrajectory jnt_tra = msg->trajectory[0].joint_trajectory;
   std_msgs::Float64MultiArray jnt_tra_pts;
 
-  if (use_gazebo_ == true)
+  if (use_platform_ == false)
   {
     for (std::vector<uint32_t>::size_type i = 0; i < jnt_tra.points.size(); i++)
     {

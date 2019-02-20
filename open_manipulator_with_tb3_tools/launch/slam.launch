@@ -2,7 +2,7 @@
   <arg name="model" default="$(env TURTLEBOT3_MODEL)" doc="model type [waffle, waffle_pi]"/>
   <arg name="use_robot_name"       default="om_with_tb3"/>
 
-  <arg name="use_gazebo"	   default="true" />
+  <arg name="use_platform"	   default="true" />
 
   <arg name="scan_topic"     default="scan_filtered"/>
   <arg name="open_rviz"      default="true" />
