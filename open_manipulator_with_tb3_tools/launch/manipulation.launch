@@ -66,8 +66,14 @@
     <group ns = "$(arg use_robot_name)">
       <include file="$(find open_manipulator_ar_markers)/launch/ar_pose.launch">
         <arg name="use_platform"	    value="$(arg use_platform)" />
-        <arg name="use_robot_name"  value="$(arg use_robot_name)"/>
-        <arg name="frame_id"        value="$(arg marker_frame_id)"/>
+        <arg name="use_robot_name"    value="$(arg use_robot_name)"/>
+        <arg name="use_state_publisher" value="false"/>
+        <arg name="open_rviz"       value="false"/>
+        <arg name="marker_frame_id" value="$(arg marker_frame_id)"/>
+        <arg name="camera_model" value="raspicam"/>
+        <arg name="camera_namespace" value="camera"/>
+        <!-- <arg name="rgb_camera_info_url" value=""/> -->
+        <!-- <arg name="depth_camera_info_url" value=""/> -->
       </include>
     </group>
  </group>
