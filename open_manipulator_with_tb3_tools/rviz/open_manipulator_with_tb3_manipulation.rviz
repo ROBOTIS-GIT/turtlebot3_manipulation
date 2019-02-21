@@ -5,6 +5,7 @@ Panels:
     Property Tree Widget:
       Expanded:
         - /MotionPlanning1
+        - /TF1
         - /TF1/Frames1
       Splitter Ratio: 0.742560029
     Tree Height: 422
@@ -83,14 +84,6 @@ Visualization Manager:
             Show Axes: false
             Show Trail: false
             Value: true
-          camera_depth_frame:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-          camera_depth_optical_frame:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
           camera_link:
             Alpha: 1
             Show Axes: false
@@ -227,14 +220,6 @@ Visualization Manager:
             Show Axes: false
             Show Trail: false
             Value: true
-          camera_depth_frame:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-          camera_depth_optical_frame:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
           camera_link:
             Alpha: 1
             Show Axes: false
@@ -329,9 +314,9 @@ Visualization Manager:
         om_with_tb3/base_scan:
           Value: true
         om_with_tb3/camera_link:
-          Value: true
-        om_with_tb3/camera_rgb_frame:
           Value: false
+        om_with_tb3/camera_rgb_frame:
+          Value: true
         om_with_tb3/camera_rgb_optical_frame:
           Value: false
         om_with_tb3/caster_back_left_link:
@@ -454,7 +439,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/XYOrbit
-      Distance: 0.944110394
+      Distance: 0.432135046
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.0599999987
         Stereo Focal Distance: 1
@@ -469,10 +454,10 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.00999999978
-      Pitch: 0.474796802
+      Pitch: 0.42479682
       Target Frame: base_footprint
       Value: XYOrbit (rviz)
-      Yaw: 0.841773629
+      Yaw: 0.546773553
     Saved: ~
 Window Geometry:
   Camera:
@@ -494,5 +479,5 @@ Window Geometry:
   Views:
     collapsed: false
   Width: 1506
-  X: 977
-  Y: 49
+  X: 929
+  Y: 57
