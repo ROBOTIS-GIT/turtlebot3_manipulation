@@ -7,10 +7,10 @@
          command="$(find xacro)/xacro --inorder '$(find open_manipulator_with_tb3_description)/urdf/open_manipulator_with_tb3_$(arg model).urdf.xacro'"/>
 
   <!-- Send joint values -->
-    <node pkg="joint_state_publisher" type="joint_state_publisher" name="joint_state_publisher">
-      <param name="/use_gui" value="$(arg use_gui)"/>
-      <rosparam param="source_list">["/joint_states"]</rosparam>
-    </node>
+  <node pkg="joint_state_publisher" type="joint_state_publisher" name="joint_state_publisher">
+    <param name="/use_gui" value="$(arg use_gui)"/>
+    <rosparam param="source_list">["/joint_states"]</rosparam>
+  </node>
   
   <!-- Combine joint values -->
   <node pkg="robot_state_publisher" type="state_publisher" name="robot_state_publisher"/>
