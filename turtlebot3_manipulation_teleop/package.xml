@@ -4,8 +4,9 @@
   <name>turtlebot3_manipulation_teleop</name>
   <version>2.2.0</version>
   <description>
-    ROS2 package for turtlebot3_manipulation_teleop
+    ROS 2 package for turtlebot3_manipulation_teleop
   </description>
+  <author email="thlim@robotis.com">Darby Lim</author>
   <author email="jhshim@robotis.com">Ryan Shim</author>
   <maintainer email="pyo@robotis.com">Pyo</maintainer>
   <license>Apache 2.0</license>
