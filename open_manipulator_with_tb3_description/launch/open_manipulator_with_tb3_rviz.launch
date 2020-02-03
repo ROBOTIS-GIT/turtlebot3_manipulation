@@ -13,7 +13,7 @@
   </node>
   
   <!-- Combine joint values -->
-  <node pkg="robot_state_publisher" type="state_publisher" name="robot_state_publisher"/>
+  <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher"/>
 
   <!-- Show in Rviz -->
   <group if="$(arg open_rviz)">
