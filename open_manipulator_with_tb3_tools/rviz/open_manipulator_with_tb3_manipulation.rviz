@@ -4,10 +4,11 @@ Panels:
     Name: Displays
     Property Tree Widget:
       Expanded:
+        - /Global Options1
         - /MotionPlanning1
         - /TF1/Frames1
-      Splitter Ratio: 0.742560029
-    Tree Height: 474
+      Splitter Ratio: 0.7425600290298462
+    Tree Height: 464
   - Class: rviz/Help
     Name: Help
   - Class: rviz/Views
@@ -15,6 +16,10 @@ Panels:
       - /Current View1
     Name: Views
     Splitter Ratio: 0.5
+Preferences:
+  PromptSaveOnExit: true
+Toolbars:
+  toolButtonStyle: 2
 Visualization Manager:
   Class: ""
   Displays:
@@ -24,7 +29,7 @@ Visualization Manager:
       Color: 0; 0; 0
       Enabled: true
       Line Style:
-        Line Width: 0.0299999993
+        Line Width: 0.029999999329447746
         Value: Lines
       Name: Grid
       Normal Cell Count: 0
@@ -47,6 +52,7 @@ Visualization Manager:
       MoveIt_Goal_Tolerance: 0
       MoveIt_Planning_Attempts: 10
       MoveIt_Planning_Time: 5
+      MoveIt_Use_Cartesian_Path: false
       MoveIt_Use_Constraint_Aware_IK: true
       MoveIt_Warehouse_Host: 127.0.0.1
       MoveIt_Warehouse_Port: 33829
@@ -175,12 +181,12 @@ Visualization Manager:
         Show Manipulability: false
         Show Manipulability Index: false
         Show Weight Limit: false
-        TextHeight: 0.0799999982
+        TextHeight: 0.07999999821186066
       Planning Request:
         Colliding Link Color: 255; 0; 0
         Goal State Alpha: 1
         Goal State Color: 250; 128; 0
-        Interactive Marker Size: 0.0500000007
+        Interactive Marker Size: 0.05000000074505806
         Joint Violation Color: 255; 0; 255
         Planning Group: arm
         Query Goal State: true
@@ -193,7 +199,7 @@ Visualization Manager:
       Scene Geometry:
         Scene Alpha: 1
         Scene Color: 50; 230; 50
-        Scene Display Time: 0.200000003
+        Scene Display Time: 0.20000000298023224
         Show Scene Geometry: true
         Voxel Coloring: Z-Axis
         Voxel Rendering: Occupied Voxels
@@ -296,7 +302,7 @@ Visualization Manager:
             Show Axes: false
             Show Trail: false
             Value: true
-        Robot Alpha: 0.400000006
+        Robot Alpha: 0.4000000059604645
         Show Robot Collision: false
         Show Robot Visual: true
       Value: true
@@ -306,6 +312,10 @@ Visualization Manager:
       Frame Timeout: 15
       Frames:
         All Enabled: false
+        base_footprint:
+          Value: true
+        odom:
+          Value: true
         om_with_tb3/base_footprint:
           Value: false
         om_with_tb3/base_link:
@@ -340,48 +350,19 @@ Visualization Manager:
           Value: false
         om_with_tb3/link5:
           Value: false
-        om_with_tb3/odom:
-          Value: true
         om_with_tb3/wheel_left_link:
           Value: true
         om_with_tb3/wheel_right_link:
           Value: true
-      Marker Scale: 0.300000012
+      Marker Scale: 0.30000001192092896
       Name: TF
       Show Arrows: true
       Show Axes: true
       Show Names: false
       Tree:
-        om_with_tb3/odom:
-          om_with_tb3/base_footprint:
-            om_with_tb3/base_link:
-              om_with_tb3/base_scan:
-                {}
-              om_with_tb3/camera_link:
-                om_with_tb3/camera_rgb_frame:
-                  om_with_tb3/camera_rgb_optical_frame:
-                    {}
-              om_with_tb3/caster_back_left_link:
-                {}
-              om_with_tb3/caster_back_right_link:
-                {}
-              om_with_tb3/imu_link:
-                {}
-              om_with_tb3/link1:
-                om_with_tb3/link2:
-                  om_with_tb3/link3:
-                    om_with_tb3/link4:
-                      om_with_tb3/link5:
-                        om_with_tb3/end_effector_link:
-                          {}
-                        om_with_tb3/gripper_link:
-                          {}
-                        om_with_tb3/gripper_link_sub:
-                          {}
-              om_with_tb3/wheel_left_link:
-                {}
-              om_with_tb3/wheel_right_link:
-                {}
+        odom:
+          base_footprint:
+            {}
       Update Interval: 0
       Value: true
     - Class: rviz/Camera
@@ -426,7 +407,7 @@ Visualization Manager:
   Global Options:
     Background Color: 223; 223; 223
     Default Light: true
-    Fixed Frame: om_with_tb3/odom
+    Fixed Frame: odom
     Frame Rate: 30
   Name: root
   Tools:
@@ -438,32 +419,32 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/XYOrbit
-      Distance: 0.76156956
+      Distance: 0.7615695595741272
       Enable Stereo Rendering:
-        Stereo Eye Separation: 0.0599999987
+        Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: -0.043180123
-        Y: 0.0181434155
-        Z: 1.95205257e-06
+        X: -0.04318012297153473
+        Y: 0.018143415451049805
+        Z: 1.952052571141394e-6
       Focal Shape Fixed Size: true
-      Focal Shape Size: 0.0500000007
+      Focal Shape Size: 0.05000000074505806
       Invert Z Axis: false
       Name: Current View
-      Near Clip Distance: 0.00999999978
-      Pitch: 0.289796859
+      Near Clip Distance: 0.009999999776482582
+      Pitch: 0.2897968590259552
       Target Frame: base_footprint
       Value: XYOrbit (rviz)
-      Yaw: 0.81177336
+      Yaw: 0.8117733597755432
     Saved: ~
 Window Geometry:
   Camera:
     collapsed: false
   Displays:
     collapsed: false
-  Height: 1056
+  Height: 1050
   Help:
     collapsed: false
   Hide Left Dock: false
@@ -474,9 +455,9 @@ Window Geometry:
     collapsed: false
   MotionPlanning - Trajectory Slider:
     collapsed: false
-  QMainWindow State: 000000ff00000000fd0000000200000000000002ad000003dafc0200000007fb000000100044006900730070006c00610079007301000000280000021b000000d700fffffffb0000000800480065006c00700000000342000000bb0000007300fffffffb0000000a0056006900650077007300000003b0000000b0000000ad00fffffffb0000001e004d006f00740069006f006e00200050006c0061006e006e0069006e00670100000374000001890000000000000000fb0000002e004d006f00740069006f006e0050006c0061006e006e0069006e00670020002d00200053006c00690064006500720000000000ffffffff0000000000000000fb0000001c004d006f00740069006f006e0050006c0061006e006e0069006e00670100000249000001b90000018300fffffffb00000044004d006f00740069006f006e0050006c0061006e006e0069006e00670020002d0020005400720061006a006500630074006f0072007900200053006c00690064006500720000000000ffffffff0000004a00ffffff00000003000004cd00000106fc0100000003fb0000000c00430061006d00650072006101000002b3000004cd0000006700fffffffb0000000c00430061006d00650072006101000002b30000032f0000000000000000fb0000000a0049006d00610067006500000004540000018e0000005c00ffffff000004cd000002ce00000001000000020000000100000002fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
+  QMainWindow State: 000000ff00000000fd0000000200000000000002ad000003c0fc0200000007fb000000100044006900730070006c006100790073010000003d0000020d000000c900fffffffb0000000800480065006c00700000000342000000bb0000006e00fffffffb0000000a0056006900650077007300000003b0000000b0000000a400fffffffb0000001e004d006f00740069006f006e00200050006c0061006e006e0069006e00670100000374000001890000000000000000fb0000002e004d006f00740069006f006e0050006c0061006e006e0069006e00670020002d00200053006c00690064006500720000000000ffffffff0000000000000000fb0000001c004d006f00740069006f006e0050006c0061006e006e0069006e00670100000250000001ad0000019b00fffffffb00000044004d006f00740069006f006e0050006c0061006e006e0069006e00670020002d0020005400720061006a006500630074006f0072007900200053006c00690064006500720000000000ffffffff0000004100ffffff00000003000004cd00000106fc0100000003fb0000000c00430061006d00650072006101000002b3000004cd0000006900fffffffb0000000c00430061006d00650072006101000002b30000032f0000000000000000fb0000000a0049006d00610067006500000004540000018e0000005e00ffffff000004cd000002b400000001000000020000000100000002fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
   Views:
     collapsed: false
   Width: 1920
   X: 2560
-  Y: 24
+  Y: 0
