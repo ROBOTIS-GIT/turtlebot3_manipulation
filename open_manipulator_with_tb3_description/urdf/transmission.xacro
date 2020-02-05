@@ -29,8 +29,5 @@
 
   <!-- Transmission 5 -->
   <xacro:SimpleTransmission n="5" joint="gripper" />
-
-  <!-- Transmission 6 -->
-  <xacro:SimpleTransmission n="6" joint="gripper_sub" />
   
 </robot>
