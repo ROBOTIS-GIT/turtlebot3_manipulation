@@ -4,8 +4,6 @@ Panels:
     Name: Displays
     Property Tree Widget:
       Expanded:
-        - /Global Options1
-        - /MotionPlanning1
         - /TF1/Frames1
       Splitter Ratio: 0.7425600290298462
     Tree Height: 464
@@ -308,67 +306,23 @@ Visualization Manager:
       Value: true
       Velocity_Scaling_Factor: 1
     - Class: rviz/TF
-      Enabled: true
+      Enabled: false
       Frame Timeout: 15
       Frames:
         All Enabled: false
-        base_footprint:
-          Value: true
-        odom:
-          Value: true
-        om_with_tb3/base_footprint:
-          Value: false
-        om_with_tb3/base_link:
-          Value: false
-        om_with_tb3/base_scan:
-          Value: true
-        om_with_tb3/camera_link:
-          Value: false
-        om_with_tb3/camera_rgb_frame:
-          Value: true
-        om_with_tb3/camera_rgb_optical_frame:
-          Value: false
-        om_with_tb3/caster_back_left_link:
-          Value: false
-        om_with_tb3/caster_back_right_link:
-          Value: false
-        om_with_tb3/end_effector_link:
-          Value: true
-        om_with_tb3/gripper_link:
-          Value: false
-        om_with_tb3/gripper_link_sub:
-          Value: false
-        om_with_tb3/imu_link:
-          Value: false
-        om_with_tb3/link1:
-          Value: false
-        om_with_tb3/link2:
-          Value: false
-        om_with_tb3/link3:
-          Value: false
-        om_with_tb3/link4:
-          Value: false
-        om_with_tb3/link5:
-          Value: false
-        om_with_tb3/wheel_left_link:
-          Value: true
-        om_with_tb3/wheel_right_link:
-          Value: true
       Marker Scale: 0.30000001192092896
       Name: TF
       Show Arrows: true
       Show Axes: true
       Show Names: false
       Tree:
-        odom:
-          base_footprint:
-            {}
+        {}
       Update Interval: 0
-      Value: true
+      Value: false
     - Class: rviz/Camera
       Enabled: true
       Image Rendering: background and overlay
-      Image Topic: /om_with_tb3/camera/rgb/image_raw
+      Image Topic: /camera/rgb/image_raw
       Name: Camera
       Overlay Alpha: 1
       Queue Size: 10000
@@ -455,9 +409,9 @@ Window Geometry:
     collapsed: false
   MotionPlanning - Trajectory Slider:
     collapsed: false
-  QMainWindow State: 000000ff00000000fd0000000200000000000002ad000003c0fc0200000007fb000000100044006900730070006c006100790073010000003d0000020d000000c900fffffffb0000000800480065006c00700000000342000000bb0000006e00fffffffb0000000a0056006900650077007300000003b0000000b0000000a400fffffffb0000001e004d006f00740069006f006e00200050006c0061006e006e0069006e00670100000374000001890000000000000000fb0000002e004d006f00740069006f006e0050006c0061006e006e0069006e00670020002d00200053006c00690064006500720000000000ffffffff0000000000000000fb0000001c004d006f00740069006f006e0050006c0061006e006e0069006e00670100000250000001ad0000019b00fffffffb00000044004d006f00740069006f006e0050006c0061006e006e0069006e00670020002d0020005400720061006a006500630074006f0072007900200053006c00690064006500720000000000ffffffff0000004100ffffff00000003000004cd00000106fc0100000003fb0000000c00430061006d00650072006101000002b3000004cd0000006900fffffffb0000000c00430061006d00650072006101000002b30000032f0000000000000000fb0000000a0049006d00610067006500000004540000018e0000005e00ffffff000004cd000002b400000001000000020000000100000002fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
+  QMainWindow State: 000000ff00000000fd0000000200000000000002ad000003c0fc0200000007fb000000100044006900730070006c006100790073010000003d0000020d000000c900fffffffb0000000800480065006c00700000000342000000bb0000006e00fffffffb0000000a0056006900650077007300000003b0000000b0000000a400fffffffb0000001e004d006f00740069006f006e00200050006c0061006e006e0069006e00670100000374000001890000000000000000fb0000002e004d006f00740069006f006e0050006c0061006e006e0069006e00670020002d00200053006c00690064006500720000000000ffffffff0000000000000000fb0000001c004d006f00740069006f006e0050006c0061006e006e0069006e00670100000250000001ad0000019b00fffffffb00000044004d006f00740069006f006e0050006c0061006e006e0069006e00670020002d0020005400720061006a006500630074006f0072007900200053006c00690064006500720000000000ffffffff0000004100ffffff00000003000004a300000106fc0100000003fb0000000c00430061006d00650072006101000002b3000004a30000006900fffffffb0000000c00430061006d00650072006101000002b30000032f0000000000000000fb0000000a0049006d00610067006500000004540000018e0000005e00ffffff000004a3000002b400000001000000020000000100000002fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
   Views:
     collapsed: false
-  Width: 1920
-  X: 2560
+  Width: 1878
+  X: 2602
   Y: 0
