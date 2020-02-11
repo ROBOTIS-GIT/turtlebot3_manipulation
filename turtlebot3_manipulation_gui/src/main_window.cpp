@@ -96,7 +96,7 @@ void MainWindow::on_btn_timer_start_clicked(void)
   ui.btn_read_joint_angle->setEnabled(true);
   ui.btn_read_kinematic_pose->setEnabled(true);
   ui.btn_send_joint_angle->setEnabled(true);
-  // ui.btn_send_kinematic_pose->setEnabled(true);
+  ui.btn_send_kinematic_pose->setEnabled(true);
   ui.btn_gripper_close->setEnabled(true);
   ui.btn_gripper_open->setEnabled(true);
   ui.btn_set_gripper->setEnabled(true);

@@ -54,8 +54,6 @@
 #include <moveit_msgs/MoveGroupActionGoal.h>
 
 
-#define NUM_OF_JOINT_AND_TOOL 5
-
 /*****************************************************************************
 ** Namespaces
 *****************************************************************************/
@@ -88,7 +86,7 @@ public:
 	QStringListModel* loggingModel() { return &logging_model; }
 	void log( const LogLevel &level, const std::string &msg);
 
-  void jointStatesCallback(const sensor_msgs::JointState::ConstPtr &msg);
+  void updateRobotState();
 
   std::vector<double> getPresentJointAngle();
   std::vector<double> getPresentKinematicsPosition();
@@ -105,13 +103,8 @@ private:
 	char** init_argv;
   QStringListModel logging_model;
 
-  // ROS Subscribers
-  ros::Subscriber open_manipulator_joint_states_sub_;
-
   std::vector<double> present_joint_angle_;
   std::vector<double> present_kinematics_position_;
-  Eigen::Quaterniond present_kinematics_orientation_;
-  Eigen::Vector3d present_kinematics_orientation_rpy_;
 
   // MoveIt! interface
   moveit::planning_interface::MoveGroupInterface* move_group_;
