@@ -2,7 +2,7 @@
 Changelog for package turtlebot3_manipulation
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-2.0.1 (2020-02-10)
+2.0.1 (2020-02-12)
 ------------------
 * removed namespace
 * changed travis email address
@@ -11,6 +11,10 @@ Changelog for package turtlebot3_manipulation
 * updated launch files in description
 * removed old moveit files
 * changed package name to turtlebot3_manipulation
+* added turtlebot3_manipulation_gui
+* added turtlebot3_manipulation_bringup
+* applied position_only_ik
+* Contributors: Ryan Shim
 
 1.1.0 (2019-02-08)
 ------------------
