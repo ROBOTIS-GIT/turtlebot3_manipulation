@@ -1,0 +1,11 @@
+moveit_setup_assistant_config:
+  URDF:
+    package: turtlebot3_manipulation_description
+    relative_path: urdf/tb3_omx.urdf.xacro
+    xacro_args: ""
+  SRDF:
+    relative_path: config/tb3_omx.srdf
+  CONFIG:
+    author_name: Ryan Shim
+    author_email: rjshim@robotis.com
+    generated_timestamp: 1581303264

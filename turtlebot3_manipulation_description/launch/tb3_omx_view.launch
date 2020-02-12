@@ -1,0 +1,24 @@
+<launch>
+  <arg name="model" default="$(env TURTLEBOT3_MODEL)" doc="model type [waffle, waffle_pi]"/>
+  <arg name="use_gui" default="false" />
+  <arg name="open_rviz" default="true" />
+
+  <!-- send robot urdf to param server -->
+  <include file="$(find turtlebot3_manipulation_description)/launch/tb3_omx_upload.launch">
+    <arg name="model" value="$(arg model)"/>
+  </include> 
+
+  <!-- start joint state publisher -->
+  <node pkg="joint_state_publisher" type="joint_state_publisher" name="joint_state_publisher">
+    <param name="/use_gui" value="$(arg use_gui)"/>
+    <rosparam param="source_list">["/joint_states"]</rosparam>
+  </node>
+  
+  <!-- start robot state publisher -->
+  <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher"/>
+
+  <!-- start rviz -->
+  <group if="$(arg open_rviz)">
+    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find turtlebot3_manipulation_description)/rviz/tb3_omx_view.rviz"/>
+  </group>
+</launch>

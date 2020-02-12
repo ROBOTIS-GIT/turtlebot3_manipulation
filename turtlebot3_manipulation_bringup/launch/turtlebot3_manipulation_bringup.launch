@@ -1,0 +1,3 @@
+<launch>
+  <node pkg="turtlebot3_manipulation_bringup" type="turtlebot3_manipulation_bringup" name="turtlebot3_manipulation_bringup" output="screen"/>
+</launch>

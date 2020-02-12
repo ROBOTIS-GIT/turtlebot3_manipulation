@@ -1,0 +1,3 @@
+<launch>
+  <node pkg="turtlebot3_manipulation_gui" type="turtlebot3_manipulation_gui" name="turtlebot3_manipulation_gui" output="screen"/>
+</launch>
