@@ -1,9 +1,0 @@
-<launch>
-  <arg name="use_robot_name"         default="om_with_tb3"/>
-  <arg name="planning_group"         default="arm" />
-
-  <node name="pick_and_place_state_machine" pkg="open_manipulator_with_tb3_tools" type="pick_and_place_state_machine" output="screen">
-    <param name="robot_name"  value="$(arg use_robot_name)"/>
-    <param name="planning_group"  value="$(arg planning_group)"/>
-  </node>
-</launch>
