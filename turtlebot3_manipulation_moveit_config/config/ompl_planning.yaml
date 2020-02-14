@@ -149,7 +149,7 @@ arm:
   projection_evaluator: joints(joint1,joint2)
   longest_valid_segment_fraction: 0.005
 gripper:
-  default_planner_config: ""
+  default_planner_config: RRTConnect
   planner_configs:
     - SBL
     - EST

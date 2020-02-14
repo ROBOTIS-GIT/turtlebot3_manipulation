@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<robot name="tb3_omx" xmlns:xacro="http://ros.org/wiki/xacro">
+<robot name="tb3_manipulation" xmlns:xacro="http://ros.org/wiki/xacro">
 
   <!-- Include TurtleBot3 Waffle URDF -->
   <xacro:include filename="$(find turtlebot3_description)/urdf/turtlebot3_waffle_pi_for_open_manipulator.urdf.xacro"/>

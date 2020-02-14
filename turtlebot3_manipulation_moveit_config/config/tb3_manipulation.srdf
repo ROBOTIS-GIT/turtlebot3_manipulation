@@ -3,7 +3,7 @@
     This is a format for representing semantic information about the robot structure.
     A URDF file must exist for this robot as well, where the joints and the links that are referenced are defined
 -->
-<robot name="tb3_omx">
+<robot name="tb3_manipulation">
     <!--GROUPS: Representation of a set of joints and links. This can be useful for specifying DOF to plan for, defining arms, end effectors, etc-->
     <!--LINKS: When a link is specified, the parent joint of that link (if it exists) is automatically included-->
     <!--JOINTS: When a joint is specified, the child link of that joint (which will always exist) is automatically included-->
@@ -14,6 +14,7 @@
         <joint name="joint2" />
         <joint name="joint3" />
         <joint name="joint4" />
+        <joint name="end_effector_joint" />
     </group>
     <group name="gripper">
         <joint name="gripper" />
@@ -63,7 +64,6 @@
     <disable_collisions link1="camera_link" link2="wheel_left_link" reason="Never" />
     <disable_collisions link1="camera_link" link2="wheel_right_link" reason="Never" />
     <disable_collisions link1="caster_back_left_link" link2="caster_back_right_link" reason="Never" />
-    <disable_collisions link1="caster_back_left_link" link2="end_effector_link" reason="Never" />
     <disable_collisions link1="caster_back_left_link" link2="link1" reason="Never" />
     <disable_collisions link1="caster_back_left_link" link2="link2" reason="Never" />
     <disable_collisions link1="caster_back_left_link" link2="link3" reason="Never" />

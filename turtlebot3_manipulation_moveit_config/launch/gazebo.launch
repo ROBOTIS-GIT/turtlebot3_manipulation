@@ -2,7 +2,7 @@
 <launch>
   <arg name="paused" default="false"/>
   <arg name="gazebo_gui" default="true"/>
-  <arg name="urdf_path" default="$(find turtlebot3_manipulation_description)/urdf/tb3_omx.urdf.xacro"/>
+  <arg name="urdf_path" default="$(find turtlebot3_manipulation_description)/urdf/tb3_manipulation_robot.urdf.xacro"/>
 
   <!-- startup simulated world -->
   <include file="$(find gazebo_ros)/launch/empty_world.launch">
