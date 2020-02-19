@@ -161,6 +161,21 @@ bool QNode::setTaskSpacePath(std::vector<double> kinematics_pose, double path_ti
   ros::AsyncSpinner spinner(1); 
   spinner.start();
 
+  // Uncomment below to keep the end-effector parallel to the ground
+  /*
+  moveit_msgs::OrientationConstraint oc;
+  oc.link_name = "end_effector_link";
+  oc.header.frame_id = "link1";
+  oc.orientation.w = 1.0;
+  oc.absolute_x_axis_tolerance = 0.1;
+  oc.absolute_y_axis_tolerance = 0.1;
+  oc.absolute_z_axis_tolerance = 3.14;
+  oc.weight = 1.0;
+  moveit_msgs::Constraints constraints;
+  constraints.orientation_constraints.push_back(oc);
+  move_group_->setPathConstraints(constraints);
+  */
+
   geometry_msgs::Pose target_pose;
   target_pose.position.x = kinematics_pose.at(0);
   target_pose.position.y = kinematics_pose.at(1);
