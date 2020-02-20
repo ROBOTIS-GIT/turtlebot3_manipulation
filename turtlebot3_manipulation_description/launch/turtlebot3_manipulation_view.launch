@@ -4,7 +4,7 @@
   <arg name="open_rviz" default="true" />
 
   <!-- send robot urdf to param server -->
-  <include file="$(find turtlebot3_manipulation_description)/launch/tb3_manipulation_upload.launch">
+  <include file="$(find turtlebot3_manipulation_description)/launch/turtlebot3_manipulation_upload.launch">
     <arg name="model" value="$(arg model)"/>
   </include> 
 
@@ -19,6 +19,6 @@
 
   <!-- start rviz -->
   <group if="$(arg open_rviz)">
-    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find turtlebot3_manipulation_description)/rviz/tb3_manipulation_view.rviz"/>
+    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find turtlebot3_manipulation_description)/rviz/turtlebot3_manipulation_view.rviz"/>
   </group>
 </launch>
