@@ -1,0 +1,6 @@
+scan_filter_chain:
+- name: Remove_120_to_240_degree
+  type: laser_filters/LaserScanAngularBoundsFilterInPlace
+  params:
+    lower_angle: 2.0944
+    upper_angle: 4.18879
