@@ -1,6 +1,9 @@
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Changelog for package turtlebot3_manipulation
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2.0.2 (2020-03-03)
+------------------
+* added tools for TurtleBot3 SLAM with OpenMANIPULATOR
 
 2.0.1 (2020-02-12)
 ------------------
