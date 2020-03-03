@@ -18,7 +18,7 @@
   <!-- <group ns="$(arg use_robot_name)"> -->
   <!-- Gmapping -->
   <node pkg="laser_filters" type="scan_to_scan_filter_chain" name="laser_filter" output="screen" >
-    <rosparam command="load" file="$(find turtlebot3_manipulation_tools)/config/scan_data_filter.yaml" />
+    <rosparam command="load" file="$(find turtlebot3_manipulation_slam)/config/scan_data_filter.yaml" />
   </node>
   
   <node pkg="gmapping" type="slam_gmapping" name="turtlebot3_slam_gmapping" output="screen">
@@ -59,15 +59,10 @@
   </node>
   <!-- </group> -->
 
-  <!-- Show in Rviz -->
-  <!-- <group if="$(arg open_rviz)">
-    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find turtlebot3_manipulation_tools)/rviz/turtlebot3_manipulation_slam.rviz"/>
-  </group> -->
-
   <!-- rviz -->
   <group if="$(arg open_rviz)"> 
     <node pkg="rviz" type="rviz" name="rviz" required="true"
-          args="-d $(find turtlebot3_manipulation_tools)/rviz/turtlebot3_manipulation_slam.rviz"/>
+          args="-d $(find turtlebot3_manipulation_slam)/rviz/turtlebot3_manipulation_slam.rviz"/>
   </group>
 
 </launch>

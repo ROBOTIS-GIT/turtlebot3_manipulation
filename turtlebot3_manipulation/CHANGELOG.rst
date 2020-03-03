@@ -2,6 +2,11 @@
 Changelog for package turtlebot3_manipulation
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+2.0.2 (2020-03-30)
+------------------
+* Package name changed from `open_manipulator_with_tb3` to `turtlebot3_manipulation`
+* added turtlebot3_manipulation_slam
+
 2.0.1 (2020-02-12)
 ------------------
 * removed namespace

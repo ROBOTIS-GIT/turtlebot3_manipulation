@@ -2,7 +2,7 @@
 # Set minimum required version of cmake, project name and compile options
 ################################################################################
 cmake_minimum_required(VERSION 2.8.3)
-project(turtlebot3_manipulation_tools)
+project(turtlebot3_manipulation_slam)
 
 add_compile_options(-std=c++11)
 
@@ -49,17 +49,17 @@ catkin_package(
 # Build
 ################################################################################
 include_directories(
-  include
+# include
   ${catkin_INCLUDE_DIRS}
 )
 
 ################################################################################
 # Install
 ################################################################################
-catkin_install_python(PROGRAMS
+# catkin_install_python(PROGRAMS
 #  nodes/pick_and_place_state_machine
-  DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
-)
+#  DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+# )
 
 install(TARGETS 
   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}

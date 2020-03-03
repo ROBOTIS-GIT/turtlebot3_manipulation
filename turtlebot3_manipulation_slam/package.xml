@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <package format="2">
-  <name>turtlebot3_manipulation_tools</name>
+  <name>turtlebot3_manipulation_slam</name>
   <version>1.0.0</version>
   <description>
-    The turtlebot3_manipulation_tools package includes SLAM and Navigation for TurtleBot3 with OpenMANIPULATOR.
+    The turtlebot3_manipulation_slam package added.
   </description>
   <license>Apache 2.0</license>
   <author email="willson@robotis.com">Will Son</author>
