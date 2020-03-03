@@ -65,7 +65,7 @@ install(TARGETS
   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 
-install(DIRECTORY config launch maps rviz
+install(DIRECTORY config launch rviz
   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
 )
 
