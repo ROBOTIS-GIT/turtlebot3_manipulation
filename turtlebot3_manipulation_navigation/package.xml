@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <package format="2">
-  <name>turtlebot3_manipulation_slam</name>
+  <name>turtlebot3_manipulation_navigation</name>
   <version>2.0.2</version>
   <description>
-    The turtlebot3_manipulation_slam package added.
+    The turtlebot3_manipulation_navigation package added.
   </description>
   <license>Apache 2.0</license>
   <author email="willson@robotis.com">Will Son</author>

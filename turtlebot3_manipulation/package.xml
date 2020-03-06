@@ -18,6 +18,7 @@
   <exec_depend>turtlebot3_manipulation_description</exec_depend>
   <exec_depend>turtlebot3_manipulation_gui</exec_depend>
   <exec_depend>turtlebot3_manipulation_moveit_config</exec_depend>
+  <exec_depend>turtlebot3_manipulation_navigation</exec_depend>
   <exec_depend>turtlebot3_manipulation_slam</exec_depend>
 
   <export><metapackage/></export>
