@@ -1,31 +1,34 @@
 <?xml version="1.0"?>
 <package format="2">
-  <name>turtlebot3_manipulation_gui</name>
+  <name>turtlebot3_manipulation_slam</name>
   <version>2.0.2</version>
-  <description>ROS package for turtlebot3_manipulation_gui</description>
-
+  <description>
+    The turtlebot3_manipulation_slam package added.
+  </description>
   <license>Apache 2.0</license>
-  <author email="thlim@robotis.com">Darby Lim</author>
-  <author email="jhshim@robotis.com">Ryan Shim</author>
-  <maintainer email="pyo@robotis.com">Pyo</maintainer>
+  <author email="willson@robotis.com">Will Son</author>
+  <maintainer email="willson@robotis.com">Will Son</maintainer>
   <!-- <url type="website">http://wiki.ros.org/turtlebot3_manipulation</url> -->
   <url type="emanual">http://emanual.robotis.com/docs/en/platform/turtlebot3/manipulation</url>
   <url type="repository">https://github.com/ROBOTIS-GIT/turtlebot3_manipulation</url>
   <url type="bugtracker">https://github.com/ROBOTIS-GIT/turtlebot3_manipulation/issues</url>
-
   <buildtool_depend>catkin</buildtool_depend>
+  <depend>rospy</depend>
   <depend>roscpp</depend>
+  <depend>roslaunch</depend>
   <depend>std_msgs</depend>
-  <depend>sensor_msgs</depend>
-  <depend>qtbase5-dev</depend>
-  <depend>qt5-qmake</depend>
-  <depend>libqt5-core</depend>
-  <depend>libqt5-gui</depend>
-  <depend>cmake_modules</depend>
-  <depend>eigen</depend>
+  <depend>geometry_msgs</depend>
+  <depend>nav_msgs</depend>
   <depend>moveit_msgs</depend>
+  <depend>trajectory_msgs</depend>
+  <depend>open_manipulator_msgs</depend>
+  <depend>ar_track_alvar_msgs</depend>
   <depend>moveit_core</depend>
   <depend>moveit_ros_planning</depend>
   <depend>moveit_ros_planning_interface</depend>
-  <depend>geometry_msgs</depend>
+  <exec_depend>joint_state_publisher</exec_depend>
+  <exec_depend>robot_state_publisher</exec_depend>
+  <exec_depend>amcl</exec_depend>
+  <exec_depend>map_server</exec_depend>
+  <exec_depend>move_base</exec_depend>
 </package>
