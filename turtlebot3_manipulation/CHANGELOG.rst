@@ -4,23 +4,18 @@ Changelog for package turtlebot3_manipulation
 
 2.0.2 (2020-03-06)
 ------------------
-* Package name changed from `open_manipulator_with_tb3` to `turtlebot3_manipulation`
-* added turtlebot3_manipulation_slam
-* added turtlebot3_manipulation_navigation
-
-2.0.1 (2020-02-12)
-------------------
+* package name changed from open_manipulator_with_tb3 to turtlebot3_manipulation
 * removed namespace
-* changed travis email address
 * fixed transmission
 * added new moveit_config
 * updated launch files in description
 * removed old moveit files
-* changed package name to turtlebot3_manipulation
 * added turtlebot3_manipulation_gui
 * added turtlebot3_manipulation_bringup
 * applied position_only_ik
-* Contributors: Ryan Shim
+* added turtlebot3_manipulation_slam
+* added turtlebot3_manipulation_navigation
+* Contributors: Ryan Shim, Will Son
 
 1.1.0 (2019-02-08)
 ------------------
