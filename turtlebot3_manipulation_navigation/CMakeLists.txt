@@ -17,7 +17,6 @@ find_package(catkin REQUIRED COMPONENTS
   nav_msgs
   moveit_msgs
   trajectory_msgs
-  open_manipulator_msgs
   ar_track_alvar_msgs
   moveit_core
   moveit_ros_planning
