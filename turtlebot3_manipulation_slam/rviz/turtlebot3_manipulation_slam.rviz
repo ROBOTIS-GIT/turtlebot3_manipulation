@@ -54,21 +54,21 @@ Visualization Manager:
         All Enabled: false
         /map:
           Value: true
-        /turtlebot3_manipulation/base_footprint:
+        /base_footprint:
           Value: false
-        /turtlebot3_manipulation/base_link:
+        /base_link:
           Value: false
-        /turtlebot3_manipulation/base_scan:
+        /base_scan:
           Value: false
-        /turtlebot3_manipulation/camera_link:
+        /camera_link:
           Value: false
-        /turtlebot3_manipulation/camera_rgb_frame:
+        /camera_rgb_frame:
           Value: false
-        /turtlebot3_manipulation/camera_rgb_optical_frame:
+        /camera_rgb_optical_frame:
           Value: false
-        /turtlebot3_manipulation/caster_back_left_link:
+        /caster_back_left_link:
           Value: false
-        /turtlebot3_manipulation/caster_back_right_link:
+        /caster_back_right_link:
           Value: false
         /end_effector_link:
           Value: true
@@ -276,7 +276,7 @@ Visualization Manager:
           Value: true
       Name: RobotModel
       Robot Description: /robot_description
-      TF Prefix: turtlebot3_manipulation
+      TF Prefix: 
       Update Interval: 0
       Value: true
       Visual Enabled: true

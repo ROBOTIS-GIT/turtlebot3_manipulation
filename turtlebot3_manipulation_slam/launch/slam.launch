@@ -11,10 +11,13 @@
   <arg name="scan_topic"     default="scan_filtered"/>
   <arg name="open_rviz"      default="true" />
 
-
   <arg name="urdf_file" default="$(find xacro)/xacro --inorder '$(find turtlebot3_manipulation_description)/urdf/turtlebot3_manipulation_robot.urdf.xacro'" />
   <param name="robot_description" command="$(arg urdf_file)" />
 
+  <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher">
+    <param name="publish_frequency" type="double" value="50.0" />
+  </node>
+  
   <!-- <group ns="$(arg use_robot_name)"> -->
   <!-- Gmapping -->
   <node pkg="laser_filters" type="scan_to_scan_filter_chain" name="laser_filter" output="screen" >
