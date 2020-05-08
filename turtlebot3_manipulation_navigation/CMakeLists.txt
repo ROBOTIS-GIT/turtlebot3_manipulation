@@ -40,7 +40,7 @@ find_package(catkin REQUIRED COMPONENTS
 ################################################################################
 catkin_package(
 #  INCLUDE_DIRS include
-  CATKIN_DEPENDS rospy roscpp std_msgs geometry_msgs nav_msgs moveit_msgs trajectory_msgs moveit_core moveit_ros_planning moveit_ros_planning_interface
+  CATKIN_DEPENDS roscpp std_msgs geometry_msgs nav_msgs
 )
 
 ################################################################################
