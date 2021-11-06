@@ -63,7 +63,7 @@ void Turtlebot3ManipulationBringup::armActionCallback(const control_msgs::Follow
       jnt_tra_pts.data.push_back(jnt_tra.points[i].positions[j]);
     }
   }
-  if(jnt_tra_pts_size % POINTS_STEP_SIZE){
+  if(jnt_tra_pts_size % steps){
     //set last positions
     jnt_tra_pts.data.push_back(jnt_tra.points[jnt_tra_pts_size-1].time_from_start.toSec());
     for (std::vector<uint32_t>::size_type j = 0; j < jnt_tra.points[jnt_tra_pts_size-1].positions.size(); j++)
