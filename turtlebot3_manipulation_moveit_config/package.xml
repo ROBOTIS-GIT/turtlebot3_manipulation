@@ -1,12 +1,12 @@
 <package>
 
   <name>turtlebot3_manipulation_moveit_config</name>
-  <version>2.0.2</version>
+  <version>2.0.3</version>
   <description>
      An automatically generated package with all the configuration and launch files for using the turtlebot3_manipulation with the MoveIt! Motion Planning Framework
   </description>
   <author email="jhshim@robotis.com">Ryan Shim</author>
-  <maintainer email="jhshim@robotis.com">Ryan Shim</maintainer>
+  <maintainer email="willson@robotis.com">Will Son</maintainer>
 
   <license>BSD</license>
 
