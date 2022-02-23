@@ -49,6 +49,7 @@ void Turtlebot3ManipulationBringup::armActionCallback(const control_msgs::Follow
   uint32_t jnt_tra_pts_size = jnt_tra.points.size();
   const uint8_t POINTS_STEP_SIZE = 10;
   uint32_t steps = floor((double)jnt_tra_pts_size/(double)POINTS_STEP_SIZE);
+  if (steps < 1) steps = 1;
 
   for (uint32_t i = 0; i < jnt_tra_pts_size; i = i + steps)
   {
