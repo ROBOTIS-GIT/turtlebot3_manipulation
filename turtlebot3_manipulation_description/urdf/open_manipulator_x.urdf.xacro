@@ -22,9 +22,9 @@ https://github.com/ROBOTIS-GIT/open_manipulator/blob/kinetic-devel/open_manipula
     </visual>
 
     <collision>
-      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <origin xyz="0 0 0.017" rpy="0 0 0"/>
       <geometry>
-        <mesh filename="${meshes_file_direction}/link1.stl" scale="0.001 0.001 0.001"/>
+        <box size="0.0465 0.0285 0.034"/>
       </geometry>
     </collision>
 
@@ -55,9 +55,9 @@ https://github.com/ROBOTIS-GIT/open_manipulator/blob/kinetic-devel/open_manipula
     </visual>
 
     <collision>
-      <origin xyz="0 0 0.019" rpy="0 0 0"/>
+      <origin xyz="0 0 0.0475" rpy="0 0 0"/>
       <geometry>
-        <mesh filename="${meshes_file_direction}/link2.stl" scale="0.001 0.001 0.001"/>
+        <box size="0.0285 0.034 0.0465"/>
       </geometry>
     </collision>
 
@@ -88,9 +88,9 @@ https://github.com/ROBOTIS-GIT/open_manipulator/blob/kinetic-devel/open_manipula
     </visual>
 
     <collision>
-      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <origin xyz="0 0 0.09265" rpy="0 0 0"/>
       <geometry>
-        <mesh filename="${meshes_file_direction}/link3.stl" scale="0.001 0.001 0.001"/>
+        <box size="0.02375 0.034 0.12485"/>
       </geometry>
     </collision>
 
@@ -121,9 +121,9 @@ https://github.com/ROBOTIS-GIT/open_manipulator/blob/kinetic-devel/open_manipula
     </visual>
 
     <collision>
-      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <origin xyz="0.0675 0 0" rpy="0 0 0"/>
       <geometry>
-        <mesh filename="${meshes_file_direction}/link4.stl" scale="0.001 0.001 0.001"/>
+        <box size="0.135 0.034 0.02375"/>
       </geometry>
     </collision>
 
@@ -154,9 +154,9 @@ https://github.com/ROBOTIS-GIT/open_manipulator/blob/kinetic-devel/open_manipula
     </visual>
 
     <collision>
-      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <origin xyz="0.0555 0 0.00705" rpy="0 0 0"/>
       <geometry>
-        <mesh filename="${meshes_file_direction}/link5.stl" scale="0.001 0.001 0.001"/>
+        <box size="0.055 0.130 0.061"/>
       </geometry>
     </collision>
 
@@ -179,9 +179,9 @@ https://github.com/ROBOTIS-GIT/open_manipulator/blob/kinetic-devel/open_manipula
     </visual>
 
     <collision>
-      <origin xyz="0.0 0.0 0" rpy="0 0 0"/>
+      <origin xyz="0.052 0.0075 0" rpy="0 0 0"/>
       <geometry>
-        <mesh filename="${meshes_file_direction}/gripper_left_palm.stl" scale="0.001 0.001 0.001"/>
+        <box size="0.070 0.035 0.055"/>
       </geometry>
     </collision>
 
@@ -212,9 +212,9 @@ https://github.com/ROBOTIS-GIT/open_manipulator/blob/kinetic-devel/open_manipula
     </visual>
 
     <collision>
-      <origin xyz="0.0 -0.0 0" rpy="0 0 0"/>
+      <origin xyz="0.052 -0.0075 0" rpy="0 0 0"/>
       <geometry>
-        <mesh filename="${meshes_file_direction}/gripper_right_palm.stl" scale="0.001 0.001 0.001"/>
+        <box size="0.070 0.035 0.055"/>
       </geometry>
     </collision>
 
