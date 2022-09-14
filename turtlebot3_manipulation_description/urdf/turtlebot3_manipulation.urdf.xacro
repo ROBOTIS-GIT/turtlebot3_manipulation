@@ -286,7 +286,7 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <mesh filename="package://turtlebot3_manipulation_description/meshes/manipulator/link1.stl" scale="0.001 0.001 0.001"/>
+        <mesh filename="package://turtlebot3_manipulation_description/meshes/manipulator/chain_link1.stl" scale="0.001 0.001 0.001"/>
       </geometry>
       <material name="grey"/>
     </visual>
@@ -324,7 +324,7 @@
     <visual>
       <origin xyz="0 0 0.019" rpy="0 0 0"/>
       <geometry>
-        <mesh filename="package://turtlebot3_manipulation_description/meshes/manipulator/link2.stl" scale="0.001 0.001 0.001"/>
+        <mesh filename="package://turtlebot3_manipulation_description/meshes/manipulator/chain_link2.stl" scale="0.001 0.001 0.001"/>
       </geometry>
       <material name="grey"/>
     </visual>
@@ -332,7 +332,7 @@
     <collision>
       <origin xyz="0 0 0.0475" rpy="0 0 0"/>
       <geometry>
-        <box size="0.034 0.0285 0.0465"/>
+        <box size="0.0285 0.034 0.0465"/>
       </geometry>
     </collision>
 
@@ -362,25 +362,17 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <mesh filename="package://turtlebot3_manipulation_description/meshes/manipulator/link3.stl" scale="0.001 0.001 0.001"/>
+        <mesh filename="package://turtlebot3_manipulation_description/meshes/manipulator/chain_link3.stl" scale="0.001 0.001 0.001"/>
       </geometry>
       <material name="grey"/>
     </visual>
 
     <collision>
-      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <origin xyz="0 0 0.09265" rpy="0 0 0"/>
       <geometry>
-        <mesh filename="package://turtlebot3_manipulation_description/meshes/manipulator/link3.stl" scale="0.001 0.001 0.001"/>
+        <box size="0.02375 0.034 0.12485"/>
       </geometry>
     </collision>
-
-<!--    <inertial>
-      <origin xyz="0 0 0" />
-      <mass value="0.136" />
-      <inertia ixx="0.1" ixy="0.0" ixz="0.0"
-               iyy="0.1" iyz="0.0"
-               izz="0.1" />
-    </inertial>-->
 
      <inertial>
       <origin xyz="1.0308393e-02 3.7743363e-04 1.0170197e-01" />
@@ -408,27 +400,19 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <mesh filename="package://turtlebot3_manipulation_description/meshes/manipulator/link4.stl" scale="0.001 0.001 0.001"/>
+        <mesh filename="package://turtlebot3_manipulation_description/meshes/manipulator/chain_link4.stl" scale="0.001 0.001 0.001"/>
       </geometry>
       <material name="grey"/>
     </visual>
 
     <collision>
-      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <origin xyz="0.08765 0 0" rpy="0 0 0"/>
       <geometry>
-        <mesh filename="package://turtlebot3_manipulation_description/meshes/manipulator/link4.stl" scale="0.001 0.001 0.001"/>
+        <box size="0.11485 0.034 0.02375"/>
       </geometry>
     </collision>
 
-<!--    <inertial>
-      <origin xyz="0 0 0" />
-      <mass value="0.131" />
-      <inertia ixx="0.1" ixy="0.0" ixz="0.0"
-               iyy="0.1" iyz="0.0"
-               izz="0.1" />
-    </inertial>-->
-
-     <inertial>
+    <inertial>
       <origin xyz="9.0909590e-02 3.8929816e-04 2.2413279e-04" />
       <mass value="1.3274562e-01" />
       <inertia ixx="3.0654178e-05" ixy="-1.2764155e-06" ixz="-2.6874417e-07"
@@ -454,67 +438,25 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <mesh filename="package://turtlebot3_manipulation_description/meshes/manipulator/link5.stl" scale="0.001 0.001 0.001"/>
+        <mesh filename="package://turtlebot3_manipulation_description/meshes/manipulator/chain_link5.stl" scale="0.001 0.001 0.001"/>
       </geometry>
       <material name="grey"/>
     </visual>
 
     <collision>
-      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <origin xyz="0.0555 0 0.0705" rpy="0 0 0"/>
       <geometry>
-        <mesh filename="package://turtlebot3_manipulation_description/meshes/manipulator/link5.stl" scale="0.001 0.001 0.001"/>
+        <box size="0.055 0.130 0.061"/>
       </geometry>
     </collision>
 
-<!--    <inertial>
-      <origin xyz="0 0 0" />
-      <mass value="0.141" />
-      <inertia ixx="0.1" ixy="0.0" ixz="0.0"
-               iyy="0.1" iyz="0.0"
-               izz="0.1" />
-    </inertial>-->
-
-     <inertial>
+    <inertial>
       <origin xyz="4.4206755e-02 3.6839985e-07 8.9142216e-03" />
       <mass value="1.4327573e-01" />
       <inertia ixx="8.0870749e-05" ixy="0.0" ixz="-1.0157896e-06"
                iyy="7.5980465e-05" iyz="0.0"
                izz="9.3127351e-05" />
     </inertial>
-  </link>
-
-  <!--  Gripper link -->
-  <link name="gripper_link">
-    <visual>
-      <origin xyz="0.0 0.0 0" rpy="0 0 0"/>
-      <geometry>
-        <mesh filename="package://turtlebot3_manipulation_description/meshes/manipulator/link_grip_l.stl" scale="0.001 0.001 0.001"/>
-      </geometry>
-      <material name="grey"/>
-    </visual>
-
-    <collision>
-      <origin xyz="0.0 0.0 0" rpy="0 0 0"/>
-      <geometry>
-        <mesh filename="package://turtlebot3_manipulation_description/meshes/manipulator/link_grip_l.stl" scale="0.001 0.001 0.001"/>
-      </geometry>
-    </collision>
-
-    <inertial>
-      <origin xyz="0 0 0" />
-      <mass value="0.017" />
-      <inertia ixx="1.0e-03" ixy="0.0" ixz="0.0"
-               iyy="1.0e-03" iyz="0.0"
-               izz="1.0e-03" />
-    </inertial>
-
-<!--     <inertial>
-      <origin xyz="${0.028 + 8.3720668e-03} ${0.0246 + 9.9696160e-03} -4.2836895e-07" />
-      <mass value="3.2218127e-02" />
-      <inertia ixx="9.5568826e-06" ixy="2.8424644e-06" ixz="-3.2829197e-10"
-               iyy="2.2552871e-05" iyz="-3.1463634e-10"
-               izz="1.7605306e-05" />
-    </inertial>-->
   </link>
 
   <!--  Gripper joint -->
@@ -529,20 +471,20 @@
   <!-- Transmission 5 -->
   <xacro:SimpleTransmission n="5" joint="gripper" />
 
-  <!--  Gripper link sub -->
-  <link name="gripper_link_sub">
+  <!--  Gripper link -->
+  <link name="gripper_link">
     <visual>
-      <origin xyz="0.0 -0.0 0" rpy="0 0 0"/>
+      <origin xyz="0.0 0.0 0" rpy="0 0 0"/>
       <geometry>
-        <mesh filename="package://turtlebot3_manipulation_description/meshes/manipulator/link_grip_r.stl" scale="0.001 0.001 0.001"/>
+        <mesh filename="package://turtlebot3_manipulation_description/meshes/manipulator/chain_link_grip_l.stl" scale="0.001 0.001 0.001"/>
       </geometry>
       <material name="grey"/>
     </visual>
 
     <collision>
-      <origin xyz="0.0 -0.0 0" rpy="0 0 0"/>
+      <origin xyz="0.052 0.0075 0" rpy="0 0 0"/>
       <geometry>
-        <mesh filename="package://turtlebot3_manipulation_description/meshes/manipulator/link_grip_r.stl" scale="0.001 0.001 0.001"/>
+        <box size="0.070 0.035 0.055"/>
       </geometry>
     </collision>
 
@@ -553,14 +495,6 @@
                iyy="1.0e-03" iyz="0.0"
                izz="1.0e-03" />
     </inertial>
-
-<!--     <inertial>
-      <origin xyz="${0.028 + 8.3720668e-03} ${-0.0246 - 9.9696160e-03} -4.2836895e-07" />
-      <mass value="3.2218127e-02" />
-      <inertia ixx="9.5568826e-06" ixy="2.8424644e-06" ixz="-3.2829197e-10"
-               iyy="2.2552871e-05" iyz="-3.1463634e-10"
-               izz="1.7605306e-05" />
-    </inertial>-->
   </link>
 
   <!--  Gripper joint sub -->
@@ -575,6 +509,32 @@
 
   <!-- Transmission 6 -->
   <xacro:SimpleTransmission n="6" joint="gripper_sub" />
+
+  <!--  Gripper link sub -->
+  <link name="gripper_link_sub">
+    <visual>
+      <origin xyz="0.0 -0.0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://turtlebot3_manipulation_description/meshes/manipulator/chain_link_grip_r.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="grey"/>
+    </visual>
+
+  <collision>
+    <origin xyz="0.052 -0.0075 0" rpy="0 0 0"/>
+    <geometry>
+      <box size="0.070 0.035 0.055"/>
+    </geometry>
+  </collision>
+
+    <inertial>
+      <origin xyz="0 0 0" />
+      <mass value="0.017" />
+      <inertia ixx="1.0e-03" ixy="0.0" ixz="0.0"
+               iyy="1.0e-03" iyz="0.0"
+               izz="1.0e-03" />
+    </inertial>
+  </link>
 
   <!-- end effector joint -->
   <joint name="end_effector_joint" type="fixed">
