@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="turtlebot3_manipulation">
+    <xacro:arg name="initial_positions_file" default="initial_positions.yaml" />
+
+    <!-- Import turtlebot3_manipulation urdf file -->
+    <xacro:include filename="$(find turtlebot3_manipulation_description)/urdf/turtlebot3_manipulation.urdf.xacro" />
+
+    <!-- Import control_xacro -->
+    <xacro:include filename="turtlebot3_manipulation.ros2_control.xacro" />
+
+
+    <xacro:turtlebot3_manipulation_ros2_control name="FakeSystem" initial_positions_file="$(arg initial_positions_file)"/>
+
+</robot>
