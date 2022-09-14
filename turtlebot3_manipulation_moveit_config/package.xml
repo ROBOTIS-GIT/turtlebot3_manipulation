@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>turtlebot3_manipulation_moveit_config</name>
+  <version>0.0.0</version>
+  <description>
+      An automatically generated package with all the configuration and launch files for using the turtlebot3_manipulation with the MoveIt! Motion Planning Framework
+  </description>
+  <maintainer email="hjkim@robotis.com">Hye-jong KIM</maintainer>
+  <license>BSD</license>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <depend>moveit_ros_move_group</depend>
+  <depend>moveit_kinematics</depend>
+  <depend>moveit_planners_ompl</depend>
+  <depend>moveit_ros_visualization</depend>
+  <depend>robot_state_publisher</depend>
+  <depend>tf2_ros</depend>
+  <depend>xacro</depend>
+  <depend>turtlebot3_manipulation_description</depend>
+
+  <test_depend>ament_lint_auto</test_depend>
+  <test_depend>ament_lint_common</test_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>
