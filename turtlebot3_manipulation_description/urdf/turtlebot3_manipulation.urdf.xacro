@@ -2,15 +2,6 @@
 <!-- TurtleBot3 Manipulation -->
 <robot name="turtlebot3_manipulation" xmlns:xacro="http://ros.org/wiki/xacro">
 
-  <!-- Include TurtleBot3 Waffle Pi URDF -->
-  <!-- <xacro:include filename="$(find turtlebot3_description)/urdf/turtlebot3_waffle_pi.urdf" /> -->
-
-  <!-- Include TurtleBot3 OpenManipulatorX URDF -->
-  <!-- <xacro:include filename="$(find open_manipulator_x_description)/urdf/open_manipulator_x.urdf.xacro" /> -->
-
-  <!-- Include OpenManipulator Chain Gazebo Parameter -->
-  <!-- <xacro:include filename="$(find turtlebot3_description)/urdf/turtlebot3_description.gazebo.xacro" /> -->
-
   <!-- Transmission macro -->
   <xacro:macro name="SimpleTransmission" params="joint n">
     <transmission name="tran${n}">
@@ -81,7 +72,7 @@
     <visual>
       <origin xyz="-0.064 0 0.0" rpy="0 0 0"/>
       <geometry>
-        <mesh filename="package://turtlebot3_description/meshes/bases/waffle_pi_base.stl" scale="0.001 0.001 0.001"/>
+        <mesh filename="package://turtlebot3_manipulation_description/meshes/bases/waffle_pi_base.stl" scale="0.001 0.001 0.001"/>
       </geometry>
       <material name="light_black"/>
     </visual>
@@ -113,7 +104,7 @@
     <visual>
       <origin xyz="0 0 0" rpy="1.57 0 0"/>
       <geometry>
-        <mesh filename="package://turtlebot3_description/meshes/wheels/left_tire.stl" scale="0.001 0.001 0.001"/>
+        <mesh filename="package://turtlebot3_manipulation_description/meshes/wheels/left_tire.stl" scale="0.001 0.001 0.001"/>
       </geometry>
       <material name="dark"/>
     </visual>
@@ -145,7 +136,7 @@
     <visual>
       <origin xyz="0 0 0" rpy="1.57 0 0"/>
       <geometry>
-        <mesh filename="package://turtlebot3_description/meshes/wheels/right_tire.stl" scale="0.001 0.001 0.001"/>
+        <mesh filename="package://turtlebot3_manipulation_description/meshes/wheels/right_tire.stl" scale="0.001 0.001 0.001"/>
       </geometry>
       <material name="dark"/>
     </visual>
@@ -230,7 +221,7 @@
     <visual>
       <origin xyz="0 0 0.0" rpy="0 0 0"/>
       <geometry>
-        <mesh filename="package://turtlebot3_description/meshes/sensors/lds.stl" scale="0.001 0.001 0.001"/>
+        <mesh filename="package://turtlebot3_manipulation_description/meshes/sensors/lds.stl" scale="0.001 0.001 0.001"/>
       </geometry>
       <material name="dark"/>
     </visual>
@@ -295,7 +286,7 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <mesh filename="package://open_manipulator_x_description/meshes/link1.stl" scale="0.001 0.001 0.001"/>
+        <mesh filename="package://turtlebot3_manipulation_description/meshes/manipulator/link1.stl" scale="0.001 0.001 0.001"/>
       </geometry>
       <material name="grey"/>
     </visual>
@@ -303,7 +294,7 @@
     <collision>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <mesh filename="package://open_manipulator_x_description/meshes/link1.stl" scale="0.001 0.001 0.001"/>
+        <mesh filename="package://turtlebot3_manipulation_description/meshes/manipulator/link1.stl" scale="0.001 0.001 0.001"/>
       </geometry>
     </collision>
 
@@ -341,7 +332,7 @@
     <visual>
       <origin xyz="0 0 0.019" rpy="0 0 0"/>
       <geometry>
-        <mesh filename="package://open_manipulator_x_description/meshes/link2.stl" scale="0.001 0.001 0.001"/>
+        <mesh filename="package://turtlebot3_manipulation_description/meshes/manipulator/link2.stl" scale="0.001 0.001 0.001"/>
       </geometry>
       <material name="grey"/>
     </visual>
@@ -349,7 +340,7 @@
     <collision>
       <origin xyz="0 0 0.019" rpy="0 0 0"/>
       <geometry>
-        <mesh filename="package://open_manipulator_x_description/meshes/link2.stl" scale="0.001 0.001 0.001"/>
+        <mesh filename="package://turtlebot3_manipulation_description/meshes/manipulator/link2.stl" scale="0.001 0.001 0.001"/>
       </geometry>
     </collision>
 
@@ -387,7 +378,7 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <mesh filename="package://open_manipulator_x_description/meshes/link3.stl" scale="0.001 0.001 0.001"/>
+        <mesh filename="package://turtlebot3_manipulation_description/meshes/manipulator/link3.stl" scale="0.001 0.001 0.001"/>
       </geometry>
       <material name="grey"/>
     </visual>
@@ -395,7 +386,7 @@
     <collision>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <mesh filename="package://open_manipulator_x_description/meshes/link3.stl" scale="0.001 0.001 0.001"/>
+        <mesh filename="package://turtlebot3_manipulation_description/meshes/manipulator/link3.stl" scale="0.001 0.001 0.001"/>
       </geometry>
     </collision>
 
@@ -433,7 +424,7 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <mesh filename="package://open_manipulator_x_description/meshes/link4.stl" scale="0.001 0.001 0.001"/>
+        <mesh filename="package://turtlebot3_manipulation_description/meshes/manipulator/link4.stl" scale="0.001 0.001 0.001"/>
       </geometry>
       <material name="grey"/>
     </visual>
@@ -441,7 +432,7 @@
     <collision>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <mesh filename="package://open_manipulator_x_description/meshes/link4.stl" scale="0.001 0.001 0.001"/>
+        <mesh filename="package://turtlebot3_manipulation_description/meshes/manipulator/link4.stl" scale="0.001 0.001 0.001"/>
       </geometry>
     </collision>
 
@@ -479,7 +470,7 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <mesh filename="package://open_manipulator_x_description/meshes/link5.stl" scale="0.001 0.001 0.001"/>
+        <mesh filename="package://turtlebot3_manipulation_description/meshes/manipulator/link5.stl" scale="0.001 0.001 0.001"/>
       </geometry>
       <material name="grey"/>
     </visual>
@@ -487,7 +478,7 @@
     <collision>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <mesh filename="package://open_manipulator_x_description/meshes/link5.stl" scale="0.001 0.001 0.001"/>
+        <mesh filename="package://turtlebot3_manipulation_description/meshes/manipulator/link5.stl" scale="0.001 0.001 0.001"/>
       </geometry>
     </collision>
 
@@ -513,7 +504,7 @@
     <visual>
       <origin xyz="0.0 0.0 0" rpy="0 0 0"/>
       <geometry>
-        <mesh filename="package://open_manipulator_x_description/meshes/link_grip_l.stl" scale="0.001 0.001 0.001"/>
+        <mesh filename="package://turtlebot3_manipulation_description/meshes/manipulator/link_grip_l.stl" scale="0.001 0.001 0.001"/>
       </geometry>
       <material name="grey"/>
     </visual>
@@ -521,7 +512,7 @@
     <collision>
       <origin xyz="0.0 0.0 0" rpy="0 0 0"/>
       <geometry>
-        <mesh filename="package://open_manipulator_x_description/meshes/link_grip_l.stl" scale="0.001 0.001 0.001"/>
+        <mesh filename="package://turtlebot3_manipulation_description/meshes/manipulator/link_grip_l.stl" scale="0.001 0.001 0.001"/>
       </geometry>
     </collision>
 
@@ -559,7 +550,7 @@
     <visual>
       <origin xyz="0.0 -0.0 0" rpy="0 0 0"/>
       <geometry>
-        <mesh filename="package://open_manipulator_x_description/meshes/link_grip_r.stl" scale="0.001 0.001 0.001"/>
+        <mesh filename="package://turtlebot3_manipulation_description/meshes/manipulator/link_grip_r.stl" scale="0.001 0.001 0.001"/>
       </geometry>
       <material name="grey"/>
     </visual>
@@ -567,7 +558,7 @@
     <collision>
       <origin xyz="0.0 -0.0 0" rpy="0 0 0"/>
       <geometry>
-        <mesh filename="package://open_manipulator_x_description/meshes/link_grip_r.stl" scale="0.001 0.001 0.001"/>
+        <mesh filename="package://turtlebot3_manipulation_description/meshes/manipulator/link_grip_r.stl" scale="0.001 0.001 0.001"/>
       </geometry>
     </collision>
 
