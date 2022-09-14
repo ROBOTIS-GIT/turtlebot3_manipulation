@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 #
-# Copyright 2019 ROBOTIS CO., LTD.
+# Copyright 2022 ROBOTIS CO., LTD.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,48 +14,80 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-# Author: Ryan Shim
+# Author: Darby Lim
 
-import os
-
-from ament_index_python.packages import get_package_share_directory
 from launch import LaunchDescription
+from launch.actions import DeclareLaunchArgument
+from launch.conditions import IfCondition
+from launch.substitutions import Command
+from launch.substitutions import FindExecutable
 from launch.substitutions import LaunchConfiguration
+from launch.substitutions import PathJoinSubstitution
+
 from launch_ros.actions import Node
+from launch_ros.substitutions import FindPackageShare
 
 
 def generate_launch_description():
-    # Parameters
-    robot_name = LaunchConfiguration('robot_name', default='turtlebot3_manipulation')
-    use_gui    = LaunchConfiguration('use_gui',    default='False')
+    prefix = LaunchConfiguration('prefix')
+    use_gui = LaunchConfiguration('use_gui')
 
-    # File Paths
-    rviz_file = os.path.join(get_package_share_directory(
-      'turtlebot3_manipulation_description'), 'rviz', 'turtlebot3_manipulation.rviz')
-    urdf_file = os.path.join(get_package_share_directory(
-      'turtlebot3_manipulation_description'), 'urdf', 'turtlebot3_manipulation.urdf.xacro')
+    urdf_file = Command(
+        [
+            PathJoinSubstitution([FindExecutable(name='xacro')]),
+            ' ',
+            PathJoinSubstitution(
+                [
+                    FindPackageShare('turtlebot3_manipulation_description'),
+                    'urdf',
+                    'turtlebot3_manipulation.urdf.xacro'
+                ]
+            ),
+            ' ',
+            'prefix:=',
+            prefix,
+        ]
+    )
+
+    rviz_config_file = PathJoinSubstitution(
+        [
+            FindPackageShare('turtlebot3_manipulation_description'),
+            'rviz',
+            'turtlebot3_manipulation.rviz'
+        ]
+    )
 
     return LaunchDescription([
-        Node(
-            package='rviz2',
-            node_executable='rviz2',
-            node_name='rviz2',
-            arguments=['-d', rviz_file],
-            output='screen'),
+        DeclareLaunchArgument(
+            'prefix',
+            default_value='""',
+            description='Prefix of the joint and link names'),
+
+        DeclareLaunchArgument(
+            'use_gui',
+            default_value='False',
+            description='Whether execute joint_state_publisher_gui node'),
 
         Node(
             package='joint_state_publisher',
-            node_executable='joint_state_publisher',
-            node_name='joint_state_publisher',
-            arguments=[urdf_file],
-            parameters=[{'use_gui': use_gui},
-                        {'source_list': ['turtlebot3_manipulation/joint_states']}],
+            executable='joint_state_publisher',
+            parameters=[{'robot_description': urdf_file}],
             output='screen'),
 
         Node(
             package='robot_state_publisher',
-            node_executable='robot_state_publisher',
-            node_name='robot_state_publisher',
-            arguments=[urdf_file],
-            output='screen')
+            executable='robot_state_publisher',
+            parameters=[{'robot_description': urdf_file}],
+            output='screen'),
+
+        Node(
+            package='rviz2',
+            executable='rviz2',
+            arguments=['-d', rviz_config_file],
+            output='screen'),
+
+        Node(
+            package="joint_state_publisher_gui",
+            executable="joint_state_publisher_gui",
+            condition=IfCondition(use_gui)),
     ])
