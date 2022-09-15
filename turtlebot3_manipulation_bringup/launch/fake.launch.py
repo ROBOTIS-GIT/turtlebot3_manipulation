@@ -26,10 +26,10 @@ from launch.substitutions import ThisLaunchFileDir
 
 def generate_launch_description():
     start_rviz = LaunchConfiguration('start_rviz')
-    prefix = LaunchConfiguration("prefix")
-    use_fake_hardware = LaunchConfiguration("use_fake_hardware")
-    fake_sensor_commands = LaunchConfiguration("fake_sensor_commands")
-    slowdown = LaunchConfiguration("slowdown")
+    prefix = LaunchConfiguration('prefix')
+    use_fake_hardware = LaunchConfiguration('use_fake_hardware')
+    fake_sensor_commands = LaunchConfiguration('fake_sensor_commands')
+    slowdown = LaunchConfiguration('slowdown')
 
 
     return LaunchDescription([
@@ -44,29 +44,29 @@ def generate_launch_description():
             description='Prefix of the joint and link names'),
 
         DeclareLaunchArgument(
-            "use_fake_hardware",
-            default_value="true",
-            description="Start robot with fake hardware mirroring command to its states."),
+            'use_fake_hardware',
+            default_value='true',
+            description='Start robot with fake hardware mirroring command to its states.'),
 
         DeclareLaunchArgument(
-            "fake_sensor_commands",
-            default_value="false",
-            description="Enable fake command interfaces for sensors used for simple simulations. \
-            Used only if 'use_fake_hardware' parameter is true."),
+            'fake_sensor_commands',
+            default_value='false',
+            description='Enable fake command interfaces for sensors used for simple simulations. \
+            Used only if "use_fake_hardware" parameter is true.'),
 
         DeclareLaunchArgument(
-            "slowdown",
-            default_value="3.0",
-            description="Slowdown factor."),
+            'slowdown',
+            default_value='3.0',
+            description='Slowdown factor.'),
 
         IncludeLaunchDescription(
-            PythonLaunchDescriptionSource([ThisLaunchFileDir(), "/base.launch.py"]),
+            PythonLaunchDescriptionSource([ThisLaunchFileDir(), '/base.launch.py']),
             launch_arguments={
-                "start_rviz": start_rviz,
-                "prefix": prefix,
-                "use_fake_hardware": use_fake_hardware,
-                "fake_sensor_commands": fake_sensor_commands,
-                "slowdown": slowdown,
+                'start_rviz': start_rviz,
+                'prefix': prefix,
+                'use_fake_hardware': use_fake_hardware,
+                'fake_sensor_commands': fake_sensor_commands,
+                'slowdown': slowdown,
             }.items(),
         )
     ])
