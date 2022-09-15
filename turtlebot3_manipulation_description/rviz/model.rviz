@@ -212,13 +212,21 @@ Visualization Manager:
           Value: true
         end_effector_link:
           Value: true
+        gripper_link:
+          Value: true
+        gripper_link_sub:
+          Value: true
         imu_link:
           Value: true
         link1:
           Value: true
-        link5:
+        link2:
           Value: true
-        odom:
+        link3:
+          Value: true
+        link4:
+          Value: true
+        link5:
           Value: true
         wheel_left_link:
           Value: true
@@ -230,27 +238,35 @@ Visualization Manager:
       Show Axes: true
       Show Names: true
       Tree:
-        odom:
-          base_footprint:
-            base_link:
-              base_scan:
-                {}
-              camera_link:
-                camera_rgb_frame:
-                  camera_rgb_optical_frame:
-                    {}
-              caster_back_left_link:
-                {}
-              caster_back_right_link:
-                {}
-              imu_link:
-                {}
-              link1:
-                {}
-              wheel_left_link:
-                {}
-              wheel_right_link:
-                {}
+        base_footprint:
+          base_link:
+            base_scan:
+              {}
+            camera_link:
+              camera_rgb_frame:
+                camera_rgb_optical_frame:
+                  {}
+            caster_back_left_link:
+              {}
+            caster_back_right_link:
+              {}
+            imu_link:
+              {}
+            link1:
+              link2:
+                link3:
+                  link4:
+                    link5:
+                      end_effector_link:
+                        {}
+                      gripper_link:
+                        {}
+                      gripper_link_sub:
+                        {}
+            wheel_left_link:
+              {}
+            wheel_right_link:
+              {}
       Update Interval: 0
       Value: true
     - Angle Tolerance: 0.10000000149011612
@@ -325,16 +341,16 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz_default_plugins/Orbit
-      Distance: 5.429967403411865
+      Distance: 1.0364693403244019
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: -0.04720889404416084
-        Y: 0.045656368136405945
-        Z: 0.03729022294282913
+        X: -0.028900543227791786
+        Y: -0.026094242930412292
+        Z: 0.07621483504772186
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.05000000074505806
       Invert Z Axis: false

@@ -56,7 +56,7 @@ def generate_launch_description():
         [
             FindPackageShare('turtlebot3_manipulation_description'),
             'rviz',
-            'turtlebot3_manipulation.rviz'
+            'model.rviz'
         ]
     )
 
