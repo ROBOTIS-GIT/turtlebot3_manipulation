@@ -125,7 +125,7 @@ https://github.com/ROBOTIS-GIT/turtlebot3/blob/kinetic-devel/turtlebot3_descript
   </gazebo>
 
   <gazebo reference="${prefix}camera_rgb_frame">
-    <sensor type="camera" name="Pi Camera">
+    <sensor type="camera" name="Pi_Camera">
       <always_on>true</always_on>
       <visualize>${camera_visual}</visualize>
       <camera>
