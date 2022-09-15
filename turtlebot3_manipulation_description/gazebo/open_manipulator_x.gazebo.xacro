@@ -7,12 +7,6 @@ https://github.com/ROBOTIS-GIT/turtlebot3/blob/kinetic-devel/turtlebot3_descript
 
   <xacro:macro name="open_manipulator_x_gazebo" params="prefix">
 
-  <gazebo>
-    <plugin name="gazebo_ros2_control" filename="libgazebo_ros2_control.so">
-      <parameters>$(find ros2_control_demo_bringup)/config/rrbot_gazebo_forward_controller_position.yaml</parameters>
-    </plugin>
-  </gazebo>
-
   <xacro:macro name="Link" params="reference">
     <gazebo reference="${reference}">
       <kp>1000000.0</kp>
