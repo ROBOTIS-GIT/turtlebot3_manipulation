@@ -18,7 +18,9 @@
 
 from launch import LaunchDescription
 from launch.actions import DeclareLaunchArgument
+from launch.actions import IncludeLaunchDescription
 from launch.conditions import IfCondition
+from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.substitutions import Command
 from launch.substitutions import FindExecutable
 from launch.substitutions import LaunchConfiguration
@@ -30,11 +32,11 @@ from launch_ros.substitutions import FindPackageShare
 
 def generate_launch_description():
     start_rviz = LaunchConfiguration('start_rviz')
-    prefix = LaunchConfiguration("prefix")
-    use_sim = LaunchConfiguration("use_sim")
-    use_fake_hardware = LaunchConfiguration("use_fake_hardware")
-    fake_sensor_commands = LaunchConfiguration("fake_sensor_commands")
-    slowdown = LaunchConfiguration("slowdown")
+    prefix = LaunchConfiguration('prefix')
+    use_sim = LaunchConfiguration('use_sim')
+    use_fake_hardware = LaunchConfiguration('use_fake_hardware')
+    fake_sensor_commands = LaunchConfiguration('fake_sensor_commands')
+    slowdown = LaunchConfiguration('slowdown')
 
     urdf_file = Command(
         [
@@ -48,29 +50,28 @@ def generate_launch_description():
                 ]
             ),
             ' ',
-            " ",
-            "prefix:=",
+            'prefix:=',
             prefix,
-            " ",
-            "use_sim:=",
+            ' ',
+            'use_sim:=',
             use_sim,
-            " ",
-            "use_fake_hardware:=",
+            ' ',
+            'use_fake_hardware:=',
             use_fake_hardware,
-            " ",
-            "fake_sensor_commands:=",
+            ' ',
+            'fake_sensor_commands:=',
             fake_sensor_commands,
-            " ",
-            "slowdown:=",
+            ' ',
+            'slowdown:=',
             slowdown,
         ]
     )
 
     controller_manager_config = PathJoinSubstitution(
         [
-            FindPackageShare("turtlebot3_manipulation_bringup"),
-            "config",
-            "controller_manager.yaml",
+            FindPackageShare('turtlebot3_manipulation_bringup'),
+            'config',
+            'controller_manager.yaml',
         ]
     )
 
@@ -94,25 +95,51 @@ def generate_launch_description():
             description='Prefix of the joint and link names'),
 
         DeclareLaunchArgument(
-            "use_sim",
-            default_value="false",
-            description="Start robot in Gazebo simulation."),
+            'use_sim',
+            default_value='false',
+            description='Start robot in Gazebo simulation.'),
 
         DeclareLaunchArgument(
-            "use_fake_hardware",
-            default_value="false",
-            description="Start robot with fake hardware mirroring command to its states."),
+            'use_fake_hardware',
+            default_value='false',
+            description='Start robot with fake hardware mirroring command to its states.'),
 
         DeclareLaunchArgument(
-            "fake_sensor_commands",
-            default_value="false",
-            description="Enable fake command interfaces for sensors used for simple simulations. \
-            Used only if 'use_fake_hardware' parameter is true."),
+            'fake_sensor_commands',
+            default_value='false',
+            description='Enable fake command interfaces for sensors used for simple simulations. \
+            Used only if "use_fake_hardware" parameter is true.'),
 
         DeclareLaunchArgument(
-            "slowdown",
-            default_value="3.0",
-            description="Slowdown factor."),
+            'slowdown',
+            default_value='3.0',
+            description='Slowdown factor.'),
+
+        IncludeLaunchDescription(
+            PythonLaunchDescriptionSource(
+                [
+                    PathJoinSubstitution(
+                        [
+                            FindPackageShare('gazebo_ros'),
+                            'launch',
+                            'gazebo.launch.py'
+                        ]
+                    )
+                ]
+            ),
+            launch_arguments={'verbose': 'false'}.items(),
+            condition=IfCondition(use_sim),
+        ),
+
+        Node(
+            package='gazebo_ros',
+            executable='spawn_entity.py',
+            arguments=[
+                '-topic', 'robot_description',
+                '-entity', 'turtlebot3_manipulation_system'],
+            output='screen',
+            condition=IfCondition(use_sim),
+        ),
 
         Node(
             package='robot_state_publisher',
@@ -121,44 +148,44 @@ def generate_launch_description():
             output='screen'),
 
         Node(
-            package="controller_manager",
-            executable="ros2_control_node",
+            package='controller_manager',
+            executable='ros2_control_node',
             parameters=[
                 {'robot_description': urdf_file},
                 controller_manager_config
             ],
             output={
-                "stdout": "screen",
-                "stderr": "screen",
+                'stdout': 'screen',
+                'stderr': 'screen',
             },
         ),
 
         Node(
-            package="controller_manager",
-            executable="spawner.py",
-            arguments=["diff_drive_controller"],
-            output="screen",
+            package='controller_manager',
+            executable='spawner.py',
+            arguments=['diff_drive_controller'],
+            output='screen',
         ),
 
         Node(
-            package="controller_manager",
-            executable="spawner.py",
-            arguments=["joint_state_broadcaster"],
-            output="screen",
+            package='controller_manager',
+            executable='spawner.py',
+            arguments=['joint_state_broadcaster'],
+            output='screen',
         ),
 
         Node(
-            package="controller_manager",
-            executable="spawner.py",
-            arguments=["joint_trajectory_position_controller"],
-            output="screen",
+            package='controller_manager',
+            executable='spawner.py',
+            arguments=['joint_trajectory_position_controller'],
+            output='screen',
         ),
 
         Node(
-            package="controller_manager",
-            executable="spawner.py",
-            arguments=["gripper_trajectory_position_controller"],
-            output="screen",
+            package='controller_manager',
+            executable='spawner.py',
+            arguments=['gripper_trajectory_position_controller'],
+            output='screen',
         ),
 
         Node(
