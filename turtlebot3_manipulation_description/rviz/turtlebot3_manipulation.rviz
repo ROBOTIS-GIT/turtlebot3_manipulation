@@ -7,13 +7,6 @@ Panels:
         - /Global Options1
         - /Status1
         - /TF1
-        - /TF1/Tree1/base_footprint1
-        - /TF1/Tree1/base_footprint1/base_link1
-        - /TF1/Tree1/base_footprint1/base_link1/link11
-        - /TF1/Tree1/base_footprint1/base_link1/link11/link21
-        - /TF1/Tree1/base_footprint1/base_link1/link11/link21/link31
-        - /TF1/Tree1/base_footprint1/base_link1/link11/link21/link31/link41
-        - /TF1/Tree1/base_footprint1/base_link1/link11/link21/link31/link41/link51
       Splitter Ratio: 0.5055555701255798
     Tree Height: 784
   - Class: rviz_common/Selection
@@ -219,21 +212,13 @@ Visualization Manager:
           Value: true
         end_effector_link:
           Value: true
-        gripper_link:
-          Value: true
-        gripper_link_sub:
-          Value: true
         imu_link:
           Value: true
         link1:
           Value: true
-        link2:
-          Value: true
-        link3:
-          Value: true
-        link4:
-          Value: true
         link5:
+          Value: true
+        odom:
           Value: true
         wheel_left_link:
           Value: true
@@ -245,35 +230,27 @@ Visualization Manager:
       Show Axes: true
       Show Names: true
       Tree:
-        base_footprint:
-          base_link:
-            base_scan:
-              {}
-            camera_link:
-              camera_rgb_frame:
-                camera_rgb_optical_frame:
-                  {}
-            caster_back_left_link:
-              {}
-            caster_back_right_link:
-              {}
-            imu_link:
-              {}
-            link1:
-              link2:
-                link3:
-                  link4:
-                    link5:
-                      end_effector_link:
-                        {}
-                      gripper_link:
-                        {}
-                      gripper_link_sub:
-                        {}
-            wheel_left_link:
-              {}
-            wheel_right_link:
-              {}
+        odom:
+          base_footprint:
+            base_link:
+              base_scan:
+                {}
+              camera_link:
+                camera_rgb_frame:
+                  camera_rgb_optical_frame:
+                    {}
+              caster_back_left_link:
+                {}
+              caster_back_right_link:
+                {}
+              imu_link:
+                {}
+              link1:
+                {}
+              wheel_left_link:
+                {}
+              wheel_right_link:
+                {}
       Update Interval: 0
       Value: true
     - Angle Tolerance: 0.10000000149011612
@@ -348,7 +325,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz_default_plugins/Orbit
-      Distance: 0.8907851576805115
+      Distance: 5.429967403411865
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
@@ -382,5 +359,5 @@ Window Geometry:
   Views:
     collapsed: true
   Width: 1279
-  X: 180
-  Y: 158
+  X: 45
+  Y: 44
