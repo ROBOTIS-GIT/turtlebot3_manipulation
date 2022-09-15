@@ -46,6 +46,9 @@ def generate_launch_description():
             ' ',
             'prefix:=',
             prefix,
+            ' ',
+            'use_fake_hardware:=',
+            'False',
         ]
     )
 
