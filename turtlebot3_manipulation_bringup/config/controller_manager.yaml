@@ -86,6 +86,7 @@ joint_trajectory_controller:
       - joint2
       - joint3
       - joint4
+    interface_name: position
 
     command_interfaces:
       - position
