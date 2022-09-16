@@ -25,8 +25,8 @@ https://github.com/ROBOTIS-GIT/turtlebot3/blob/kinetic-devel/turtlebot3_descript
   <xacro:Link reference="${prefix}link4"/>
   <xacro:Link reference="${prefix}link5"/>
 
-  <xacro:Link reference="${prefix}gripper_link"/>
-  <xacro:Link reference="${prefix}gripper_link_sub"/>
+  <xacro:Link reference="${prefix}gripper_left_link"/>
+  <xacro:Link reference="${prefix}gripper_right_link"/>
 
   <gazebo reference="${prefix}end_effector_link">
     <material>Gazebo/Red</material>

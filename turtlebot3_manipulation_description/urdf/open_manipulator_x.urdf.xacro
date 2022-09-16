@@ -25,6 +25,7 @@ https://github.com/ROBOTIS-GIT/open_manipulator/blob/kinetic-devel/open_manipula
       <origin xyz="0 0 0.017" rpy="0 0 0"/>
       <geometry>
         <box size="0.0465 0.0285 0.034"/>
+        <!-- <mesh filename="${meshes_file_direction}/link1.stl" scale="0.001 0.001 0.001"/> -->
       </geometry>
     </collision>
 
@@ -58,6 +59,7 @@ https://github.com/ROBOTIS-GIT/open_manipulator/blob/kinetic-devel/open_manipula
       <origin xyz="0 0 0.0475" rpy="0 0 0"/>
       <geometry>
         <box size="0.0285 0.034 0.0465"/>
+        <!-- <mesh filename="${meshes_file_direction}/link2.stl" scale="0.001 0.001 0.001"/> -->
       </geometry>
     </collision>
 
@@ -91,6 +93,7 @@ https://github.com/ROBOTIS-GIT/open_manipulator/blob/kinetic-devel/open_manipula
       <origin xyz="0 0 0.09265" rpy="0 0 0"/>
       <geometry>
         <box size="0.02375 0.034 0.12485"/>
+        <!-- <mesh filename="${meshes_file_direction}/link3.stl" scale="0.001 0.001 0.001"/> -->
       </geometry>
     </collision>
 
@@ -124,6 +127,7 @@ https://github.com/ROBOTIS-GIT/open_manipulator/blob/kinetic-devel/open_manipula
       <origin xyz="0.0675 0 0" rpy="0 0 0"/>
       <geometry>
         <box size="0.135 0.034 0.02375"/>
+        <!-- <mesh filename="${meshes_file_direction}/link4.stl" scale="0.001 0.001 0.001"/> -->
       </geometry>
     </collision>
 
@@ -157,6 +161,7 @@ https://github.com/ROBOTIS-GIT/open_manipulator/blob/kinetic-devel/open_manipula
       <origin xyz="0.0555 0 0.00705" rpy="0 0 0"/>
       <geometry>
         <box size="0.055 0.130 0.061"/>
+        <!-- <mesh filename="${meshes_file_direction}/link5.stl" scale="0.001 0.001 0.001"/> -->
       </geometry>
     </collision>
 
@@ -169,7 +174,15 @@ https://github.com/ROBOTIS-GIT/open_manipulator/blob/kinetic-devel/open_manipula
     </inertial>
   </link>
 
-  <link name="${prefix}gripper_link">
+  <joint name="${prefix}gripper_left_joint" type="prismatic">
+    <parent link="${prefix}link5"/>
+    <child link="${prefix}gripper_left_link"/>
+    <origin xyz="0.0817 0.021 0.0" rpy="0 0 0"/>
+    <axis xyz="0 1 0"/>
+    <limit velocity="4.8" effort="1" lower="-0.010" upper="0.019" />
+  </joint>
+
+  <link name="${prefix}gripper_left_link">
     <visual>
       <origin xyz="0.0 0.0 0" rpy="0 0 0"/>
       <geometry>
@@ -182,6 +195,7 @@ https://github.com/ROBOTIS-GIT/open_manipulator/blob/kinetic-devel/open_manipula
       <origin xyz="0.052 0.0075 0" rpy="0 0 0"/>
       <geometry>
         <box size="0.070 0.035 0.055"/>
+        <!-- <mesh filename="${meshes_file_direction}/gripper_left_palm.stl" scale="0.001 0.001 0.001"/> -->
       </geometry>
     </collision>
 
@@ -194,15 +208,16 @@ https://github.com/ROBOTIS-GIT/open_manipulator/blob/kinetic-devel/open_manipula
     </inertial>
   </link>
 
-  <joint name="${prefix}gripper" type="prismatic">
+  <joint name="${prefix}gripper_right_joint" type="prismatic">
     <parent link="${prefix}link5"/>
-    <child link="${prefix}gripper_link"/>
-    <origin xyz="0.0817 0.021 0.0" rpy="0 0 0"/>
-    <axis xyz="0 1 0"/>
+    <child link="${prefix}gripper_right_link"/>
+    <origin xyz="0.0817 -0.021 0" rpy="0 0 0"/>
+    <axis xyz="0 -1 0"/>
     <limit velocity="4.8" effort="1" lower="-0.010" upper="0.019" />
+    <mimic joint="${prefix}gripper" multiplier="1"/>
   </joint>
 
-  <link name="${prefix}gripper_link_sub">
+  <link name="${prefix}gripper_right_link">
     <visual>
       <origin xyz="0.0 -0.0 0" rpy="0 0 0"/>
       <geometry>
@@ -215,6 +230,7 @@ https://github.com/ROBOTIS-GIT/open_manipulator/blob/kinetic-devel/open_manipula
       <origin xyz="0.052 -0.0075 0" rpy="0 0 0"/>
       <geometry>
         <box size="0.070 0.035 0.055"/>
+        <!-- <mesh filename="${meshes_file_direction}/gripper_right_palm.stl" scale="0.001 0.001 0.001"/> -->
       </geometry>
     </collision>
 
@@ -227,15 +243,6 @@ https://github.com/ROBOTIS-GIT/open_manipulator/blob/kinetic-devel/open_manipula
     </inertial>
 
   </link>
-
-  <joint name="${prefix}gripper_sub" type="prismatic">
-    <parent link="${prefix}link5"/>
-    <child link="${prefix}gripper_link_sub"/>
-    <origin xyz="0.0817 -0.021 0" rpy="0 0 0"/>
-    <axis xyz="0 -1 0"/>
-    <limit velocity="4.8" effort="1" lower="-0.010" upper="0.019" />
-    <mimic joint="${prefix}gripper" multiplier="1"/>
-  </joint>
 
   <joint name="${prefix}end_effector_joint" type="fixed">
     <parent link="${prefix}link5"/>
