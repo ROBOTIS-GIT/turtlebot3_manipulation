@@ -18,9 +18,7 @@
 
 from launch import LaunchDescription
 from launch.actions import DeclareLaunchArgument
-from launch.actions import IncludeLaunchDescription
 from launch.conditions import IfCondition
-from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.substitutions import Command
 from launch.substitutions import FindExecutable
 from launch.substitutions import LaunchConfiguration
@@ -115,36 +113,10 @@ def generate_launch_description():
             default_value='3.0',
             description='Slowdown factor.'),
 
-        IncludeLaunchDescription(
-            PythonLaunchDescriptionSource(
-                [
-                    PathJoinSubstitution(
-                        [
-                            FindPackageShare('gazebo_ros'),
-                            'launch',
-                            'gazebo.launch.py'
-                        ]
-                    )
-                ]
-            ),
-            launch_arguments={'verbose': 'false'}.items(),
-            condition=IfCondition(use_sim),
-        ),
-
-        Node(
-            package='gazebo_ros',
-            executable='spawn_entity.py',
-            arguments=[
-                '-topic', 'robot_description',
-                '-entity', 'turtlebot3_manipulation_system'],
-            output='screen',
-            condition=IfCondition(use_sim),
-        ),
-
         Node(
             package='robot_state_publisher',
             executable='robot_state_publisher',
-            parameters=[{'robot_description': urdf_file}],
+            parameters=[{'robot_description': urdf_file, 'use_sim_time': use_sim}],
             output='screen'),
 
         Node(
