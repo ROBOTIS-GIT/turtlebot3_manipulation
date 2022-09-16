@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 #
-# Copyright 2012 ROBOTIS CO., LTD.
+# Copyright 2022 ROBOTIS CO., LTD.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -135,13 +135,6 @@ def generate_launch_description():
         Node(
             package='controller_manager',
             executable='spawner.py',
-            arguments=['diff_drive_controller'],
-            output='screen',
-        ),
-
-        Node(
-            package='controller_manager',
-            executable='spawner.py',
             arguments=['joint_state_broadcaster'],
             output='screen',
         ),
@@ -149,14 +142,28 @@ def generate_launch_description():
         Node(
             package='controller_manager',
             executable='spawner.py',
-            arguments=['joint_trajectory_position_controller'],
+            arguments=['diff_drive_controller'],
             output='screen',
         ),
 
         Node(
             package='controller_manager',
             executable='spawner.py',
-            arguments=['gripper_trajectory_position_controller'],
+            arguments=['imu_broadcaster'],
+            output='screen',
+        ),
+
+        Node(
+            package='controller_manager',
+            executable='spawner.py',
+            arguments=['joint_trajectory_controller'],
+            output='screen',
+        ),
+
+        Node(
+            package='controller_manager',
+            executable='spawner.py',
+            arguments=['gripper_position_controller'],
             output='screen',
         ),
 

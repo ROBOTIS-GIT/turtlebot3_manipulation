@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 #
-# Copyright 2012 ROBOTIS CO., LTD.
+# Copyright 2022 ROBOTIS CO., LTD.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -21,6 +21,7 @@ from launch.actions import DeclareLaunchArgument
 from launch.actions import ExecuteProcess
 from launch.actions import IncludeLaunchDescription
 from launch.actions import RegisterEventHandler
+from launch.conditions import IfCondition
 from launch.event_handlers import OnProcessExit
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.substitutions import Command
@@ -58,6 +59,14 @@ def generate_launch_description():
         ]
     )
 
+    rviz_config_file = PathJoinSubstitution(
+        [
+            FindPackageShare('turtlebot3_manipulation_bringup'),
+            'rviz',
+            'turtlebot3_manipulation.rviz'
+        ]
+    )
+
     spawn_entity = Node(
         package='gazebo_ros',
         executable='spawn_entity.py',
@@ -73,21 +82,27 @@ def generate_launch_description():
         output='screen'
     )
 
+    load_imu_broadcaster = ExecuteProcess(
+        cmd=['ros2', 'control', 'load_controller', '--set-state', 'start',
+             'imu_broadcaster'],
+        output='screen'
+    )
+
     load_diff_drive_controller = ExecuteProcess(
         cmd=['ros2', 'control', 'load_controller', '--set-state', 'start',
              'diff_drive_controller'],
         output='screen'
     )
 
-    load_joint_trajectory_position_controller = ExecuteProcess(
+    load_joint_trajectory_controller = ExecuteProcess(
         cmd=['ros2', 'control', 'load_controller', '--set-state', 'start',
-             'joint_trajectory_position_controller'],
+             'joint_trajectory_controller'],
         output='screen'
     )
 
-    load_gripper_trajectory_position_controller = ExecuteProcess(
+    load_gripper_position_controller = ExecuteProcess(
         cmd=['ros2', 'control', 'load_controller', '--set-state', 'start',
-             'gripper_trajectory_position_controller'],
+             'gripper_position_controller'],
         output='screen'
     )
 
@@ -117,6 +132,13 @@ def generate_launch_description():
         RegisterEventHandler(
             event_handler=OnProcessExit(
                 target_action=load_joint_state_broadcaster,
+                on_exit=[load_imu_broadcaster],
+            )
+        ),
+
+        RegisterEventHandler(
+            event_handler=OnProcessExit(
+                target_action=load_imu_broadcaster,
                 on_exit=[load_diff_drive_controller],
             )
         ),
@@ -124,14 +146,14 @@ def generate_launch_description():
         RegisterEventHandler(
             event_handler=OnProcessExit(
                 target_action=load_diff_drive_controller,
-                on_exit=[load_joint_trajectory_position_controller],
+                on_exit=[load_joint_trajectory_controller],
             )
         ),
 
         RegisterEventHandler(
             event_handler=OnProcessExit(
-                target_action=load_joint_trajectory_position_controller,
-                on_exit=[load_gripper_trajectory_position_controller],
+                target_action=load_joint_trajectory_controller,
+                on_exit=[load_gripper_position_controller],
             )
         ),
 
@@ -157,4 +179,11 @@ def generate_launch_description():
             output='screen'),
 
         spawn_entity,
+
+        Node(
+            package='rviz2',
+            executable='rviz2',
+            arguments=['-d', rviz_config_file],
+            output='screen',
+            condition=IfCondition(start_rviz)),
     ])
