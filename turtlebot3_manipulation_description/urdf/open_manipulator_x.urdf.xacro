@@ -24,7 +24,7 @@ https://github.com/ROBOTIS-GIT/open_manipulator/blob/kinetic-devel/open_manipula
     <collision>
       <origin xyz="0 0 0.017" rpy="0 0 0"/>
       <geometry>
-        <box size="0.0465 0.0285 0.034"/>
+        <box size="0.0465 0.0285 0.024"/>
         <!-- <mesh filename="${meshes_file_direction}/link1.stl" scale="0.001 0.001 0.001"/> -->
       </geometry>
     </collision>
@@ -201,7 +201,7 @@ https://github.com/ROBOTIS-GIT/open_manipulator/blob/kinetic-devel/open_manipula
 
     <inertial>
       <origin xyz="0 0 0" />
-      <mass value="0.017" />
+      <mass value="1.0e-03" />
       <inertia ixx="1.0e-03" ixy="0.0" ixz="0.0"
                iyy="1.0e-03" iyz="0.0"
                izz="1.0e-03" />
@@ -236,12 +236,11 @@ https://github.com/ROBOTIS-GIT/open_manipulator/blob/kinetic-devel/open_manipula
 
     <inertial>
       <origin xyz="0 0 0" />
-      <mass value="0.017" />
+      <mass value="1.0e-03" />
       <inertia ixx="1.0e-03" ixy="0.0" ixz="0.0"
                iyy="1.0e-03" iyz="0.0"
                izz="1.0e-03" />
     </inertial>
-
   </link>
 
   <joint name="${prefix}end_effector_joint" type="fixed">
@@ -260,9 +259,11 @@ https://github.com/ROBOTIS-GIT/open_manipulator/blob/kinetic-devel/open_manipula
      </visual>
 
     <inertial>
-      <origin xyz="0.0 0.0 0.0" rpy="0 0 0"/>
-      <mass value="0.001"/>
-      <inertia ixx="1.0e-06" ixy="0.0" ixz="0.0" iyy="1.0e-06" iyz="0.0" izz="1.0e-06" />
+      <origin xyz="0 0 0" />
+      <mass value="1.0e-03" />
+      <inertia ixx="1.0e-03" ixy="0.0" ixz="0.0"
+               iyy="1.0e-03" iyz="0.0"
+               izz="1.0e-03" />
     </inertial>
   </link>
 
