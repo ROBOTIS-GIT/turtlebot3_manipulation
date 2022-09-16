@@ -24,8 +24,6 @@ https://github.com/ros-controls/ros2_control_demos/blob/foxy/ros2_control_demo_d
           </xacro:if>
           <xacro:unless value="${use_fake_hardware}">
             <plugin>turtlebot3_manipulation_hardware/TurtleBot3WafflePiSystemHardware</plugin>
-            <param name="example_param_hw_start_duration_sec">2.0</param>
-            <param name="example_param_hw_stop_duration_sec">3.0</param>
           </xacro:unless>
         </hardware>
       </xacro:unless>
