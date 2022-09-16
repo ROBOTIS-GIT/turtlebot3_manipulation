@@ -26,12 +26,6 @@
   <!-- Include TurtleBot3 Manipulation ros2 control macro -->
   <xacro:include filename="$(find turtlebot3_manipulation_description)/ros2_control/turtlebot3_manipulation_system.ros2_control.xacro" />
 
-  <gazebo>
-    <plugin name="gazebo_ros2_control" filename="libgazebo_ros2_control.so">
-      <parameters>$(find turtlebot3_manipulation_bringup)/config/controller_manager.yaml</parameters>
-    </plugin>
-  </gazebo>
-
   <xacro:turtlebot3_waffle_pi prefix="$(arg prefix)" />
   <xacro:turtlebot3_waffle_pi_gazebo prefix="$(arg prefix)" />
 
@@ -50,4 +44,11 @@
     use_fake_hardware="$(arg use_fake_hardware)"
     fake_sensor_commands="$(arg fake_sensor_commands)"
     slowdown="$(arg slowdown)"/>
+
+  <gazebo>
+    <plugin name="gazebo_ros2_control" filename="libgazebo_ros2_control.so">
+      <parameters>$(find turtlebot3_manipulation_bringup)/config/controller_manager.yaml</parameters>
+    </plugin>
+  </gazebo>
+
 </robot>
