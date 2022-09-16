@@ -18,20 +18,78 @@
 
 from launch import LaunchDescription
 from launch.actions import DeclareLaunchArgument
+from launch.actions import ExecuteProcess
 from launch.actions import IncludeLaunchDescription
+from launch.actions import RegisterEventHandler
+from launch.event_handlers import OnProcessExit
 from launch.launch_description_sources import PythonLaunchDescriptionSource
+from launch.substitutions import Command
+from launch.substitutions import FindExecutable
 from launch.substitutions import LaunchConfiguration
-from launch.substitutions import ThisLaunchFileDir
+from launch.substitutions import PathJoinSubstitution
+
+from launch_ros.actions import Node
+from launch_ros.substitutions import FindPackageShare
 
 
 def generate_launch_description():
     start_rviz = LaunchConfiguration('start_rviz')
     prefix = LaunchConfiguration('prefix')
     use_sim = LaunchConfiguration('use_sim')
-    use_fake_hardware = LaunchConfiguration('use_fake_hardware')
-    fake_sensor_commands = LaunchConfiguration('fake_sensor_commands')
-    slowdown = LaunchConfiguration('slowdown')
 
+    urdf_file = Command(
+        [
+            PathJoinSubstitution([FindExecutable(name='xacro')]),
+            ' ',
+            PathJoinSubstitution(
+                [
+                    FindPackageShare('turtlebot3_manipulation_description'),
+                    'urdf',
+                    'turtlebot3_manipulation.urdf.xacro'
+                ]
+            ),
+            ' ',
+            'prefix:=',
+            prefix,
+            ' ',
+            'use_sim:=',
+            use_sim,
+            ' ',
+        ]
+    )
+
+    spawn_entity = Node(
+        package='gazebo_ros',
+        executable='spawn_entity.py',
+        arguments=[
+            '-topic', 'robot_description',
+            '-entity', 'turtlebot3_manipulation_system'],
+        output='screen',
+    )
+
+    load_joint_state_broadcaster = ExecuteProcess(
+        cmd=['ros2', 'control', 'load_controller', '--set-state', 'start',
+             'joint_state_broadcaster'],
+        output='screen'
+    )
+
+    load_diff_drive_controller = ExecuteProcess(
+        cmd=['ros2', 'control', 'load_controller', '--set-state', 'start',
+             'diff_drive_controller'],
+        output='screen'
+    )
+
+    load_joint_trajectory_position_controller = ExecuteProcess(
+        cmd=['ros2', 'control', 'load_controller', '--set-state', 'start',
+             'joint_trajectory_position_controller'],
+        output='screen'
+    )
+
+    load_gripper_trajectory_position_controller = ExecuteProcess(
+        cmd=['ros2', 'control', 'load_controller', '--set-state', 'start',
+             'gripper_trajectory_position_controller'],
+        output='screen'
+    )
 
     return LaunchDescription([
         DeclareLaunchArgument(
@@ -49,31 +107,54 @@ def generate_launch_description():
             default_value='true',
             description='Start robot in Gazebo simulation.'),
 
-        DeclareLaunchArgument(
-            'use_fake_hardware',
-            default_value='false',
-            description='Start robot with fake hardware mirroring command to its states.'),
+       RegisterEventHandler(
+            event_handler=OnProcessExit(
+                target_action=spawn_entity,
+                on_exit=[load_joint_state_broadcaster],
+            )
+        ),
 
-        DeclareLaunchArgument(
-            'fake_sensor_commands',
-            default_value='false',
-            description='Enable fake command interfaces for sensors used for simple simulations. \
-            Used only if "use_fake_hardware" parameter is true.'),
+        RegisterEventHandler(
+            event_handler=OnProcessExit(
+                target_action=load_joint_state_broadcaster,
+                on_exit=[load_diff_drive_controller],
+            )
+        ),
 
-        DeclareLaunchArgument(
-            'slowdown',
-            default_value='3.0',
-            description='Slowdown factor.'),
+        RegisterEventHandler(
+            event_handler=OnProcessExit(
+                target_action=load_diff_drive_controller,
+                on_exit=[load_joint_trajectory_position_controller],
+            )
+        ),
+
+        RegisterEventHandler(
+            event_handler=OnProcessExit(
+                target_action=load_joint_trajectory_position_controller,
+                on_exit=[load_gripper_trajectory_position_controller],
+            )
+        ),
 
         IncludeLaunchDescription(
-            PythonLaunchDescriptionSource([ThisLaunchFileDir(), '/base.launch.py']),
-            launch_arguments={
-                'start_rviz': start_rviz,
-                'prefix': prefix,
-                'use_sim': use_sim,
-                'use_fake_hardware': use_fake_hardware,
-                'fake_sensor_commands': fake_sensor_commands,
-                'slowdown': slowdown,
-            }.items(),
-        )
+            PythonLaunchDescriptionSource(
+                [
+                    PathJoinSubstitution(
+                        [
+                            FindPackageShare('gazebo_ros'),
+                            'launch',
+                            'gazebo.launch.py'
+                        ]
+                    )
+                ]
+            ),
+            launch_arguments={'verbose': 'false'}.items(),
+        ),
+
+        Node(
+            package='robot_state_publisher',
+            executable='robot_state_publisher',
+            parameters=[{'robot_description': urdf_file, 'use_sim_time': use_sim}],
+            output='screen'),
+
+        spawn_entity,
     ])
