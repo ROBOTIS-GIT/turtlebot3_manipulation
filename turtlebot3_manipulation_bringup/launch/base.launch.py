@@ -163,7 +163,7 @@ def generate_launch_description():
         Node(
             package='controller_manager',
             executable='spawner.py',
-            arguments=['gripper_position_controller'],
+            arguments=['gripper_trajectory_controller'],
             output='screen',
         ),
 
