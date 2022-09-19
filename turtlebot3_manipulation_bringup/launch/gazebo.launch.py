@@ -100,9 +100,9 @@ def generate_launch_description():
         output='screen'
     )
 
-    load_gripper_position_controller = ExecuteProcess(
+    load_gripper_trajectory_controller = ExecuteProcess(
         cmd=['ros2', 'control', 'load_controller', '--set-state', 'start',
-             'gripper_position_controller'],
+             'gripper_trajectory_controller'],
         output='screen'
     )
 
@@ -153,7 +153,7 @@ def generate_launch_description():
         RegisterEventHandler(
             event_handler=OnProcessExit(
                 target_action=load_joint_trajectory_controller,
-                on_exit=[load_gripper_position_controller],
+                on_exit=[load_gripper_trajectory_controller],
             )
         ),
 
