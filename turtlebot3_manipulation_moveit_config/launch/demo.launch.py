@@ -113,9 +113,9 @@ def generate_launch_description():
               rviz_launch,
               static_tf_launch,
               rsp_launch,
-#              move_group_launch,
+              move_group_launch,
 #              ros2_control_node,
-#              warehouse_db_launch,
+              warehouse_db_launch,
 #              spawn_controllers_launch
           ]
     )
