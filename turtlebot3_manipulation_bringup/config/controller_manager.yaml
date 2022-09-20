@@ -11,11 +11,11 @@ controller_manager:
     imu_broadcaster:
       type: imu_sensor_broadcaster/IMUSensorBroadcaster
 
-    joint_trajectory_controller:
+    arm_controller:
       type: joint_trajectory_controller/JointTrajectoryController
 
-    gripper_trajectory_controller:
-      type: joint_trajectory_controller/JointTrajectoryController
+    gripper_controller:
+      type: position_controllers/GripperActionController
 
 diff_drive_controller:
   ros__parameters:
@@ -79,7 +79,7 @@ imu_broadcaster:
     frame_id: imu_link
     sensor_name: imu
 
-joint_trajectory_controller:
+arm_controller:
   ros__parameters:
     joints:
       - joint1
@@ -93,6 +93,7 @@ joint_trajectory_controller:
 
     state_interfaces:
       - position
+      - velocity
 
     state_publish_rate: 200.0 # Defaults to 50
     action_monitor_rate: 20.0 # Defaults to 20
@@ -104,24 +105,25 @@ joint_trajectory_controller:
       stopped_velocity_tolerance: 0.01 # Defaults to 0.01
       goal_time: 0.0 # Defaults to 0.0 (start immediately)
 
-gripper_trajectory_controller:
+gripper_controller:
   ros__parameters:
-    joints:
-      - gripper_left_joint
-    interface_name: position
+    joint: gripper_left_joint
+#      - gripper_left_joint
+#    interface_name: position
 
-    command_interfaces:
-      - position
+#    command_interfaces:
+#      - position
 
-    state_interfaces:
-      - position
+#    state_interfaces:
+#      - position
+#      - velocity
 
-    state_publish_rate: 200.0 # Defaults to 50
-    action_monitor_rate: 20.0 # Defaults to 20
+#    state_publish_rate: 200.0 # Defaults to 50
+#    action_monitor_rate: 20.0 # Defaults to 20
 
-    allow_partial_joints_goal: false # Defaults to false
-    open_loop_control: true
-    allow_integration_in_goal_trajectories: true
-    constraints:
-      stopped_velocity_tolerance: 0.01 # Defaults to 0.01
-      goal_time: 0.0 # Defaults to 0.0 (start immediately)
+#    allow_partial_joints_goal: false # Defaults to false
+#    open_loop_control: true
+#    allow_integration_in_goal_trajectories: true
+#    constraints:
+#      stopped_velocity_tolerance: 0.01 # Defaults to 0.01
+#      goal_time: 0.0 # Defaults to 0.0 (start immediately)
