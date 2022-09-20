@@ -139,10 +139,10 @@ TurtleBot3ManipulationSystemHardware::export_command_interfaces()
 hardware_interface::return_type TurtleBot3ManipulationSystemHardware::start()
 {
   RCLCPP_INFO(rclcpp::get_logger("turtlebot3_manipulation"), "Ready for start");
-  dynamixel_sdk_wrapper_->write_byte(opencr_control_table.sound.address, (uint8_t *)1);
+  dynamixel_sdk_wrapper_->write_byte(opencr_control_table.sound.address, 1);
 
-  dynamixel_sdk_wrapper_->write_byte(opencr_control_table.motor_torque.address, (uint8_t *)0);
-  dynamixel_sdk_wrapper_->write_byte(opencr_control_table.torque_joint.address, (uint8_t *)0);
+  dynamixel_sdk_wrapper_->write_byte(opencr_control_table.motor_torque.address, 0);
+  dynamixel_sdk_wrapper_->write_byte(opencr_control_table.torque_joint.address, 0);
 
   status_ = hardware_interface::status::STARTED;
 
