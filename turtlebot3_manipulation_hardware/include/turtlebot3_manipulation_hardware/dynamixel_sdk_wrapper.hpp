@@ -36,15 +36,23 @@ public:
   bool open_port(const std::string & usb_port);
   bool set_baud_rate(const uint32_t & baud_rate);
 
-  int32_t is_connected(std::string & log);
+  int32_t ping(std::string & log);
+
+  bool read(
+    const uint16_t & address,
+    const uint16_t & length,
+    uint8_t * data,
+    std::string & log);
+
+  uint8_t read(const uint16_t & address);
 
 private:
   dynamixel::PortHandler * port_handler_;
   dynamixel::PacketHandler * packet_handler_;
 
-  uint8_t id_;
-
   std::mutex sdk_handler_m_;
+
+  uint8_t id_;
 };
 }  // namespace turtlebot3_manipulation_hardware
 }  // namespace robotis
