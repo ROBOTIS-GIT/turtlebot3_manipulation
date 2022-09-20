@@ -57,11 +57,11 @@ hardware_interface::return_type TurtleBot3ManipulationSystemHardware::configure(
     return hardware_interface::return_type::ERROR;
   }
 
-  const char * log = nullptr;
+  std::string log;
   int32_t model_number = dynamixel_sdk_wrapper_->is_connected(log);
   RCLCPP_INFO(
     rclcpp::get_logger("turtlebot3_manipulation"),
-    "model number %d [%s]", model_number, *log);
+    "model number %d [%s]", model_number, log.c_str());
 
   return hardware_interface::return_type::OK;
 }

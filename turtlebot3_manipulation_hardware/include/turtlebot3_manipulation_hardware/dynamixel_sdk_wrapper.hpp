@@ -36,7 +36,7 @@ public:
   bool open_port(const std::string & usb_port);
   bool set_baud_rate(const uint32_t & baud_rate);
 
-  int32_t is_connected(const char * log);
+  int32_t is_connected(std::string & log);
 
 private:
   dynamixel::PortHandler * port_handler_;
