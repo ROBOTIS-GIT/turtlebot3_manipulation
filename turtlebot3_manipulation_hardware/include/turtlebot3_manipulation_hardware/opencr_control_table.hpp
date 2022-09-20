@@ -19,6 +19,8 @@
 
 #include <stdint.h>
 
+#define CONTROL_TABLE_SIZE 330
+
 namespace robotis
 {
 namespace turtlebot3_manipulation_hardware
@@ -86,8 +88,8 @@ typedef struct
   ControlItem present_position_left = {136, 4};
   ControlItem present_position_right = {140, 4};
 
-  ControlItem motor_connect = {148, 1};
-  ControlItem motor_torque = {149, 1};
+  ControlItem connect_wheels = {148, 1};
+  ControlItem torque_wheels = {149, 1};
 
   ControlItem cmd_velocity_linear_x = {150, 4};
   ControlItem cmd_velocity_linear_y = {154, 4};
@@ -100,7 +102,7 @@ typedef struct
   ControlItem profile_acceleration_left = {174, 4};
   ControlItem profile_acceleration_right = {178, 4};
 
-  ControlItem torque_joint = {199, 1};
+  ControlItem torque_joints = {199, 1};
 
   ControlItem goal_position_joint_1 = {200, 4};
   ControlItem goal_position_joint_2 = {204, 4};
@@ -146,8 +148,6 @@ typedef struct
 
   ControlItem profile_velocity_update_write = {328, 1};
   ControlItem profile_velocity_update_read = {329, 1};
-
-  const uint32_t size = 330;
 } ControlTable;
 
 const ControlTable opencr_control_table;
