@@ -44,17 +44,20 @@ bool DynamixelSDKWrapper::set_baud_rate(const uint32_t & baud_rate)
   return port_handler_->setBaudRate(baud_rate);
 }
 
-int32_t DynamixelSDKWrapper::is_connected(const char ** log)
+int32_t DynamixelSDKWrapper::is_connected(const char * log)
 {
   std::lock_guard<std::mutex> lock(sdk_handler_m_);
 
+  int32_t dxl_comm_result = COMM_RX_FAIL;
   uint8_t dxl_error = 0;
-  int32_t model_number = packet_handler_->ping(port_handler_, id_, &dxl_error);
 
-  if (dxl_error != 0) {
-    if (log != NULL) {
-      *log = packet_handler_->getRxPacketError(dxl_error);
-    }
+  uint16_t model_number = 0;
+  dxl_comm_result = packet_handler_->ping(port_handler_, id_, &model_number, &dxl_error);
+
+  if (dxl_comm_result != COMM_SUCCESS) {
+    log = packet_handler_->getTxRxResult(dxl_comm_result);
+  } else if (dxl_error != 0) {
+    log = packet_handler_->getRxPacketError(dxl_error);
   }
 
   return model_number;
