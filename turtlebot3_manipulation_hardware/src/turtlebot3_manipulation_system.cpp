@@ -39,24 +39,22 @@ hardware_interface::return_type TurtleBot3ManipulationSystemHardware::configure(
     RCLCPP_INFO(
       rclcpp::get_logger("turtlebot3_manipulation"),
       "Succeeded to open port");
-
-    return hardware_interface::return_type::ERROR;
   } else {
     RCLCPP_FATAL(
       rclcpp::get_logger("turtlebot3_manipulation"),
       "Failed to open port");
+    return hardware_interface::return_type::ERROR;
   }
 
   if (dynamixel_sdk_wrapper_->set_baud_rate(1000000)) {
     RCLCPP_INFO(
       rclcpp::get_logger("turtlebot3_manipulation"),
       "Succeeded to set baudrate");
-
-    return hardware_interface::return_type::ERROR;
   } else {
     RCLCPP_FATAL(
       rclcpp::get_logger("turtlebot3_manipulation"),
       "Failed to set baudrate");
+    return hardware_interface::return_type::ERROR;
   }
 
   const char ** log = nullptr;
