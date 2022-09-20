@@ -87,7 +87,7 @@ typedef struct
   ControlItem present_position_right = {140, 4};
 
   ControlItem motor_connect = {148, 1};
-  ControlItem motor_torque_enable = {149, 1};
+  ControlItem motor_torque = {149, 1};
 
   ControlItem cmd_velocity_linear_x = {150, 4};
   ControlItem cmd_velocity_linear_y = {154, 4};
