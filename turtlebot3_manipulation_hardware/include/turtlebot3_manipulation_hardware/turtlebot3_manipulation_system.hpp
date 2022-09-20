@@ -66,6 +66,15 @@ public:
 
 private:
   std::unique_ptr<DynamixelSDKWrapper> dynamixel_sdk_wrapper_;
+
+  std::vector<double> dxl_wheel_commands_;
+  std::vector<double> dxl_joint_commands_;
+  std::vector<double> dxl_gripper_commands_;
+
+  std::vector<double> dxl_positions_;
+  std::vector<double> dxl_velocities_;
+
+  std::vector<double> opencr_sensor_states_;
 };
 }  // turtlebot3_manipulation_hardware
 }  // robotis

@@ -18,7 +18,6 @@
 
 #include <chrono>
 #include <cmath>
-#include <limits>
 #include <memory>
 #include <vector>
 
@@ -32,7 +31,10 @@ namespace turtlebot3_manipulation_hardware
 hardware_interface::return_type TurtleBot3ManipulationSystemHardware::configure(
   const hardware_interface::HardwareInfo & info)
 {
-  (void) info;
+  if (configure_default(info) != hardware_interface::return_type::OK)
+  {
+    return hardware_interface::return_type::ERROR;
+  }
 
   dynamixel_sdk_wrapper_ = std::make_unique<DynamixelSDKWrapper>(200);
   if (dynamixel_sdk_wrapper_->open_port("/dev/ttyACM0")) {
@@ -61,8 +63,19 @@ hardware_interface::return_type TurtleBot3ManipulationSystemHardware::configure(
   int32_t model_number = dynamixel_sdk_wrapper_->is_connected(log);
   RCLCPP_INFO(
     rclcpp::get_logger("turtlebot3_manipulation"),
-    "model number %d [%s]", model_number, log.c_str());
+    "OpenCR Model Number %d [%s]", model_number, log.c_str());
 
+  dxl_wheel_commands_.resize(2, 0.0);
+  dxl_joint_commands_.resize(4, 0.0);
+  dxl_gripper_commands_.resize(2, 0.0);
+
+  dxl_positions_.resize(info_.joints.size(), 0.0);
+  dxl_velocities_.resize(info_.joints.size(), 0.0);
+
+  opencr_sensor_states_.resize(
+    info_.sensors[0].state_interfaces.size(), 0.0);
+
+  status_ = hardware_interface::status::CONFIGURED;
   return hardware_interface::return_type::OK;
 }
 
@@ -70,19 +83,20 @@ std::vector<hardware_interface::StateInterface>
 TurtleBot3ManipulationSystemHardware::export_state_interfaces()
 {
   std::vector<hardware_interface::StateInterface> state_interfaces;
-  // for (uint8_t i = 0; i < info_.joints.size(); i++)
-  // {
-  //   state_interfaces.emplace_back(hardware_interface::StateInterface(
-  //     info_.joints[i].name, hardware_interface::HW_IF_POSITION, &hw_positions_[i]));
-  //   state_interfaces.emplace_back(hardware_interface::StateInterface(
-  //     info_.joints[i].name, hardware_interface::HW_IF_VELOCITY, &hw_velocities_[i]));
-  // }
+  for (uint8_t i = 0; i < info_.joints.size(); i++) {
+    state_interfaces.emplace_back(hardware_interface::StateInterface(
+      info_.joints[i].name, hardware_interface::HW_IF_POSITION, &dxl_positions_[i]));
+    state_interfaces.emplace_back(hardware_interface::StateInterface(
+      info_.joints[i].name, hardware_interface::HW_IF_VELOCITY, &dxl_velocities_[i]));
+  }
 
-  // for (uint8_t i = 0; i < info_.sensors[0].state_interfaces.size(); i++)
-  // {
-  //   state_interfaces.emplace_back(hardware_interface::StateInterface(
-  //     info_.sensors[0].name, info_.sensors[0].state_interfaces[i].name, &hw_sensor_states_[i]));
-  // }
+  for (uint8_t i = 0; i < info_.sensors[0].state_interfaces.size(); i++)
+  {
+    state_interfaces.emplace_back(hardware_interface::StateInterface(
+      info_.sensors[0].name,
+      info_.sensors[0].state_interfaces[i].name,
+      &opencr_sensor_states_[i]));
+  }
 
   return state_interfaces;
 }
@@ -91,34 +105,56 @@ std::vector<hardware_interface::CommandInterface>
 TurtleBot3ManipulationSystemHardware::export_command_interfaces()
 {
   std::vector<hardware_interface::CommandInterface> command_interfaces;
-  // for (uint8_t i = 0; i < info_.joints.size(); i++)
-  // {
-  //   command_interfaces.emplace_back(hardware_interface::CommandInterface(
-  //     info_.joints[i].name, hardware_interface::HW_IF_POSITION, &hw_joint_commands_[i]));
-  //   command_interfaces.emplace_back(hardware_interface::CommandInterface(
-  //     info_.joints[i].name, hardware_interface::HW_IF_VELOCITY, &hw_commands_[i]));
-  // }
+  for (uint8_t i = 0; i < info_.joints.size(); i++)
+  {
+    if (info_.joints[i].name.find("wheel")) {
+      command_interfaces.emplace_back(hardware_interface::CommandInterface(
+        info_.joints[i].name, hardware_interface::HW_IF_VELOCITY, &dxl_wheel_commands_[i]));
+    } else if (info_.joints[i].name.find("gripper")) {
+      command_interfaces.emplace_back(hardware_interface::CommandInterface(
+        info_.joints[i].name, hardware_interface::HW_IF_POSITION, &dxl_gripper_commands_[i]));
+    } else {
+      command_interfaces.emplace_back(hardware_interface::CommandInterface(
+        info_.joints[i].name, hardware_interface::HW_IF_POSITION, &dxl_gripper_commands_[i]));
+    }
+  }
 
   return command_interfaces;
 }
 
 hardware_interface::return_type TurtleBot3ManipulationSystemHardware::start()
 {
+  RCLCPP_INFO(rclcpp::get_logger("turtlebot3_manipulation"), "Ready for start");
+
+  status_ = hardware_interface::status::STARTED;
+
+  RCLCPP_INFO(rclcpp::get_logger("turtlebot3_manipulation"), "System starting");
+
   return hardware_interface::return_type::OK;
 }
 
 hardware_interface::return_type TurtleBot3ManipulationSystemHardware::stop()
 {
+  RCLCPP_INFO(rclcpp::get_logger("turtlebot3_manipulation"), "Ready for stop");
+
+  status_ = hardware_interface::status::STOPPED;
+
+  RCLCPP_INFO(rclcpp::get_logger("turtlebot3_manipulation"), "System stopped");
+
   return hardware_interface::return_type::OK;
 }
 
 hardware_interface::return_type TurtleBot3ManipulationSystemHardware::read()
 {
+  RCLCPP_INFO(rclcpp::get_logger("turtlebot3_manipulation"), "Read opencr");
+
   return hardware_interface::return_type::OK;
 }
 
 hardware_interface::return_type TurtleBot3ManipulationSystemHardware::write()
 {
+  RCLCPP_INFO(rclcpp::get_logger("turtlebot3_manipulation"), "Write opencr");
+
   return hardware_interface::return_type::OK;
 }
 }  // turtlebot3_manipulation_hardware
