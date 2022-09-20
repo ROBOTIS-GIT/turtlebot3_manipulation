@@ -23,6 +23,7 @@ find_package(pluginlib REQUIRED)
 find_package(rclcpp REQUIRED)
 
 add_library(${PROJECT_NAME} SHARED
+  src/dynamixel_sdk_wrapper.cpp
   src/turtlebot3_manipulation_system.cpp
 )
 
