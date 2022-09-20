@@ -16,10 +16,13 @@
 #
 # Author: Darby Lim
 
+import os
+
 from launch import LaunchDescription
 from launch.actions import DeclareLaunchArgument
 from launch.actions import ExecuteProcess
 from launch.actions import IncludeLaunchDescription
+from launch.actions import LogInfo
 from launch.actions import RegisterEventHandler
 from launch.conditions import IfCondition
 from launch.event_handlers import OnProcessExit
@@ -33,7 +36,20 @@ from launch_ros.actions import Node
 from launch_ros.substitutions import FindPackageShare
 
 
+def is_valid_to_launch():
+    # Path includes model name of Raspberry Pi series
+    path = '/sys/firmware/devicetree/base/model'
+    if os.path.exists(path):
+        return False
+    else:
+        return True
+
+
 def generate_launch_description():
+    if not is_valid_to_launch():
+        LogInfo(msg='Can not launch fake robot in Raspberry Pi')
+        return LaunchDescription([])
+
     start_rviz = LaunchConfiguration('start_rviz')
     prefix = LaunchConfiguration('prefix')
     use_sim = LaunchConfiguration('use_sim')
