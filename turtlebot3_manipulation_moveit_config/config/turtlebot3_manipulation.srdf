@@ -10,6 +10,7 @@
     <!--CHAINS: When a chain is specified, all the links along the chain (including endpoints) are included in the group. Additionally, all the joints that are parents to included links are also included. This means that joints along the chain and the parent joint of the base link are included in the group-->
     <!--SUBGROUPS: Groups can also be formed by referencing to already defined group names-->
     <group name="arm">
+        <!-- <chain base_link="link1" tip_link="end_effector_link"/> -->
         <joint name="joint1"/>
         <joint name="joint2"/>
         <joint name="joint3"/>
@@ -17,8 +18,11 @@
         <joint name="end_effector_joint"/>
     </group>
     <group name="gripper">
-        <joint name="gripper"/>
-        <joint name="gripper_sub"/>
+        <!-- <link name="link5"/>
+        <link name="gripper_left_link"/>
+        <link name="gripper_left_link"/> -->
+        <joint name="gripper_left_joint"/>
+        <!--passive_joint name="gripper_right_joint"/-->
     </group>
     <!--GROUP STATES: Purpose: Define a named state for a particular group, in terms of joint values. This is useful to define states like 'folded arms'-->
     <group_state name="home" group="arm">
@@ -28,10 +32,12 @@
         <joint name="joint4" value="0.3"/>
     </group_state>
     <group_state name="close" group="gripper">
-        <joint name="gripper" value="-0.01"/>
+        <joint name="gripper_left_joint" value="-0.01"/>
+        <!--joint name="gripper_right_joint" value="-0.01"/-->
     </group_state>
     <group_state name="open" group="gripper">
-        <joint name="gripper" value="0.01"/>
+        <joint name="gripper_left_joint" value="0.01"/>
+        <!--joint name="gripper_right_joint" value="0.01"/-->
     </group_state>
     <!--END EFFECTOR: Purpose: Represent information about an end effector.-->
     <end_effector name="linear_grippper" parent_link="link5" group="gripper"/>
@@ -62,8 +68,8 @@
     <disable_collisions link1="camera_link" link2="wheel_left_link" reason="Never"/>
     <disable_collisions link1="camera_link" link2="wheel_right_link" reason="Never"/>
     <disable_collisions link1="caster_back_left_link" link2="caster_back_right_link" reason="Never"/>
-    <disable_collisions link1="caster_back_left_link" link2="gripper_link" reason="User"/>
-    <disable_collisions link1="caster_back_left_link" link2="gripper_link_sub" reason="User"/>
+    <disable_collisions link1="caster_back_left_link" link2="gripper_left_link" reason="User"/>
+    <disable_collisions link1="caster_back_left_link" link2="gripper_right_link" reason="User"/>
     <disable_collisions link1="caster_back_left_link" link2="link1" reason="Never"/>
     <disable_collisions link1="caster_back_left_link" link2="link2" reason="Never"/>
     <disable_collisions link1="caster_back_left_link" link2="link3" reason="Never"/>
@@ -71,8 +77,8 @@
     <disable_collisions link1="caster_back_left_link" link2="link5" reason="User"/>
     <disable_collisions link1="caster_back_left_link" link2="wheel_left_link" reason="Never"/>
     <disable_collisions link1="caster_back_left_link" link2="wheel_right_link" reason="Never"/>
-    <disable_collisions link1="caster_back_right_link" link2="gripper_link" reason="User"/>
-    <disable_collisions link1="caster_back_right_link" link2="gripper_link_sub" reason="User"/>
+    <disable_collisions link1="caster_back_right_link" link2="gripper_left_link" reason="User"/>
+    <disable_collisions link1="caster_back_right_link" link2="gripper_right_link" reason="User"/>
     <disable_collisions link1="caster_back_right_link" link2="link1" reason="Never"/>
     <disable_collisions link1="caster_back_right_link" link2="link2" reason="Never"/>
     <disable_collisions link1="caster_back_right_link" link2="link3" reason="Never"/>
@@ -80,11 +86,11 @@
     <disable_collisions link1="caster_back_right_link" link2="link5" reason="User"/>
     <disable_collisions link1="caster_back_right_link" link2="wheel_left_link" reason="Never"/>
     <disable_collisions link1="caster_back_right_link" link2="wheel_right_link" reason="Never"/>
-    <disable_collisions link1="gripper_link" link2="gripper_link_sub" reason="Never"/>
-    <disable_collisions link1="gripper_link" link2="link4" reason="Never"/>
-    <disable_collisions link1="gripper_link" link2="link5" reason="Adjacent"/>
-    <disable_collisions link1="gripper_link_sub" link2="link4" reason="Never"/>
-    <disable_collisions link1="gripper_link_sub" link2="link5" reason="Adjacent"/>
+    <disable_collisions link1="gripper_left_link" link2="gripper_right_link" reason="Never"/>
+    <disable_collisions link1="gripper_left_link" link2="link4" reason="Never"/>
+    <disable_collisions link1="gripper_left_link" link2="link5" reason="Adjacent"/>
+    <disable_collisions link1="gripper_right_link" link2="link4" reason="Never"/>
+    <disable_collisions link1="gripper_right_link" link2="link5" reason="Adjacent"/>
     <disable_collisions link1="link1" link2="link2" reason="Adjacent"/>
     <disable_collisions link1="link1" link2="link3" reason="Never"/>
     <disable_collisions link1="link1" link2="wheel_left_link" reason="Never"/>

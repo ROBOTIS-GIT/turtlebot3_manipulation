@@ -45,8 +45,8 @@ def generate_launch_description():
   # Robot description
   robot_description_config = xacro.process_file(
       os.path.join(
-          get_package_share_directory("turtlebot3_manipulation_moveit_config"),
-          "config",
+          get_package_share_directory("turtlebot3_manipulation_description"),
+          "urdf",
           "turtlebot3_manipulation.urdf.xacro",
       )
   )

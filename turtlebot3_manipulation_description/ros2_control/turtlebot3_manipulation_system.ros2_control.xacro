@@ -107,12 +107,5 @@ https://github.com/ros-controls/ros2_control_demos/blob/foxy/ros2_control_demo_d
         </command_interface>
         <state_interface name="position"/>
         <state_interface name="velocity"/>
-      </joint>
-      <joint name="${prefix}end_effector_joint">
-        <state_interface name="position"/>
-      </joint>
-    </ros2_control>
-
-  </xacro:macro>
 
 </robot>
