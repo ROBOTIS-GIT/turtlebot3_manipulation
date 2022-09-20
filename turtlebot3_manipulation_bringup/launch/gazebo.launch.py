@@ -22,7 +22,6 @@ from launch import LaunchDescription
 from launch.actions import DeclareLaunchArgument
 from launch.actions import ExecuteProcess
 from launch.actions import IncludeLaunchDescription
-from launch.actions import LogInfo
 from launch.actions import RegisterEventHandler
 from launch.conditions import IfCondition
 from launch.event_handlers import OnProcessExit
@@ -47,7 +46,7 @@ def is_valid_to_launch():
 
 def generate_launch_description():
     if not is_valid_to_launch():
-        LogInfo(msg='Can not launch fake robot in Raspberry Pi')
+        print('Can not launch fake robot in Raspberry Pi')
         return LaunchDescription([])
 
     start_rviz = LaunchConfiguration('start_rviz')
