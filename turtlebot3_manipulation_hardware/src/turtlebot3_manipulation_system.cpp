@@ -39,31 +39,43 @@ hardware_interface::return_type TurtleBot3ManipulationSystemHardware::configure(
   dynamixel_sdk_wrapper_ = std::make_unique<DynamixelSDKWrapper>(200);
   if (dynamixel_sdk_wrapper_->open_port("/dev/ttyACM0")) {
     RCLCPP_INFO(
-      rclcpp::get_logger("turtlebot3_manipulation"),
-      "Succeeded to open port");
+      rclcpp::get_logger("turtlebot3_manipulation"), "Succeeded to open port");
   } else {
     RCLCPP_FATAL(
-      rclcpp::get_logger("turtlebot3_manipulation"),
-      "Failed to open port");
+      rclcpp::get_logger("turtlebot3_manipulation"), "Failed to open port");
     return hardware_interface::return_type::ERROR;
   }
 
   if (dynamixel_sdk_wrapper_->set_baud_rate(1000000)) {
     RCLCPP_INFO(
-      rclcpp::get_logger("turtlebot3_manipulation"),
-      "Succeeded to set baudrate");
+      rclcpp::get_logger("turtlebot3_manipulation"), "Succeeded to set baudrate");
   } else {
     RCLCPP_FATAL(
-      rclcpp::get_logger("turtlebot3_manipulation"),
-      "Failed to set baudrate");
+      rclcpp::get_logger("turtlebot3_manipulation"), "Failed to set baudrate");
     return hardware_interface::return_type::ERROR;
   }
 
   std::string log;
-  int32_t model_number = dynamixel_sdk_wrapper_->is_connected(log);
+  int32_t model_number = dynamixel_sdk_wrapper_->ping(log);
   RCLCPP_INFO(
     rclcpp::get_logger("turtlebot3_manipulation"),
     "OpenCR Model Number %d [%s]", model_number, log.c_str());
+
+  if (dynamixel_sdk_wrapper_->read(opencr_control_table.connect_manipulator.address)) {
+    RCLCPP_INFO(
+      rclcpp::get_logger("turtlebot3_manipulation"), "Connected manipulator");
+  } else {
+    RCLCPP_FATAL(
+      rclcpp::get_logger("turtlebot3_manipulation"), "Not connected manipulator");
+  }
+
+  if (dynamixel_sdk_wrapper_->read(opencr_control_table.motor_connect.address)) {
+    RCLCPP_INFO(
+      rclcpp::get_logger("turtlebot3_manipulation"), "Connected wheels");
+  } else {
+    RCLCPP_FATAL(
+      rclcpp::get_logger("turtlebot3_manipulation"), "Not connected wheels");
+  }
 
   dxl_wheel_commands_.resize(2, 0.0);
   dxl_joint_commands_.resize(4, 0.0);
@@ -107,15 +119,15 @@ TurtleBot3ManipulationSystemHardware::export_command_interfaces()
   std::vector<hardware_interface::CommandInterface> command_interfaces;
   for (uint8_t i = 0; i < info_.joints.size(); i++)
   {
-    if (info_.joints[i].name.find("wheel")) {
+    if (info_.joints[i].name.find("wheel") != std::string::npos) {
       command_interfaces.emplace_back(hardware_interface::CommandInterface(
         info_.joints[i].name, hardware_interface::HW_IF_VELOCITY, &dxl_wheel_commands_[i]));
-    } else if (info_.joints[i].name.find("gripper")) {
+    } else if (info_.joints[i].name.find("gripper") != std::string::npos) {
       command_interfaces.emplace_back(hardware_interface::CommandInterface(
         info_.joints[i].name, hardware_interface::HW_IF_POSITION, &dxl_gripper_commands_[i]));
     } else {
       command_interfaces.emplace_back(hardware_interface::CommandInterface(
-        info_.joints[i].name, hardware_interface::HW_IF_POSITION, &dxl_gripper_commands_[i]));
+        info_.joints[i].name, hardware_interface::HW_IF_POSITION, &dxl_joint_commands_[i]));
     }
   }
 
@@ -147,6 +159,19 @@ hardware_interface::return_type TurtleBot3ManipulationSystemHardware::stop()
 hardware_interface::return_type TurtleBot3ManipulationSystemHardware::read()
 {
   RCLCPP_INFO(rclcpp::get_logger("turtlebot3_manipulation"), "Read opencr");
+
+  for (uint8_t i = 0; i < dxl_positions_.size(); i++)
+  {
+    dxl_positions_[i] = 0.0;
+  }
+
+  for (uint8_t i = 0; i < opencr_sensor_states_.size(); i++)
+  {
+    opencr_sensor_states_[i] = 0.0;
+    RCLCPP_INFO(
+      rclcpp::get_logger("turtlebot3_manipulation"), "Got state %e for interface %s!",
+      opencr_sensor_states_[i], info_.sensors[0].state_interfaces[i].name.c_str());
+  }
 
   return hardware_interface::return_type::OK;
 }
