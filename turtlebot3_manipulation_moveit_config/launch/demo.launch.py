@@ -41,6 +41,7 @@ def generate_launch_description():
 
     ld = LaunchDescription()
     launch_dir = os.path.join(get_package_share_directory('turtlebot3_manipulation_moveit_config'), 'launch')
+    bringup_launch_dir = os.path.join(get_package_share_directory('turtlebot3_manipulation_bringup'), 'launch')
 
     # RViz
     rviz_launch = IncludeLaunchDescription(
@@ -66,35 +67,18 @@ def generate_launch_description():
     )
     ld.add_action(move_group_launch)
 
-    # ros2_control using FakeSystem as hardware
-    ros2_controllers_path = os.path.join(
-        get_package_share_directory("turtlebot3_manipulation_moveit_config"),
-        "config",
-        "ros2_controllers.yaml",
-    )
-    # Robot description
-    robot_description_config = xacro.process_file(
-        os.path.join(
-            get_package_share_directory("turtlebot3_manipulation_moveit_config"),
-            "config",
-            "turtlebot3_manipulation.urdf.xacro",
-        )
-    )
-    robot_description = {"robot_description": robot_description_config.toxml()}
+    # fake_ros2_control
+    rviz_arg = DeclareLaunchArgument(
+        'start_rviz',
+        default_value='false',
+        description='Whether execute rviz2')
+    ld.add_action(rviz_arg)
 
-    ros2_control_node = Node(
-        package="controller_manager",
-        executable="ros2_control_node",
-        parameters=[
-            robot_description,
-            ros2_controllers_path
-        ],
-        output={
-            "stdout": "screen",
-            "stderr": "screen",
-        },
+    fake_ros2_control_launch = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource([bringup_launch_dir, '/fake.launch.py'])
     )
-    ld.add_action(ros2_control_node)
+    ld.add_action(fake_ros2_control_launch)
+
 
     # Warehouse mongodb server
     warehouse_db_launch = IncludeLaunchDescription(
@@ -102,21 +86,4 @@ def generate_launch_description():
     )
     ld.add_action(warehouse_db_launch)
 
-    # Load controllers
-    spawn_controllers_launch = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource([launch_dir, '/spawn_controllers.launch.py'])
-    )
-    ld.add_action(spawn_controllers_launch)
-
-    return LaunchDescription(
-          [
-              rviz_launch,
-              static_tf_launch,
-              rsp_launch,
-              move_group_launch,
-#              ros2_control_node,
-              warehouse_db_launch,
-#              spawn_controllers_launch
-          ]
-    )
-
+    return ld
