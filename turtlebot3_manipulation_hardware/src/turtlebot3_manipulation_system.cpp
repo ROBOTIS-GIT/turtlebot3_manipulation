@@ -33,6 +33,38 @@ hardware_interface::return_type TurtleBot3ManipulationSystemHardware::configure(
   const hardware_interface::HardwareInfo & info)
 {
   (void) info;
+
+  dynamixel_sdk_wrapper_ = std::make_unique<DynamixelSDKWrapper>(200);
+  if (dynamixel_sdk_wrapper_->open_port("/dev/ttyACM0")) {
+    RCLCPP_FATAL(
+      rclcpp::get_logger("TurtleBot3ManipulationSystemHardware"),
+      "Succeeded to open port");
+
+    return hardware_interface::return_type::ERROR;
+  } else {
+    RCLCPP_INFO(
+      rclcpp::get_logger("TurtleBot3ManipulationSystemHardware"),
+      "Failed to open port");
+  }
+
+  if (dynamixel_sdk_wrapper_->set_baud_rate(1000000)) {
+    RCLCPP_FATAL(
+      rclcpp::get_logger("TurtleBot3ManipulationSystemHardware"),
+      "Succeeded to set baudrate");
+
+    return hardware_interface::return_type::ERROR;
+  } else {
+    RCLCPP_INFO(
+      rclcpp::get_logger("TurtleBot3ManipulationSystemHardware"),
+      "Failed to set baudrate");
+  }
+
+  const char ** log = nullptr;
+  int32_t model_number = dynamixel_sdk_wrapper_->is_connected(log);
+  RCLCPP_INFO(
+    rclcpp::get_logger("TurtleBot3ManipulationSystemHardware"),
+    "model number %d [%s]", model_number, *log);
+
   return hardware_interface::return_type::OK;
 }
 
@@ -40,6 +72,20 @@ std::vector<hardware_interface::StateInterface>
 TurtleBot3ManipulationSystemHardware::export_state_interfaces()
 {
   std::vector<hardware_interface::StateInterface> state_interfaces;
+  // for (uint8_t i = 0; i < info_.joints.size(); i++)
+  // {
+  //   state_interfaces.emplace_back(hardware_interface::StateInterface(
+  //     info_.joints[i].name, hardware_interface::HW_IF_POSITION, &hw_positions_[i]));
+  //   state_interfaces.emplace_back(hardware_interface::StateInterface(
+  //     info_.joints[i].name, hardware_interface::HW_IF_VELOCITY, &hw_velocities_[i]));
+  // }
+
+  // for (uint8_t i = 0; i < info_.sensors[0].state_interfaces.size(); i++)
+  // {
+  //   state_interfaces.emplace_back(hardware_interface::StateInterface(
+  //     info_.sensors[0].name, info_.sensors[0].state_interfaces[i].name, &hw_sensor_states_[i]));
+  // }
+
   return state_interfaces;
 }
 
@@ -47,6 +93,14 @@ std::vector<hardware_interface::CommandInterface>
 TurtleBot3ManipulationSystemHardware::export_command_interfaces()
 {
   std::vector<hardware_interface::CommandInterface> command_interfaces;
+  // for (uint8_t i = 0; i < info_.joints.size(); i++)
+  // {
+  //   command_interfaces.emplace_back(hardware_interface::CommandInterface(
+  //     info_.joints[i].name, hardware_interface::HW_IF_POSITION, &hw_joint_commands_[i]));
+  //   command_interfaces.emplace_back(hardware_interface::CommandInterface(
+  //     info_.joints[i].name, hardware_interface::HW_IF_VELOCITY, &hw_commands_[i]));
+  // }
+
   return command_interfaces;
 }
 

@@ -29,6 +29,8 @@
 #include "hardware_interface/types/hardware_interface_status_values.hpp"
 #include "rclcpp/macros.hpp"
 
+#include "turtlebot3_manipulation_hardware/dynamixel_sdk_wrapper.hpp"
+#include "turtlebot3_manipulation_hardware/opencr_control_table.hpp"
 #include "turtlebot3_manipulation_hardware/visibility_control.h"
 
 namespace robotis
@@ -63,6 +65,7 @@ public:
   hardware_interface::return_type write() override;
 
 private:
+  std::unique_ptr<DynamixelSDKWrapper> dynamixel_sdk_wrapper_;
 };
 }  // turtlebot3_manipulation_hardware
 }  // robotis
