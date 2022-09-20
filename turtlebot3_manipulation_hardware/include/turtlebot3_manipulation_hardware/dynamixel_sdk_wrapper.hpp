@@ -52,7 +52,7 @@ public:
     uint8_t * data,
     std::string & log);
 
-  void write_byte(const uint16_t & address, uint8_t * data);
+  void write_byte(const uint16_t & address, uint8_t data);
 
 private:
   dynamixel::PortHandler * port_handler_;

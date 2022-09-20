@@ -120,10 +120,11 @@ bool DynamixelSDKWrapper::write(
   return true;
 }
 
-void DynamixelSDKWrapper::write_byte(const uint16_t & address, uint8_t * data)
+void DynamixelSDKWrapper::write_byte(const uint16_t & address, uint8_t data)
 {
   std::string log;
-  this->write(address, 1, &data[0], log);
+  uint8_t * data_ptr = &data;
+  this->write(address, 1, &data_ptr[0], log);
 }
 }  // namespace turtlebot3_manipulation_hardware
 }  // namespace robotis
