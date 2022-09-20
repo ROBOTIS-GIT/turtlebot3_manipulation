@@ -75,6 +75,8 @@ private:
   std::vector<double> dxl_velocities_;
 
   std::vector<double> opencr_sensor_states_;
+
+  uint8_t opencr_data_[CONTROL_TABLE_SIZE];
 };
 }  // turtlebot3_manipulation_hardware
 }  // robotis
