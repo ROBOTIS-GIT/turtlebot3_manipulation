@@ -96,13 +96,13 @@ def generate_launch_description():
 
     load_joint_trajectory_controller = ExecuteProcess(
         cmd=['ros2', 'control', 'load_controller', '--set-state', 'start',
-             'joint_trajectory_controller'],
+             'arm_controller'],
         output='screen'
     )
 
     load_gripper_trajectory_controller = ExecuteProcess(
         cmd=['ros2', 'control', 'load_controller', '--set-state', 'start',
-             'gripper_trajectory_controller'],
+             'gripper_controller'],
         output='screen'
     )
 
@@ -169,7 +169,7 @@ def generate_launch_description():
                     )
                 ]
             ),
-            launch_arguments={'verbose': 'false'}.items(),
+            launch_arguments={'verbose': 'true'}.items(),
         ),
 
         Node(

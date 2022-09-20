@@ -156,14 +156,14 @@ def generate_launch_description():
         Node(
             package='controller_manager',
             executable='spawner.py',
-            arguments=['joint_trajectory_controller'],
+            arguments=['arm_controller'],
             output='screen',
         ),
 
         Node(
             package='controller_manager',
             executable='spawner.py',
-            arguments=['gripper_trajectory_controller'],
+            arguments=['gripper_controller'],
             output='screen',
         ),
 
