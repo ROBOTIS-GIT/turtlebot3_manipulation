@@ -44,7 +44,15 @@ public:
     uint8_t * data,
     std::string & log);
 
-  uint8_t read(const uint16_t & address);
+  uint8_t read_byte(const uint16_t & address);
+
+  bool write(
+    const uint16_t & address,
+    const uint16_t & length,
+    uint8_t * data,
+    std::string & log);
+
+  void write_byte(const uint16_t & address, uint8_t * data);
 
 private:
   dynamixel::PortHandler * port_handler_;

@@ -88,11 +88,42 @@ bool DynamixelSDKWrapper::read(
   return true;
 }
 
-uint8_t DynamixelSDKWrapper::read(const uint16_t & address)
+uint8_t DynamixelSDKWrapper::read_byte(const uint16_t & address)
 {
   std::string log;
   uint8_t data[0];
   return this->read(address, 1, &data[0], log);
+}
+
+bool DynamixelSDKWrapper::write(
+  const uint16_t & address,
+  const uint16_t & length,
+  uint8_t * data,
+  std::string & log)
+{
+  std::lock_guard<std::mutex> lock(sdk_handler_m_);
+
+  int32_t dxl_comm_result = COMM_RX_FAIL;
+  uint8_t dxl_error = 0;
+
+  dxl_comm_result = packet_handler_->writeTxRx(
+    port_handler_, id_, address, length, data, &dxl_error);
+
+  if (dxl_comm_result != COMM_SUCCESS) {
+    log = std::string(packet_handler_->getTxRxResult(dxl_comm_result));
+    return false;
+  } else if (dxl_error != 0) {
+    log = std::string(packet_handler_->getRxPacketError(dxl_error));
+    return false;
+  }
+
+  return true;
+}
+
+void DynamixelSDKWrapper::write_byte(const uint16_t & address, uint8_t * data)
+{
+  std::string log;
+  this->write(address, 1, &data[0], log);
 }
 }  // namespace turtlebot3_manipulation_hardware
 }  // namespace robotis
