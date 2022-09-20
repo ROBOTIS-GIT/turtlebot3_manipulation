@@ -39,34 +39,12 @@ from launch.actions import ExecuteProcess
 from ament_index_python.packages import get_package_share_directory
 
 
-def load_file(package_name, file_path):
-    package_path = get_package_share_directory(package_name)
-    absolute_file_path = os.path.join(package_path, file_path)
-
-    try:
-        with open(absolute_file_path, "r") as file:
-            return file.read()
-    except EnvironmentError:  # parent of IOError, OSError *and* WindowsError where available
-        return None
-
-
-def load_yaml(package_name, file_path):
-    package_path = get_package_share_directory(package_name)
-    absolute_file_path = os.path.join(package_path, file_path)
-
-    try:
-        with open(absolute_file_path, "r") as file:
-            return yaml.safe_load(file)
-    except EnvironmentError:  # parent of IOError, OSError *and* WindowsError where available
-        return None
-
-
 def generate_launch_description():
   # Robot description
   robot_description_config = xacro.process_file(
       os.path.join(
-          get_package_share_directory("turtlebot3_manipulation_moveit_config"),
-          "config",
+          get_package_share_directory("turtlebot3_manipulation_description"),
+          "urdf",
           "turtlebot3_manipulation.urdf.xacro",
       )
   )
@@ -121,9 +99,14 @@ def generate_launch_description():
   }
 
   # Moveit Controllers
-  moveit_simple_controllers_yaml = load_yaml(
-      "turtlebot3_manipulation_moveit_config", "config/moveit_controllers.yaml"
+  moveit_simple_controllers_yaml_path = os.path.join(
+    get_package_share_directory("turtlebot3_manipulation_moveit_config"),
+        "config",
+        "moveit_controllers.yaml",
   )
+  with open(moveit_simple_controllers_yaml_path, "r") as file:
+      moveit_simple_controllers_yaml =  yaml.safe_load(file)
+
   moveit_controllers = {
       "moveit_simple_controller_manager": moveit_simple_controllers_yaml,
       "moveit_controller_manager": "moveit_simple_controller_manager/MoveItSimpleControllerManager",
