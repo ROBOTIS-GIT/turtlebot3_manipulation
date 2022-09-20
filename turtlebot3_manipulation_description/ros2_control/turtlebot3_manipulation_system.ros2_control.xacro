@@ -64,6 +64,7 @@ https://github.com/ros-controls/ros2_control_demos/blob/foxy/ros2_control_demo_d
           <param name="max">${pi*0.9}</param>
         </command_interface>
         <state_interface name="position"/>
+        <state_interface name="velocity"/>
       </joint>
       <joint name="${prefix}joint2">
         <command_interface name="position">
@@ -71,6 +72,7 @@ https://github.com/ros-controls/ros2_control_demos/blob/foxy/ros2_control_demo_d
           <param name="max">${pi*0.5}</param>
         </command_interface>
         <state_interface name="position"/>
+        <state_interface name="velocity"/>
       </joint>
       <joint name="${prefix}joint3">
         <command_interface name="position">
@@ -78,6 +80,7 @@ https://github.com/ros-controls/ros2_control_demos/blob/foxy/ros2_control_demo_d
           <param name="max">${pi*0.44}</param>
         </command_interface>
         <state_interface name="position"/>
+        <state_interface name="velocity"/>
       </joint>
       <joint name="${prefix}joint4">
         <command_interface name="position">
@@ -85,6 +88,7 @@ https://github.com/ros-controls/ros2_control_demos/blob/foxy/ros2_control_demo_d
           <param name="max">${pi*0.65}</param>
         </command_interface>
         <state_interface name="position"/>
+        <state_interface name="velocity"/>
       </joint>
       <joint name="${prefix}gripper_left_joint">
         <command_interface name="position">
@@ -92,6 +96,7 @@ https://github.com/ros-controls/ros2_control_demos/blob/foxy/ros2_control_demo_d
           <param name="max">0.019</param>
         </command_interface>
         <state_interface name="position"/>
+        <state_interface name="velocity"/>
       </joint>
       <joint name="${prefix}gripper_right_joint">
         <param name="mimic">gripper_left_joint</param>
@@ -101,6 +106,7 @@ https://github.com/ros-controls/ros2_control_demos/blob/foxy/ros2_control_demo_d
           <param name="max">0.019</param>
         </command_interface>
         <state_interface name="position"/>
+        <state_interface name="velocity"/>
       </joint>
       <joint name="${prefix}end_effector_joint">
         <state_interface name="position"/>
