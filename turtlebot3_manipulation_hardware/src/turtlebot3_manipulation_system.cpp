@@ -36,33 +36,33 @@ hardware_interface::return_type TurtleBot3ManipulationSystemHardware::configure(
 
   dynamixel_sdk_wrapper_ = std::make_unique<DynamixelSDKWrapper>(200);
   if (dynamixel_sdk_wrapper_->open_port("/dev/ttyACM0")) {
-    RCLCPP_FATAL(
-      rclcpp::get_logger("TurtleBot3ManipulationSystemHardware"),
+    RCLCPP_INFO(
+      rclcpp::get_logger("turtlebot3_manipulation"),
       "Succeeded to open port");
 
     return hardware_interface::return_type::ERROR;
   } else {
-    RCLCPP_INFO(
-      rclcpp::get_logger("TurtleBot3ManipulationSystemHardware"),
+    RCLCPP_FATAL(
+      rclcpp::get_logger("turtlebot3_manipulation"),
       "Failed to open port");
   }
 
   if (dynamixel_sdk_wrapper_->set_baud_rate(1000000)) {
-    RCLCPP_FATAL(
-      rclcpp::get_logger("TurtleBot3ManipulationSystemHardware"),
+    RCLCPP_INFO(
+      rclcpp::get_logger("turtlebot3_manipulation"),
       "Succeeded to set baudrate");
 
     return hardware_interface::return_type::ERROR;
   } else {
-    RCLCPP_INFO(
-      rclcpp::get_logger("TurtleBot3ManipulationSystemHardware"),
+    RCLCPP_FATAL(
+      rclcpp::get_logger("turtlebot3_manipulation"),
       "Failed to set baudrate");
   }
 
   const char ** log = nullptr;
   int32_t model_number = dynamixel_sdk_wrapper_->is_connected(log);
   RCLCPP_INFO(
-    rclcpp::get_logger("TurtleBot3ManipulationSystemHardware"),
+    rclcpp::get_logger("turtlebot3_manipulation"),
     "model number %d [%s]", model_number, *log);
 
   return hardware_interface::return_type::OK;
