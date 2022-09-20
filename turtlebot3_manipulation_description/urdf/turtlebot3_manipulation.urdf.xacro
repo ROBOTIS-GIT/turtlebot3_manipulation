@@ -40,7 +40,7 @@
   <xacro:open_manipulator_x_gazebo prefix="$(arg prefix)" />
 
   <xacro:turtlebot3_manipulation_system
-    name="TurtleBot3_Manipulation_System" prefix="$(arg prefix)" use_sim="$(arg use_sim)"
+    name="TurtleBot3ManipulationSystem" prefix="$(arg prefix)" use_sim="$(arg use_sim)"
     use_fake_hardware="$(arg use_fake_hardware)"
     fake_sensor_commands="$(arg fake_sensor_commands)"
     slowdown="$(arg slowdown)"/>
