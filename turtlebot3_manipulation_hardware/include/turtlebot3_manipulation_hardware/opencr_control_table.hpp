@@ -17,7 +17,7 @@
 #ifndef TURTLEBOT3_MANIPULATION_HARDWARE__OPENCR_CONTROL_TABLE_
 #define TURTLEBOT3_MANIPULATION_HARDWARE__OPENCR_CONTROL_TABLE_
 
-#include <stdlib.h>
+#include <stdint.h>
 
 namespace robotis
 {
@@ -25,7 +25,7 @@ namespace turtlebot3_manipulation_hardware
 {
 typedef struct
 {
-  int64_t addr;
+  int64_t address;
   int64_t length;
 } ControlItem;
 
@@ -86,6 +86,7 @@ typedef struct
   ControlItem present_position_left = {136, 4};
   ControlItem present_position_right = {140, 4};
 
+  ControlItem motor_connect = {148, 1};
   ControlItem motor_torque_enable = {149, 1};
 
   ControlItem cmd_velocity_linear_x = {150, 4};
@@ -145,6 +146,8 @@ typedef struct
 
   ControlItem profile_velocity_update_write = {328, 1};
   ControlItem profile_velocity_update_read = {329, 1};
+
+  const uint32_t size = 330;
 } ControlTable;
 
 const ControlTable opencr_control_table;
