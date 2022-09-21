@@ -45,7 +45,6 @@ def generate_launch_description():
         return LaunchDescription([])
 
     prefix = LaunchConfiguration('prefix')
-    use_gui = LaunchConfiguration('use_gui')
 
     urdf_file = Command(
         [
@@ -81,17 +80,6 @@ def generate_launch_description():
             default_value='""',
             description='Prefix of the joint and link names'),
 
-        DeclareLaunchArgument(
-            'use_gui',
-            default_value='False',
-            description='Whether execute joint_state_publisher_gui node'),
-
-        Node(
-            package='joint_state_publisher',
-            executable='joint_state_publisher',
-            parameters=[{'robot_description': urdf_file}],
-            output='screen'),
-
         Node(
             package='robot_state_publisher',
             executable='robot_state_publisher',
@@ -106,6 +94,5 @@ def generate_launch_description():
 
         Node(
             package="joint_state_publisher_gui",
-            executable="joint_state_publisher_gui",
-            condition=IfCondition(use_gui)),
+            executable="joint_state_publisher_gui"),
     ])
