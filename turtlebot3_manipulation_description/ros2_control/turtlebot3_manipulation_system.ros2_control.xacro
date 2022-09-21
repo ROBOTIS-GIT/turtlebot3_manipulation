@@ -23,7 +23,7 @@ https://github.com/ros-controls/ros2_control_demos/blob/foxy/ros2_control_demo_d
             <param name="state_following_offset">0.0</param>
           </xacro:if>
           <xacro:unless value="${use_fake_hardware}">
-            <plugin>turtlebot3_manipulation_hardware/TurtleBot3WafflePiSystemHardware</plugin>
+            <plugin>turtlebot3_manipulation_hardware/TurtleBot3ManipulationSystemHardware</plugin>
           </xacro:unless>
         </hardware>
       </xacro:unless>
@@ -108,6 +108,7 @@ https://github.com/ros-controls/ros2_control_demos/blob/foxy/ros2_control_demo_d
         <state_interface name="position"/>
         <state_interface name="velocity"/>
       </joint>
+
     </ros2_control>
 
   </xacro:macro>

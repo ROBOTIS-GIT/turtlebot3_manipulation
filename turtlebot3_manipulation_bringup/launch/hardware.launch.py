@@ -16,8 +16,6 @@
 #
 # Author: Darby Lim
 
-import os
-
 from launch import LaunchDescription
 from launch.actions import DeclareLaunchArgument
 from launch.actions import IncludeLaunchDescription
@@ -25,31 +23,17 @@ from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.substitutions import LaunchConfiguration
 from launch.substitutions import ThisLaunchFileDir
 
-def is_valid_to_launch():
-    # Path includes model name of Raspberry Pi series
-    path = '/sys/firmware/devicetree/base/model'
-    if os.path.exists(path):
-        return False
-    else:
-        return True
-
 
 def generate_launch_description():
-    if not is_valid_to_launch():
-        print('Can not launch fake robot in Raspberry Pi')
-        return LaunchDescription([])
-
     start_rviz = LaunchConfiguration('start_rviz')
     prefix = LaunchConfiguration('prefix')
     use_fake_hardware = LaunchConfiguration('use_fake_hardware')
-    fake_sensor_commands = LaunchConfiguration('fake_sensor_commands')
-    slowdown = LaunchConfiguration('slowdown')
 
 
     return LaunchDescription([
         DeclareLaunchArgument(
             'start_rviz',
-            default_value='true',
+            default_value='false',
             description='Whether execute rviz2'),
 
         DeclareLaunchArgument(
@@ -59,19 +43,8 @@ def generate_launch_description():
 
         DeclareLaunchArgument(
             'use_fake_hardware',
-            default_value='true',
+            default_value='false',
             description='Start robot with fake hardware mirroring command to its states.'),
-
-        DeclareLaunchArgument(
-            'fake_sensor_commands',
-            default_value='true',
-            description='Enable fake command interfaces for sensors used for simple simulations. \
-            Used only if "use_fake_hardware" parameter is true.'),
-
-        DeclareLaunchArgument(
-            'slowdown',
-            default_value='3.0',
-            description='Slowdown factor.'),
 
         IncludeLaunchDescription(
             PythonLaunchDescriptionSource([ThisLaunchFileDir(), '/base.launch.py']),
@@ -79,8 +52,6 @@ def generate_launch_description():
                 'start_rviz': start_rviz,
                 'prefix': prefix,
                 'use_fake_hardware': use_fake_hardware,
-                'fake_sensor_commands': fake_sensor_commands,
-                'slowdown': slowdown,
             }.items(),
         )
     ])
