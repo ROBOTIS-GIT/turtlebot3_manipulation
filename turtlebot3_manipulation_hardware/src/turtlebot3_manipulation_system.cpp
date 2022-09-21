@@ -139,11 +139,24 @@ hardware_interface::return_type TurtleBot3ManipulationSystemHardware::start()
   opencr_->wheels_torque(opencr::ON);
 
   std::string log;
+
+  std::array<int32_t, 4> acceleration = {200, 200, 200, 200};
+  opencr_->set_joint_profile_acceleration(acceleration, log);
+
+  std::array<int32_t, 4> velocity = {20, 20, 20, 20};
+  opencr_->set_joint_profile_velocity(velocity, log);
+
   if (opencr_->set_init_pose(log)) {
     RCLCPP_INFO(logger, "Move to home pose");
   } else {
     RCLCPP_ERROR(logger, "Can't move to home pose [%s]", log.c_str());
   }
+  rclcpp::sleep_for(std::chrono::seconds(1));
+  std::array<int32_t, 4> zero_acceleration = {0, 0, 0, 0};
+  opencr_->set_joint_profile_acceleration(zero_acceleration, log);
+
+  std::array<int32_t, 4> zero_velocity = {0, 0, 0, 0};
+  opencr_->set_joint_profile_velocity(zero_velocity, log);
 
   status_ = hardware_interface::status::STARTED;
 
@@ -224,6 +237,7 @@ hardware_interface::return_type TurtleBot3ManipulationSystemHardware::read()
 
 hardware_interface::return_type TurtleBot3ManipulationSystemHardware::write()
 {
+  opencr_->send_heartbeat();
     //  wheel_left_joint!
     //  wheel_right_joint!
     //  joint1!

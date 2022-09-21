@@ -96,10 +96,23 @@ public:
   double get_gripper_position();
   double get_gripper_velocity();
 
-  bool set_joint_positions(std::array<double, 4> commands, std::string & log);
+  bool set_joint_positions(std::array<double, 4> radians, std::string & log);
+  bool set_joint_profile_acceleration(std::array<int32_t, 4> acceleration, std::string & log);
+  bool set_joint_profile_velocity(std::array<int32_t, 4> velocity, std::string & log);
+
   bool set_init_pose(std::string & log);
 
+  void send_heartbeat();
+
 private:
+  uint8_t read_byte(const uint16_t & address);
+  void write_byte(const uint16_t & address, uint8_t data);
+
+  bool set_joint_variables(
+    const uint16_t & address,
+    std::array<int32_t, 4> variables,
+    std::string & log);
+
   std::unique_ptr<DynamixelSDKWrapper> dxl_sdk_wrapper_;
 
   uint8_t data_[CONTROL_TABLE_SIZE];

@@ -312,33 +312,66 @@ double OpenCR::get_gripper_velocity()
   return velocity = rpm * opencr::joints::RPM_TO_RAD_PER_SEC;
 }
 
-bool OpenCR::set_joint_positions(std::array<double, 4> commands, std::string & log)
+bool OpenCR::set_joint_variables(
+  const uint16_t & address,
+  std::array<int32_t, 4> variables,
+  std::string & log)
 {
-  std::array<int32_t, 4> tick = {0, 0, 0, 0};
-
   union Data {
     int32_t dword[4];
     uint8_t byte[4 * 4];
   } data;
 
-  for (uint8_t i = 0; i < commands.size(); i++) {
+  for (uint8_t i = 0; i < variables.size(); i++) {
+    data.dword[i] = variables[i];
+  };
+
+  uint8_t * p_data = &data.byte[0];
+  bool comm_result = dxl_sdk_wrapper_->write(address, 4 * 4, p_data, log);
+
+  return comm_result;
+}
+
+bool OpenCR::set_joint_positions(std::array<double, 4> radians, std::string & log)
+{
+  std::array<int32_t, 4> tick = {0, 0, 0, 0};
+  for (uint8_t i = 0; i < radians.size(); i++) {
     tick[i] = convert_radian_to_tick(
-      commands[i],
+      radians[i],
       opencr::joints::MAX_TICK,
       opencr::joints::MIN_TICK,
       opencr::joints::MAX_RADIAN,
       opencr::joints::MIN_RADIAN);
-
-    data.dword[i] = tick[i];
   };
 
-  uint8_t * p_data = &data.byte[0];
-  bool comm_result = dxl_sdk_wrapper_->write(
-    opencr_control_table.goal_position_joint_1.address,
-    opencr_control_table.goal_position_joint_1.length * 4,
-    p_data,
-    log
-  );
+  bool comm_result = set_joint_variables(
+    opencr_control_table.goal_position_joint_1.address, tick, log);
+
+  dxl_sdk_wrapper_->write_byte(opencr_control_table.goal_position_update_write.address, 1);
+
+  return comm_result;
+}
+
+bool OpenCR::set_joint_profile_acceleration(
+  std::array<int32_t, 4> acceleration,
+  std::string & log)
+{
+  bool comm_result = set_joint_variables(
+    opencr_control_table.profile_acceleration_joint_1.address, acceleration, log);
+
+  dxl_sdk_wrapper_->write_byte(opencr_control_table.profile_acceleration_update_write.address, 1);
+
+  return comm_result;
+}
+
+bool OpenCR::set_joint_profile_velocity(
+  std::array<int32_t, 4> velocity,
+  std::string & log)
+{
+  bool comm_result = set_joint_variables(
+    opencr_control_table.profile_velocity_joint_1.address, velocity, log);
+
+  dxl_sdk_wrapper_->write_byte(opencr_control_table.profile_velocity_update_write.address, 1);
 
   return comm_result;
 }
@@ -347,6 +380,22 @@ bool OpenCR::set_init_pose(std::string & log)
 {
   std::array<double, 4> init_pose = {0.0, 0.0, 0.0, 0.0};
   return set_joint_positions(init_pose, log);
+}
+
+uint8_t OpenCR::read_byte(const uint16_t & address)
+{
+  return dxl_sdk_wrapper_->read_byte(address);
+}
+
+void OpenCR::write_byte(const uint16_t & address, uint8_t data)
+{
+  dxl_sdk_wrapper_->write_byte(address, data);
+}
+
+void OpenCR::send_heartbeat()
+{
+  static uint8_t count = 0;
+  this->write_byte(opencr_control_table.heartbeat.address, count++);
 }
 }  // namespace turtlebot3_manipulation_hardware
 }  // namespace robotis
