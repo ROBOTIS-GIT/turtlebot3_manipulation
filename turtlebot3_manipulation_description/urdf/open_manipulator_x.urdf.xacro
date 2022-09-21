@@ -45,6 +45,7 @@ https://github.com/ROBOTIS-GIT/open_manipulator/blob/kinetic-devel/open_manipula
       <origin xyz="0.012 0.0 0.017" rpy="0 0 0"/>
       <axis xyz="0 0 1"/>
       <limit velocity="4.8" effort="1" lower="${-pi*0.9}" upper="${pi*0.9}" />
+      <dynamics damping="0.1"/>
     </joint>
 
     <link name="${prefix}link2">
@@ -80,6 +81,7 @@ https://github.com/ROBOTIS-GIT/open_manipulator/blob/kinetic-devel/open_manipula
       <origin xyz="0.0 0.0 0.0595" rpy="0 0 0"/>
       <axis xyz="0 1 0"/>
       <limit velocity="4.8" effort="1" lower="${-pi*0.57}" upper="${pi*0.5}" />
+      <dynamics damping="0.1"/>
     </joint>
 
     <link name="${prefix}link3">
@@ -115,6 +117,7 @@ https://github.com/ROBOTIS-GIT/open_manipulator/blob/kinetic-devel/open_manipula
       <origin xyz="0.024 0 0.128" rpy="0 0 0"/>
       <axis xyz="0 1 0"/>
       <limit velocity="4.8" effort="1" lower="${-pi*0.3}" upper="${pi*0.44}" />
+      <dynamics damping="0.1"/>
     </joint>
 
     <link name="${prefix}link4">
@@ -150,6 +153,7 @@ https://github.com/ROBOTIS-GIT/open_manipulator/blob/kinetic-devel/open_manipula
       <origin xyz="0.124 0.0 0.0" rpy="0 0 0"/>
       <axis xyz="0 1 0"/>
       <limit velocity="4.8" effort="1" lower="${-pi*0.57}" upper="${pi*0.65}" />
+      <dynamics damping="0.1"/>
     </joint>
 
     <link name="${prefix}link5">
@@ -185,6 +189,7 @@ https://github.com/ROBOTIS-GIT/open_manipulator/blob/kinetic-devel/open_manipula
       <origin xyz="0.0817 0.021 0.0" rpy="0 0 0"/>
       <axis xyz="0 1 0"/>
       <limit velocity="4.8" effort="1" lower="-0.010" upper="0.019" />
+      <dynamics damping="0.1"/>
     </joint>
 
     <link name="${prefix}gripper_left_link">
@@ -221,6 +226,7 @@ https://github.com/ROBOTIS-GIT/open_manipulator/blob/kinetic-devel/open_manipula
       <axis xyz="0 -1 0"/>
       <limit velocity="4.8" effort="1" lower="-0.010" upper="0.019" />
       <mimic joint="${prefix}gripper_left_joint" multiplier="1"/>
+      <dynamics damping="0.1"/>
     </joint>
 
     <link name="${prefix}gripper_right_link">
