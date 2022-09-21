@@ -66,7 +66,7 @@ void OpenCR::imu_recalibration()
   dxl_sdk_wrapper_->write_byte(opencr_control_table.imu_re_calibration.address, 1);
 }
 
-opencr::IMU OpenCR::imu()
+opencr::IMU OpenCR::get_imu()
 {
   imu_.angular_velocity.x = get_data<float>(
     opencr_control_table.imu_angular_velocity_x.address,
@@ -133,7 +133,7 @@ bool OpenCR::read_all(std::string & log)
   return comm_result;
 }
 
-std::array<double, 2> OpenCR::wheel_positions()
+std::array<double, 2> OpenCR::get_wheel_positions()
 {
   static std::array<int32_t, 2> last_diff_ticks = {0, 0};
   static std::array<int32_t, 2> last_ticks = {0, 0};
@@ -163,7 +163,7 @@ std::array<double, 2> OpenCR::wheel_positions()
   return positions;
 }
 
-std::array<double, 2> OpenCR::wheel_velocities()
+std::array<double, 2> OpenCR::get_wheel_velocities()
 {
   std::array<double, 2> velocities = {0.0, 0.0};
 
@@ -226,7 +226,7 @@ inline double convert_tick_to_radian(
   return radian;
 }
 
-std::array<double, 4> OpenCR::joint_positions()
+std::array<double, 4> OpenCR::get_joint_positions()
 {
   std::array<double, 4> positions = {0.0, 0.0, 0.0, 0.0};
 
@@ -257,7 +257,7 @@ std::array<double, 4> OpenCR::joint_positions()
   return positions;
 }
 
-std::array<double, 4> OpenCR::joint_velocities()
+std::array<double, 4> OpenCR::get_joint_velocities()
 {
   std::array<double, 4> velocities = {0.0, 0.0, 0.0, 0.0};
 
@@ -283,7 +283,7 @@ std::array<double, 4> OpenCR::joint_velocities()
   return velocities;
 }
 
-double OpenCR::gripper_position()
+double OpenCR::get_gripper_position()
 {
   double position = 0.0;
 
@@ -301,7 +301,7 @@ double OpenCR::gripper_position()
   return position * opencr::joints::GRIPPER_RAD_TO_METER;
 }
 
-double OpenCR::gripper_velocity()
+double OpenCR::get_gripper_velocity()
 {
   double velocity = 0.0;
 

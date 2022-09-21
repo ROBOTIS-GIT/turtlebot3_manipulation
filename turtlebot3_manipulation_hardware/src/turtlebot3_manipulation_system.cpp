@@ -165,56 +165,47 @@ hardware_interface::return_type TurtleBot3ManipulationSystemHardware::read()
     RCLCPP_WARN(logger, "Failed to read all control table [%s]", log.c_str());
   }
 
-    //  wheel_left_joint!
-    //  wheel_right_joint!
-    //  joint1!
-    //  joint2!
-    //  joint3!
-    //  joint4!
-    //  gripper_left_joint!
-    //  gripper_right_joint!
+  dxl_positions_[0] = opencr_->get_wheel_positions()[opencr::wheels::LEFT];
+  dxl_velocities_[0] = opencr_->get_wheel_velocities()[opencr::wheels::LEFT];
 
-  dxl_positions_[0] = opencr_->wheel_positions()[opencr::wheels::LEFT];
-  dxl_velocities_[0] = opencr_->wheel_velocities()[opencr::wheels::LEFT];
+  dxl_positions_[1] = opencr_->get_wheel_positions()[opencr::wheels::RIGHT];
+  dxl_velocities_[1] = opencr_->get_wheel_velocities()[opencr::wheels::RIGHT];
 
-  dxl_positions_[1] = opencr_->wheel_positions()[opencr::wheels::RIGHT];
-  dxl_velocities_[1] = opencr_->wheel_velocities()[opencr::wheels::RIGHT];
+  dxl_positions_[2] = opencr_->get_joint_positions()[opencr::joints::JOINT1];
+  dxl_velocities_[2] = opencr_->get_joint_velocities()[opencr::joints::JOINT1];
 
-  dxl_positions_[2] = opencr_->joint_positions()[opencr::joints::JOINT1];
-  dxl_velocities_[2] = opencr_->joint_velocities()[opencr::joints::JOINT1];
+  dxl_positions_[3] = opencr_->get_joint_positions()[opencr::joints::JOINT2];
+  dxl_velocities_[3] = opencr_->get_joint_velocities()[opencr::joints::JOINT2];
 
-  dxl_positions_[3] = opencr_->joint_positions()[opencr::joints::JOINT2];
-  dxl_velocities_[3] = opencr_->joint_velocities()[opencr::joints::JOINT2];
+  dxl_positions_[4] = opencr_->get_joint_positions()[opencr::joints::JOINT3];
+  dxl_velocities_[4] = opencr_->get_joint_velocities()[opencr::joints::JOINT3];
 
-  dxl_positions_[4] = opencr_->joint_positions()[opencr::joints::JOINT3];
-  dxl_velocities_[4] = opencr_->joint_velocities()[opencr::joints::JOINT3];
+  dxl_positions_[5] = opencr_->get_joint_positions()[opencr::joints::JOINT4];
+  dxl_velocities_[5] = opencr_->get_joint_velocities()[opencr::joints::JOINT4];
 
-  dxl_positions_[5] = opencr_->joint_positions()[opencr::joints::JOINT4];
-  dxl_velocities_[5] = opencr_->joint_velocities()[opencr::joints::JOINT4];
+  dxl_positions_[6] = opencr_->get_gripper_position();
+  dxl_velocities_[6] = opencr_->get_gripper_velocity();
 
-  dxl_positions_[6] = opencr_->gripper_position();
-  dxl_velocities_[6] = opencr_->gripper_velocity();
-
-  dxl_positions_[7] = opencr_->gripper_position();
-  dxl_velocities_[7] = opencr_->gripper_velocity();
+  dxl_positions_[7] = opencr_->get_gripper_position();
+  dxl_velocities_[7] = opencr_->get_gripper_velocity();
 
   for (uint8_t i = 0; i < dxl_positions_.size(); i++) {
     RCLCPP_INFO(logger, "Got state %.5f  %.5f for joint %s!",
       dxl_positions_[i], dxl_velocities_[i], info_.joints[i].name.c_str());
   }
 
-  opencr_sensor_states_[0] = opencr_->imu().orientation.x;
-  opencr_sensor_states_[1] = opencr_->imu().orientation.y;
-  opencr_sensor_states_[2] = opencr_->imu().orientation.z;
-  opencr_sensor_states_[3] = opencr_->imu().orientation.w;
+  opencr_sensor_states_[0] = opencr_->get_imu().orientation.x;
+  opencr_sensor_states_[1] = opencr_->get_imu().orientation.y;
+  opencr_sensor_states_[2] = opencr_->get_imu().orientation.z;
+  opencr_sensor_states_[3] = opencr_->get_imu().orientation.w;
 
-  opencr_sensor_states_[4] = opencr_->imu().angular_velocity.x;
-  opencr_sensor_states_[5] = opencr_->imu().angular_velocity.y;
-  opencr_sensor_states_[6] = opencr_->imu().angular_velocity.z;
+  opencr_sensor_states_[4] = opencr_->get_imu().angular_velocity.x;
+  opencr_sensor_states_[5] = opencr_->get_imu().angular_velocity.y;
+  opencr_sensor_states_[6] = opencr_->get_imu().angular_velocity.z;
 
-  opencr_sensor_states_[7] = opencr_->imu().linear_acceleration.x;
-  opencr_sensor_states_[8] = opencr_->imu().linear_acceleration.y;
-  opencr_sensor_states_[9] = opencr_->imu().linear_acceleration.z;
+  opencr_sensor_states_[7] = opencr_->get_imu().linear_acceleration.x;
+  opencr_sensor_states_[8] = opencr_->get_imu().linear_acceleration.y;
+  opencr_sensor_states_[9] = opencr_->get_imu().linear_acceleration.z;
 
   for (uint8_t i = 0; i < opencr_sensor_states_.size(); i++) {
     RCLCPP_DEBUG(logger, "Got state %e for interface %s!",
@@ -227,6 +218,15 @@ hardware_interface::return_type TurtleBot3ManipulationSystemHardware::read()
 hardware_interface::return_type TurtleBot3ManipulationSystemHardware::write()
 {
   RCLCPP_INFO(logger, "Write opencr");
+
+    //  wheel_left_joint!
+    //  wheel_right_joint!
+    //  joint1!
+    //  joint2!
+    //  joint3!
+    //  joint4!
+    //  gripper_left_joint!
+    //  gripper_right_joint!
 
   return hardware_interface::return_type::OK;
 }
