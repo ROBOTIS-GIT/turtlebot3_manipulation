@@ -193,10 +193,10 @@ hardware_interface::return_type TurtleBot3ManipulationSystemHardware::read()
   dxl_velocities_[5] = opencr_->joint_velocities()[opencr::joints::JOINT4];
 
   dxl_positions_[6] = opencr_->gripper_position();
-  dxl_velocities_[6] = 0.0;
+  dxl_velocities_[6] = opencr_->gripper_velocity();
 
   dxl_positions_[7] = opencr_->gripper_position();
-  dxl_velocities_[7] = 0.0;
+  dxl_velocities_[7] = opencr_->gripper_velocity();
 
   for (uint8_t i = 0; i < dxl_positions_.size(); i++) {
     RCLCPP_INFO(logger, "Got state %.5f  %.5f for joint %s!",

@@ -300,5 +300,16 @@ double OpenCR::gripper_position()
 
   return position * opencr::joints::GRIPPER_RAD_TO_METER;
 }
+
+double OpenCR::gripper_velocity()
+{
+  double velocity = 0.0;
+
+  int32_t rpm = get_data<int32_t>(
+    opencr_control_table.present_velocity_gripper.address,
+    opencr_control_table.present_velocity_gripper.length);
+
+  return velocity = rpm * opencr::joints::RPM_TO_RAD_PER_SEC;
+}
 }  // namespace turtlebot3_manipulation_hardware
 }  // namespace robotis

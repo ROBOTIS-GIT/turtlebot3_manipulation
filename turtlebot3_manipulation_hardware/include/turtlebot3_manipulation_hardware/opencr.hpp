@@ -94,6 +94,7 @@ public:
   std::array<double, 4> joint_velocities();
 
   double gripper_position();
+  double gripper_velocity();
 
 private:
   std::unique_ptr<DynamixelSDKWrapper> dxl_sdk_wrapper_;
