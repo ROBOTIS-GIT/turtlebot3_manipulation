@@ -140,7 +140,7 @@ hardware_interface::return_type TurtleBot3ManipulationSystemHardware::start()
   status_ = hardware_interface::status::STARTED;
 
   RCLCPP_INFO(logger, "System starting");
-  opencr_->play_sound(OpenCR::SOUND::ASCENDING);
+  opencr_->play_sound(opencr::SOUND::ASCENDING);
 
   return hardware_interface::return_type::OK;
 }
@@ -148,7 +148,7 @@ hardware_interface::return_type TurtleBot3ManipulationSystemHardware::start()
 hardware_interface::return_type TurtleBot3ManipulationSystemHardware::stop()
 {
   RCLCPP_INFO(logger, "Ready for stop");
-  opencr_->play_sound(OpenCR::SOUND::DESCENDING);
+  opencr_->play_sound(opencr::SOUND::DESCENDING);
 
   status_ = hardware_interface::status::STOPPED;
 
@@ -164,10 +164,24 @@ hardware_interface::return_type TurtleBot3ManipulationSystemHardware::read()
     RCLCPP_WARN(logger, "Failed to read all control table [%s]", log.c_str());
   }
 
-  for (uint8_t i = 0; i < dxl_positions_.size(); i++) {
-    dxl_positions_[i] = 0.0;
+    //  wheel_left_joint!
+    //  wheel_right_joint!
+    //  joint1!
+    //  joint2!
+    //  joint3!
+    //  joint4!
+    //  gripper_left_joint!
+    //  gripper_right_joint!
 
-    RCLCPP_INFO(logger, "Got state %.5f for joint %zu!", dxl_positions_[i], i);
+  dxl_positions_[0] = 0.0;
+  dxl_velocities_[0] = 0.0;
+
+  dxl_positions_[1] = 0.0;
+  dxl_velocities_[1] = 0.0;
+
+  for (uint8_t i = 0; i < dxl_positions_.size(); i++) {
+    RCLCPP_INFO(logger, "Got state %.5f  %.5f for joint %zu!",
+      dxl_positions_[i], dxl_velocities_[i], info_.joints[i].name.c_str());
   }
 
   opencr_sensor_states_[0] = opencr_->imu().orientation.x;

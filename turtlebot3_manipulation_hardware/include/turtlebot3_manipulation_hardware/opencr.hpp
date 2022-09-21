@@ -24,6 +24,7 @@
 
 #include "turtlebot3_manipulation_hardware/dynamixel_sdk_wrapper.hpp"
 #include "turtlebot3_manipulation_hardware/opencr_control_table.hpp"
+#include "turtlebot3_manipulation_hardware/opencr_definitions.hpp"
 
 namespace robotis
 {
@@ -67,32 +68,6 @@ public:
     return data;
   }
 
-  enum SOUND {
-    DESCENDING = 0,
-    ASCENDING,
-    WARNING,
-    ERROR
-  };
-
-  struct IMU {
-    struct Vector {
-      double x = 0.0;
-      double y = 0.0;
-      double z = 0.0;
-    };
-
-    struct Quaternion {
-      double x = 0.0;
-      double y = 0.0;
-      double z = 0.0;
-      double w = 1.0;
-    };
-
-    Vector angular_velocity;
-    Vector linear_acceleration;
-    Quaternion orientation;
-  };
-
   bool open_port(const std::string & usb_port);
   bool set_baud_rate(const uint32_t & baud_rate);
 
@@ -104,7 +79,7 @@ public:
   void play_sound(uint8_t sound) const;
 
   void imu_recalibration();
-  const IMU imu();
+  const opencr::IMU imu();
 
   void joints_torque(uint8_t onoff) const;
   void wheels_torque(uint8_t onoff) const;
@@ -119,7 +94,7 @@ private:
 
   std::mutex buffer_m_;
 
-  IMU imu_;
+  opencr::IMU imu_;
 };
 }  // namespace turtlebot3_manipulation_hardware
 }  // namespace robotis
