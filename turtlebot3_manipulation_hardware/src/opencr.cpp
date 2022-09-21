@@ -66,7 +66,7 @@ void OpenCR::imu_recalibration()
   dxl_sdk_wrapper_->write_byte(opencr_control_table.imu_re_calibration.address, 1);
 }
 
-const opencr::IMU OpenCR::imu()
+opencr::IMU OpenCR::imu()
 {
   imu_.angular_velocity.x = get_data<float>(
     opencr_control_table.imu_angular_velocity_x.address,
@@ -133,7 +133,7 @@ bool OpenCR::read_all(std::string & log)
   return comm_result;
 }
 
-const std::array<double, 2> OpenCR::wheel_positions()
+std::array<double, 2> OpenCR::wheel_positions()
 {
   static std::array<int32_t, 2> last_diff_ticks = {0, 0};
   static std::array<int32_t, 2> last_ticks = {0, 0};
@@ -163,7 +163,7 @@ const std::array<double, 2> OpenCR::wheel_positions()
   return positions;
 }
 
-const std::array<double, 2> OpenCR::wheel_velocities()
+std::array<double, 2> OpenCR::wheel_velocities()
 {
   std::array<double, 2> velocities = {0.0, 0.0};
 
@@ -226,7 +226,7 @@ inline double convert_tick_to_radian(
   return radian;
 }
 
-const std::array<double, 4> OpenCR::joint_positions()
+std::array<double, 4> OpenCR::joint_positions()
 {
   std::array<double, 4> positions = {0.0, 0.0, 0.0, 0.0};
 
@@ -257,7 +257,7 @@ const std::array<double, 4> OpenCR::joint_positions()
   return positions;
 }
 
-const std::array<double, 4> OpenCR::joint_velocities()
+std::array<double, 4> OpenCR::joint_velocities()
 {
   std::array<double, 4> velocities = {0.0, 0.0, 0.0, 0.0};
 
@@ -281,6 +281,24 @@ const std::array<double, 4> OpenCR::joint_velocities()
   };
 
   return velocities;
+}
+
+double OpenCR::gripper_position()
+{
+  double position = 0.0;
+
+  int32_t tick = get_data<int32_t>(
+    opencr_control_table.present_position_gripper.address,
+    opencr_control_table.present_position_gripper.length);
+
+  position = convert_tick_to_radian(
+    tick,
+    opencr::joints::MAX_TICK,
+    opencr::joints::MIN_TICK,
+    opencr::joints::MAX_RADIAN,
+    opencr::joints::MIN_RADIAN);
+
+  return position * -0.015;
 }
 }  // namespace turtlebot3_manipulation_hardware
 }  // namespace robotis

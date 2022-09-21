@@ -80,18 +80,20 @@ public:
   void play_sound(uint8_t sound) const;
 
   void imu_recalibration();
-  const opencr::IMU imu();
+  opencr::IMU imu();
 
   void joints_torque(uint8_t onoff) const;
   void wheels_torque(uint8_t onoff) const;
 
   bool read_all(std::string & log);
 
-  const std::array<double, 2> wheel_positions();
-  const std::array<double, 2> wheel_velocities();
+  std::array<double, 2> wheel_positions();
+  std::array<double, 2> wheel_velocities();
 
-  const std::array<double, 4> joint_positions();
-  const std::array<double, 4> joint_velocities();
+  std::array<double, 4> joint_positions();
+  std::array<double, 4> joint_velocities();
+
+  double gripper_position();
 
 private:
   std::unique_ptr<DynamixelSDKWrapper> dxl_sdk_wrapper_;
