@@ -298,7 +298,7 @@ double OpenCR::gripper_position()
     opencr::joints::MAX_RADIAN,
     opencr::joints::MIN_RADIAN);
 
-  return position * -0.015;
+  return position * opencr::joints::GRIPPER_RAD_TO_METER;
 }
 }  // namespace turtlebot3_manipulation_hardware
 }  // namespace robotis
