@@ -61,8 +61,8 @@ namespace wheels
 
 namespace joints
 {
-  constexpr uint32_t MIN_TICK = 0;
-  constexpr uint32_t MAX_TICK = 4096;
+  constexpr int32_t MIN_TICK = 0;
+  constexpr int32_t MAX_TICK = 4096;
 
   constexpr double MIN_RADIAN = -M_PI;
   constexpr double MAX_RADIAN = M_PI;

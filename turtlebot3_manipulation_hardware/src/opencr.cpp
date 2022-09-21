@@ -184,13 +184,13 @@ const std::array<double, 2> OpenCR::wheel_velocities()
 
 inline int32_t convert_radian_to_tick(
   const double & radian,
-  const uint32_t & max_tick,
-  const uint32_t & min_tick,
+  const int32_t & max_tick,
+  const int32_t & min_tick,
   const double & max_radian,
   const double & min_radian)
 {
-  uint32_t tick = 0;
-  uint32_t zero_tick = (max_tick + min_tick) / 2;
+  int32_t tick = 0;
+  int32_t zero_tick = (max_tick + min_tick) / 2;
 
   if (radian > 0) {
     tick = (radian * (max_tick - zero_tick) / max_radian) + zero_tick;
@@ -204,14 +204,14 @@ inline int32_t convert_radian_to_tick(
 }
 
 inline double convert_tick_to_radian(
-  const uint32_t & tick,
-  const uint32_t & max_tick,
-  const uint32_t & min_tick,
+  const int32_t & tick,
+  const int32_t & max_tick,
+  const int32_t & min_tick,
   const double & max_radian,
   const double & min_radian)
 {
   double radian = 0.0;
-  uint32_t zero_tick = (max_tick + min_tick) / 2;
+  int32_t zero_tick = (max_tick + min_tick) / 2;
 
   if (tick > zero_tick) {
     radian = static_cast<double>(tick - zero_tick) * max_radian /
