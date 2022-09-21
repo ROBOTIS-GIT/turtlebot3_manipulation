@@ -132,5 +132,53 @@ bool OpenCR::read_all(std::string & log)
 
   return comm_result;
 }
+
+const std::array<double, 2> OpenCR::wheel_positions()
+{
+  static std::array<int32_t, 2> last_diff_ticks, last_ticks;
+  std::array<double, 2> positions = {0.0, 0.0};
+
+  std::array<int32_t, 2> ticks = {
+    get_data<int32_t>(
+      opencr_control_table.present_position_left.address,
+      opencr_control_table.present_position_left.length),
+    get_data<int32_t>(
+      opencr_control_table.present_position_right.address,
+      opencr_control_table.present_position_right.length)
+  };
+
+  positions[opencr::wheels::LEFT] =
+    opencr::wheels::TICK_TO_RAD * last_diff_ticks[opencr::wheels::LEFT];
+  positions[opencr::wheels::RIGHT] =
+    opencr::wheels::TICK_TO_RAD * last_diff_ticks[opencr::wheels::RIGHT];
+
+  last_diff_ticks[opencr::wheels::LEFT] +=
+    (ticks[opencr::wheels::LEFT] - last_ticks[opencr::wheels::LEFT]);
+  last_diff_ticks[opencr::wheels::RIGHT] +=
+    (ticks[opencr::wheels::RIGHT] - last_ticks[opencr::wheels::RIGHT]);
+
+  last_ticks = ticks;
+
+  return positions;
+}
+
+const std::array<double, 2> OpenCR::wheel_velocities()
+{
+  std::array<double, 2> velocities = {0.0, 0.0};
+
+  std::array<int32_t, 2> rpms = {
+    get_data<int32_t>(
+      opencr_control_table.present_velocity_left.address,
+      opencr_control_table.present_velocity_left.length),
+    get_data<int32_t>(
+      opencr_control_table.present_velocity_right.address,
+      opencr_control_table.present_velocity_right.length)
+  };
+
+  velocities[opencr::wheels::LEFT] = opencr::wheels::RPM_TO_MS * rpms[opencr::wheels::LEFT];
+  velocities[opencr::wheels::RIGHT] = opencr::wheels::RPM_TO_MS * rpms[opencr::wheels::RIGHT];
+
+  return velocities;
+}
 }  // namespace turtlebot3_manipulation_hardware
 }  // namespace robotis

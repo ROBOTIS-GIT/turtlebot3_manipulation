@@ -17,6 +17,7 @@
 #ifndef TURTLEBOT3_MANIPULATION_HARDWARE__OPENCR_HPP_
 #define TURTLEBOT3_MANIPULATION_HARDWARE__OPENCR_HPP_
 
+#include <array>
 #include <memory>
 #include <mutex>
 #include <stdlib.h>
@@ -85,6 +86,9 @@ public:
   void wheels_torque(uint8_t onoff) const;
 
   bool read_all(std::string & log);
+
+  const std::array<double, 2> wheel_positions();
+  const std::array<double, 2> wheel_velocities();
 
 private:
   std::unique_ptr<DynamixelSDKWrapper> dxl_sdk_wrapper_;

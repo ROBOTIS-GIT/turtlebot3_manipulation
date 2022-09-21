@@ -14,8 +14,7 @@
 //
 // Author: Darby Lim
 
-#include "turtlebot3_manipulation_hardware/turtlebot3_manipulation_system.hpp"
-
+#include <array>
 #include <chrono>
 #include <cmath>
 #include <memory>
@@ -23,6 +22,8 @@
 
 #include "hardware_interface/types/hardware_interface_type_values.hpp"
 #include "rclcpp/rclcpp.hpp"
+
+#include "turtlebot3_manipulation_hardware/turtlebot3_manipulation_system.hpp"
 
 namespace robotis
 {
@@ -134,8 +135,8 @@ hardware_interface::return_type TurtleBot3ManipulationSystemHardware::start()
   rclcpp::sleep_for(std::chrono::seconds(3));
 
   RCLCPP_INFO(logger, "Joints and wheels torque ON");
-  opencr_->joints_torque(1);
-  opencr_->wheels_torque(1);
+  opencr_->joints_torque(opencr::ON);
+  opencr_->wheels_torque(opencr::ON);
 
   status_ = hardware_interface::status::STARTED;
 
@@ -173,11 +174,11 @@ hardware_interface::return_type TurtleBot3ManipulationSystemHardware::read()
     //  gripper_left_joint!
     //  gripper_right_joint!
 
-  dxl_positions_[0] = 0.0;
-  dxl_velocities_[0] = 0.0;
+  dxl_positions_[0] = opencr_->wheel_positions()[opencr::wheels::LEFT];
+  dxl_velocities_[0] = opencr_->wheel_velocities()[opencr::wheels::LEFT];
 
-  dxl_positions_[1] = 0.0;
-  dxl_velocities_[1] = 0.0;
+  dxl_positions_[1] = opencr_->wheel_positions()[opencr::wheels::RIGHT];
+  dxl_velocities_[1] = opencr_->wheel_velocities()[opencr::wheels::RIGHT];
 
   for (uint8_t i = 0; i < dxl_positions_.size(); i++) {
     RCLCPP_INFO(logger, "Got state %.5f  %.5f for joint %zu!",
