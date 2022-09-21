@@ -90,6 +90,9 @@ public:
   const std::array<double, 2> wheel_positions();
   const std::array<double, 2> wheel_velocities();
 
+  const std::array<double, 4> joint_positions();
+  const std::array<double, 4> joint_velocities();
+
 private:
   std::unique_ptr<DynamixelSDKWrapper> dxl_sdk_wrapper_;
 

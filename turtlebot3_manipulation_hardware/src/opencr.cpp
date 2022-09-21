@@ -135,7 +135,8 @@ bool OpenCR::read_all(std::string & log)
 
 const std::array<double, 2> OpenCR::wheel_positions()
 {
-  static std::array<int32_t, 2> last_diff_ticks, last_ticks;
+  static std::array<int32_t, 2> last_diff_ticks = {0, 0};
+  static std::array<int32_t, 2> last_ticks = {0, 0};
   std::array<double, 2> positions = {0.0, 0.0};
 
   std::array<int32_t, 2> ticks = {
@@ -177,6 +178,107 @@ const std::array<double, 2> OpenCR::wheel_velocities()
 
   velocities[opencr::wheels::LEFT] = opencr::wheels::RPM_TO_MS * rpms[opencr::wheels::LEFT];
   velocities[opencr::wheels::RIGHT] = opencr::wheels::RPM_TO_MS * rpms[opencr::wheels::RIGHT];
+
+  return velocities;
+}
+
+inline int32_t convert_radian_to_tick(
+  const double & radian,
+  const uint32_t & max_tick,
+  const uint32_t & min_tick,
+  const double & max_radian,
+  const double & min_radian)
+{
+  uint32_t tick = 0;
+  uint32_t zero_tick = (max_tick + min_tick) / 2;
+
+  if (radian > 0) {
+    tick = (radian * (max_tick - zero_tick) / max_radian) + zero_tick;
+  } else if (radian < 0) {
+    tick = (radian * (min_tick - zero_tick) / min_radian) + zero_tick;
+  } else {
+    tick = zero_tick;
+  }
+
+  return tick;
+}
+
+inline double convert_tick_to_radian(
+  const uint32_t & tick,
+  const uint32_t & max_tick,
+  const uint32_t & min_tick,
+  const double & max_radian,
+  const double & min_radian)
+{
+  double radian = 0.0;
+  uint32_t zero_tick = (max_tick + min_tick) / 2;
+
+  if (tick > zero_tick) {
+    radian = static_cast<double>(tick - zero_tick) * max_radian /
+      static_cast<double>(max_tick - zero_tick);
+  } else if (tick < zero_tick) {
+    radian = static_cast<double>(tick - zero_tick) * min_radian /
+      static_cast<double>(min_tick - zero_tick);
+  } else {
+    radian = 0.0;
+  }
+
+  return radian;
+}
+
+const std::array<double, 4> OpenCR::joint_positions()
+{
+  std::array<double, 4> positions = {0.0, 0.0, 0.0, 0.0};
+
+  std::array<int32_t, 4> ticks = {
+    get_data<int32_t>(
+      opencr_control_table.present_position_joint_1.address,
+      opencr_control_table.present_position_joint_1.length),
+    get_data<int32_t>(
+      opencr_control_table.present_position_joint_2.address,
+      opencr_control_table.present_position_joint_2.length),
+    get_data<int32_t>(
+      opencr_control_table.present_position_joint_3.address,
+      opencr_control_table.present_position_joint_3.length),
+    get_data<int32_t>(
+      opencr_control_table.present_position_joint_4.address,
+      opencr_control_table.present_position_joint_4.length),
+  };
+
+  for (uint8_t i = 0; i < ticks.size(); i++) {
+    positions[i] = convert_tick_to_radian(
+      ticks[i],
+      opencr::joints::MAX_TICK,
+      opencr::joints::MIN_TICK,
+      opencr::joints::MAX_RADIAN,
+      opencr::joints::MIN_RADIAN);
+  };
+
+  return positions;
+}
+
+const std::array<double, 4> OpenCR::joint_velocities()
+{
+  std::array<double, 4> velocities = {0.0, 0.0, 0.0, 0.0};
+
+  std::array<int32_t, 4> rpms = {
+    get_data<int32_t>(
+      opencr_control_table.present_velocity_joint_1.address,
+      opencr_control_table.present_velocity_joint_1.length),
+    get_data<int32_t>(
+      opencr_control_table.present_velocity_joint_2.address,
+      opencr_control_table.present_velocity_joint_2.length),
+    get_data<int32_t>(
+      opencr_control_table.present_velocity_joint_3.address,
+      opencr_control_table.present_velocity_joint_3.length),
+    get_data<int32_t>(
+      opencr_control_table.present_velocity_joint_4.address,
+      opencr_control_table.present_velocity_joint_4.length),
+  };
+
+  for (uint8_t i = 0; i < rpms.size(); i++) {
+    velocities[i] = rpms[i] * opencr::joints::RPM_TO_RAD_PER_SEC;
+  };
 
   return velocities;
 }

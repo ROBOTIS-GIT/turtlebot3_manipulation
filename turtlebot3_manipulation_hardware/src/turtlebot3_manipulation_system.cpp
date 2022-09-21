@@ -180,8 +180,20 @@ hardware_interface::return_type TurtleBot3ManipulationSystemHardware::read()
   dxl_positions_[1] = opencr_->wheel_positions()[opencr::wheels::RIGHT];
   dxl_velocities_[1] = opencr_->wheel_velocities()[opencr::wheels::RIGHT];
 
+  dxl_positions_[2] = opencr_->joint_positions()[opencr::joints::JOINT1];
+  dxl_velocities_[2] = opencr_->joint_velocities()[opencr::joints::JOINT1];
+
+  dxl_positions_[3] = opencr_->joint_positions()[opencr::joints::JOINT2];
+  dxl_velocities_[3] = opencr_->joint_velocities()[opencr::joints::JOINT2];
+
+  dxl_positions_[4] = opencr_->joint_positions()[opencr::joints::JOINT3];
+  dxl_velocities_[4] = opencr_->joint_velocities()[opencr::joints::JOINT3];
+
+  dxl_positions_[5] = opencr_->joint_positions()[opencr::joints::JOINT4];
+  dxl_velocities_[5] = opencr_->joint_velocities()[opencr::joints::JOINT4];
+
   for (uint8_t i = 0; i < dxl_positions_.size(); i++) {
-    RCLCPP_INFO(logger, "Got state %.5f  %.5f for joint %zu!",
+    RCLCPP_INFO(logger, "Got state %.5f  %.5f for joint %s!",
       dxl_positions_[i], dxl_velocities_[i], info_.joints[i].name.c_str());
   }
 
