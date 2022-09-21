@@ -44,7 +44,7 @@ bool DynamixelSDKWrapper::set_baud_rate(const uint32_t & baud_rate)
   return port_handler_->setBaudRate(baud_rate);
 }
 
-int32_t DynamixelSDKWrapper::ping(std::string & log)
+uint16_t DynamixelSDKWrapper::ping(std::string & log)
 {
   std::lock_guard<std::mutex> lock(sdk_handler_m_);
 

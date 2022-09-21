@@ -36,7 +36,7 @@ public:
   bool open_port(const std::string & usb_port);
   bool set_baud_rate(const uint32_t & baud_rate);
 
-  int32_t ping(std::string & log);
+  uint16_t ping(std::string & log);
 
   bool read(
     const uint16_t & address,
