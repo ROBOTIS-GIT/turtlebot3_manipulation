@@ -28,6 +28,7 @@ namespace robotis
 {
 namespace turtlebot3_manipulation_hardware
 {
+auto logger = rclcpp::get_logger("turtlebot3_manipulation");
 hardware_interface::return_type TurtleBot3ManipulationSystemHardware::configure(
   const hardware_interface::HardwareInfo & info)
 {
@@ -38,44 +39,34 @@ hardware_interface::return_type TurtleBot3ManipulationSystemHardware::configure(
 
   opencr_ = std::make_unique<OpenCR>(200);
   if (opencr_->open_port("/dev/ttyACM0")) {
-    RCLCPP_INFO(
-      rclcpp::get_logger("turtlebot3_manipulation"), "Succeeded to open port");
+    RCLCPP_INFO(logger, "Succeeded to open port");
   } else {
-    RCLCPP_FATAL(
-      rclcpp::get_logger("turtlebot3_manipulation"), "Failed to open port");
+    RCLCPP_FATAL(logger, "Failed to open port");
     return hardware_interface::return_type::ERROR;
   }
 
   if (opencr_->set_baud_rate(1000000)) {
-    RCLCPP_INFO(
-      rclcpp::get_logger("turtlebot3_manipulation"), "Succeeded to set baudrate");
+    RCLCPP_INFO(logger, "Succeeded to set baudrate");
   } else {
-    RCLCPP_FATAL(
-      rclcpp::get_logger("turtlebot3_manipulation"), "Failed to set baudrate");
+    RCLCPP_FATAL(logger, "Failed to set baudrate");
     return hardware_interface::return_type::ERROR;
   }
 
   std::string log;
   int32_t model_number = opencr_->ping(log);
-  RCLCPP_INFO(
-    rclcpp::get_logger("turtlebot3_manipulation"),
-    "OpenCR Model Number %d [%s]", model_number, log.c_str());
+  RCLCPP_INFO(logger, "OpenCR Model Number %d [%s]", model_number, log.c_str());
 
   if (opencr_->is_connect_manipulator()) {
-    RCLCPP_INFO(
-      rclcpp::get_logger("turtlebot3_manipulation"), "Connected manipulator");
+    RCLCPP_INFO(logger, "Connected manipulator");
   } else {
-    RCLCPP_FATAL(
-      rclcpp::get_logger("turtlebot3_manipulation"), "Not connected manipulator");
+    RCLCPP_FATAL(logger, "Not connected manipulator");
     return hardware_interface::return_type::ERROR;
   }
 
   if (opencr_->is_connect_wheels()) {
-    RCLCPP_INFO(
-      rclcpp::get_logger("turtlebot3_manipulation"), "Connected wheels");
+    RCLCPP_INFO(logger, "Connected wheels");
   } else {
-    RCLCPP_FATAL(
-      rclcpp::get_logger("turtlebot3_manipulation"), "Not connected wheels");
+    RCLCPP_FATAL(logger, "Not connected wheels");
     return hardware_interface::return_type::ERROR;
   }
 
@@ -86,8 +77,7 @@ hardware_interface::return_type TurtleBot3ManipulationSystemHardware::configure(
   dxl_positions_.resize(info_.joints.size(), 0.0);
   dxl_velocities_.resize(info_.joints.size(), 0.0);
 
-  opencr_sensor_states_.resize(
-    info_.sensors[0].state_interfaces.size(), 0.0);
+  opencr_sensor_states_.resize(info_.sensors[0].state_interfaces.size(), 0.0);
 
   status_ = hardware_interface::status::CONFIGURED;
   return hardware_interface::return_type::OK;
@@ -138,18 +128,18 @@ TurtleBot3ManipulationSystemHardware::export_command_interfaces()
 
 hardware_interface::return_type TurtleBot3ManipulationSystemHardware::start()
 {
-  RCLCPP_INFO(rclcpp::get_logger("turtlebot3_manipulation"), "Ready for start");
-  RCLCPP_INFO(rclcpp::get_logger("turtlebot3_manipulation"), "Wait for IMU re-calibration");
+  RCLCPP_INFO(logger, "Ready for start");
+  RCLCPP_INFO(logger, "Wait for IMU re-calibration");
   opencr_->imu_recalibration();
   rclcpp::sleep_for(std::chrono::seconds(3));
 
-  RCLCPP_INFO(rclcpp::get_logger("turtlebot3_manipulation"), "Joints and wheels torque ON");
+  RCLCPP_INFO(logger, "Joints and wheels torque ON");
   opencr_->joints_torque(1);
   opencr_->wheels_torque(1);
 
   status_ = hardware_interface::status::STARTED;
 
-  RCLCPP_INFO(rclcpp::get_logger("turtlebot3_manipulation"), "System starting");
+  RCLCPP_INFO(logger, "System starting");
   opencr_->play_sound(OpenCR::SOUND::ASCENDING);
 
   return hardware_interface::return_type::OK;
@@ -157,12 +147,12 @@ hardware_interface::return_type TurtleBot3ManipulationSystemHardware::start()
 
 hardware_interface::return_type TurtleBot3ManipulationSystemHardware::stop()
 {
-  RCLCPP_INFO(rclcpp::get_logger("turtlebot3_manipulation"), "Ready for stop");
+  RCLCPP_INFO(logger, "Ready for stop");
   opencr_->play_sound(OpenCR::SOUND::DESCENDING);
 
   status_ = hardware_interface::status::STOPPED;
 
-  RCLCPP_INFO(rclcpp::get_logger("turtlebot3_manipulation"), "System stopped");
+  RCLCPP_INFO(logger, "System stopped");
 
   return hardware_interface::return_type::OK;
 }
@@ -171,12 +161,13 @@ hardware_interface::return_type TurtleBot3ManipulationSystemHardware::read()
 {
   std::string log;
   if (opencr_->read_all(log) == false) {
-    RCLCPP_WARN(rclcpp::get_logger("turtlebot3_manipulation"),
-      "Failed to read all control table [%s]", log.c_str());
+    RCLCPP_WARN(logger, "Failed to read all control table [%s]", log.c_str());
   }
 
   for (uint8_t i = 0; i < dxl_positions_.size(); i++) {
     dxl_positions_[i] = 0.0;
+
+    RCLCPP_INFO(logger, "Got state %.5f for joint %zu!", dxl_positions_[i], i);
   }
 
   opencr_sensor_states_[0] = opencr_->imu().orientation.x;
@@ -192,16 +183,17 @@ hardware_interface::return_type TurtleBot3ManipulationSystemHardware::read()
   opencr_sensor_states_[8] = opencr_->imu().linear_acceleration.y;
   opencr_sensor_states_[9] = opencr_->imu().linear_acceleration.z;
 
-  // RCLCPP_INFO(
-  //   rclcpp::get_logger("turtlebot3_manipulation"), "Got state %e for interface %s!",
-  //   opencr_sensor_states_[i], info_.sensors[0].state_interfaces[i].name.c_str());
+  for (uint8_t i = 0; i < opencr_sensor_states_.size(); i++) {
+    RCLCPP_DEBUG(logger, "Got state %e for interface %s!",
+      opencr_sensor_states_[i], info_.sensors[0].state_interfaces[i].name.c_str());
+  }
 
   return hardware_interface::return_type::OK;
 }
 
 hardware_interface::return_type TurtleBot3ManipulationSystemHardware::write()
 {
-  RCLCPP_INFO(rclcpp::get_logger("turtlebot3_manipulation"), "Write opencr");
+  RCLCPP_INFO(logger, "Write opencr");
 
   return hardware_interface::return_type::OK;
 }
