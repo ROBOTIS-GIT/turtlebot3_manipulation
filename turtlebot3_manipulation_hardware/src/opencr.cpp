@@ -311,5 +311,42 @@ double OpenCR::get_gripper_velocity()
 
   return velocity = rpm * opencr::joints::RPM_TO_RAD_PER_SEC;
 }
+
+bool OpenCR::set_joint_positions(std::array<double, 4> commands, std::string & log)
+{
+  std::array<int32_t, 4> tick = {0, 0, 0, 0};
+
+  union Data {
+    int32_t dword[4];
+    uint8_t byte[4 * 4];
+  } data;
+
+  for (uint8_t i = 0; i < commands.size(); i++) {
+    tick[i] = convert_radian_to_tick(
+      commands[i],
+      opencr::joints::MAX_TICK,
+      opencr::joints::MIN_TICK,
+      opencr::joints::MAX_RADIAN,
+      opencr::joints::MIN_RADIAN);
+
+    data.dword[i] = tick[i];
+  };
+
+  uint8_t * p_data = &data.byte[0];
+  bool comm_result = dxl_sdk_wrapper_->write(
+    opencr_control_table.goal_position_joint_1.address,
+    opencr_control_table.goal_position_joint_1.length * 4,
+    p_data,
+    log
+  );
+
+  return comm_result;
+}
+
+bool OpenCR::set_init_pose(std::string & log)
+{
+  std::array<double, 4> init_pose = {0.0, 0.0, 0.0, 0.0};
+  return set_joint_positions(init_pose, log);
+}
 }  // namespace turtlebot3_manipulation_hardware
 }  // namespace robotis

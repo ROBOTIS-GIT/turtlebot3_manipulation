@@ -138,6 +138,13 @@ hardware_interface::return_type TurtleBot3ManipulationSystemHardware::start()
   opencr_->joints_torque(opencr::ON);
   opencr_->wheels_torque(opencr::ON);
 
+  std::string log;
+  if (opencr_->set_init_pose(log)) {
+    RCLCPP_INFO(logger, "Move to home pose");
+  } else {
+    RCLCPP_ERROR(logger, "Can't move to home pose [%s]", log.c_str());
+  }
+
   status_ = hardware_interface::status::STARTED;
 
   RCLCPP_INFO(logger, "System starting");
@@ -217,8 +224,6 @@ hardware_interface::return_type TurtleBot3ManipulationSystemHardware::read()
 
 hardware_interface::return_type TurtleBot3ManipulationSystemHardware::write()
 {
-  RCLCPP_INFO(logger, "Write opencr");
-
     //  wheel_left_joint!
     //  wheel_right_joint!
     //  joint1!
@@ -227,6 +232,25 @@ hardware_interface::return_type TurtleBot3ManipulationSystemHardware::write()
     //  joint4!
     //  gripper_left_joint!
     //  gripper_right_joint!
+  std::array<double, 4> joint_commands = {
+    dxl_joint_commands_[opencr::joints::JOINT1],
+    dxl_joint_commands_[opencr::joints::JOINT2],
+    dxl_joint_commands_[opencr::joints::JOINT3],
+    dxl_joint_commands_[opencr::joints::JOINT4],
+  };
+  std::string log;
+  // opencr_->set_joint_positions(joint_commands, log);
+  // opencr_->set_gripper_position(hw_commands_[6]);
+
+  for (uint8_t i = 0; i < dxl_wheel_commands_.size(); i++) {
+    RCLCPP_WARN(logger, "Got command %.5f for wheels!", dxl_wheel_commands_[i]);
+  }
+  for (uint8_t i = 0; i < dxl_joint_commands_.size(); i++) {
+    RCLCPP_WARN(logger, "Got command %.5f for joints!", dxl_joint_commands_[i]);
+  }
+  for (uint8_t i = 0; i < dxl_gripper_commands_.size(); i++) {
+    RCLCPP_WARN(logger, "Got command %.5f for grippers!", dxl_gripper_commands_[i]);
+  }
 
   return hardware_interface::return_type::OK;
 }

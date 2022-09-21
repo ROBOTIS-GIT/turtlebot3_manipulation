@@ -96,6 +96,9 @@ public:
   double get_gripper_position();
   double get_gripper_velocity();
 
+  bool set_joint_positions(std::array<double, 4> commands, std::string & log);
+  bool set_init_pose(std::string & log);
+
 private:
   std::unique_ptr<DynamixelSDKWrapper> dxl_sdk_wrapper_;
 
