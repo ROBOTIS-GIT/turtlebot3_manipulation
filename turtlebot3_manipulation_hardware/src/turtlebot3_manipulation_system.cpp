@@ -36,8 +36,8 @@ hardware_interface::return_type TurtleBot3ManipulationSystemHardware::configure(
     return hardware_interface::return_type::ERROR;
   }
 
-  dynamixel_sdk_wrapper_ = std::make_unique<DynamixelSDKWrapper>(200);
-  if (dynamixel_sdk_wrapper_->open_port("/dev/ttyACM0")) {
+  opencr_ = std::make_unique<OpenCR>(200);
+  if (opencr_->open_port("/dev/ttyACM0")) {
     RCLCPP_INFO(
       rclcpp::get_logger("turtlebot3_manipulation"), "Succeeded to open port");
   } else {
@@ -46,7 +46,7 @@ hardware_interface::return_type TurtleBot3ManipulationSystemHardware::configure(
     return hardware_interface::return_type::ERROR;
   }
 
-  if (dynamixel_sdk_wrapper_->set_baud_rate(1000000)) {
+  if (opencr_->set_baud_rate(1000000)) {
     RCLCPP_INFO(
       rclcpp::get_logger("turtlebot3_manipulation"), "Succeeded to set baudrate");
   } else {
@@ -56,12 +56,12 @@ hardware_interface::return_type TurtleBot3ManipulationSystemHardware::configure(
   }
 
   std::string log;
-  int32_t model_number = dynamixel_sdk_wrapper_->ping(log);
+  int32_t model_number = opencr_->ping(log);
   RCLCPP_INFO(
     rclcpp::get_logger("turtlebot3_manipulation"),
     "OpenCR Model Number %d [%s]", model_number, log.c_str());
 
-  if (dynamixel_sdk_wrapper_->read_byte(opencr_control_table.connect_manipulator.address)) {
+  if (opencr_->is_connect_manipulator()) {
     RCLCPP_INFO(
       rclcpp::get_logger("turtlebot3_manipulation"), "Connected manipulator");
   } else {
@@ -70,7 +70,7 @@ hardware_interface::return_type TurtleBot3ManipulationSystemHardware::configure(
     return hardware_interface::return_type::ERROR;
   }
 
-  if (dynamixel_sdk_wrapper_->read_byte(opencr_control_table.connect_wheels.address)) {
+  if (opencr_->is_connect_wheels()) {
     RCLCPP_INFO(
       rclcpp::get_logger("turtlebot3_manipulation"), "Connected wheels");
   } else {
@@ -139,16 +139,18 @@ TurtleBot3ManipulationSystemHardware::export_command_interfaces()
 hardware_interface::return_type TurtleBot3ManipulationSystemHardware::start()
 {
   RCLCPP_INFO(rclcpp::get_logger("turtlebot3_manipulation"), "Ready for start");
-  dynamixel_sdk_wrapper_->write_byte(opencr_control_table.sound.address, 1);
+  RCLCPP_INFO(rclcpp::get_logger("turtlebot3_manipulation"), "Wait for IMU re-calibration");
+  opencr_->imu_recalibration();
+  rclcpp::sleep_for(std::chrono::seconds(3));
 
-  dynamixel_sdk_wrapper_->write_byte(opencr_control_table.imu_re_calibration.address, 1);
-
-  dynamixel_sdk_wrapper_->write_byte(opencr_control_table.torque_wheels.address, 1);
-  dynamixel_sdk_wrapper_->write_byte(opencr_control_table.torque_joints.address, 1);
+  RCLCPP_INFO(rclcpp::get_logger("turtlebot3_manipulation"), "Joints and wheels torque ON");
+  opencr_->joints_torque(1);
+  opencr_->wheels_torque(1);
 
   status_ = hardware_interface::status::STARTED;
 
   RCLCPP_INFO(rclcpp::get_logger("turtlebot3_manipulation"), "System starting");
+  opencr_->play_sound(OpenCR::SOUND::ASCENDING);
 
   return hardware_interface::return_type::OK;
 }
@@ -156,7 +158,7 @@ hardware_interface::return_type TurtleBot3ManipulationSystemHardware::start()
 hardware_interface::return_type TurtleBot3ManipulationSystemHardware::stop()
 {
   RCLCPP_INFO(rclcpp::get_logger("turtlebot3_manipulation"), "Ready for stop");
-  dynamixel_sdk_wrapper_->write_byte(opencr_control_table.sound.address, 0);
+  opencr_->play_sound(OpenCR::SOUND::DESCENDING);
 
   status_ = hardware_interface::status::STOPPED;
 
@@ -168,53 +170,27 @@ hardware_interface::return_type TurtleBot3ManipulationSystemHardware::stop()
 hardware_interface::return_type TurtleBot3ManipulationSystemHardware::read()
 {
   std::string log;
-  if (dynamixel_sdk_wrapper_->read(0, CONTROL_TABLE_SIZE, &opencr_data_[0], log) == false) {
-    RCLCPP_WARN(rclcpp::get_logger("turtlebot3_manipulation"), "Failed to read control table");
+  if (opencr_->read_all(log) == false) {
+    RCLCPP_WARN(rclcpp::get_logger("turtlebot3_manipulation"),
+      "Failed to read all control table [%s]", log.c_str());
   }
 
   for (uint8_t i = 0; i < dxl_positions_.size(); i++) {
     dxl_positions_[i] = 0.0;
   }
 
-  uint8_t address = opencr_control_table.imu_orientation_x.address;
-  opencr_sensor_states_[0] =
-    DXL_MAKEDWORD(DXL_MAKEWORD(address + 0, address + 1), DXL_MAKEWORD(address + 2, address + 3));
+  opencr_sensor_states_[0] = opencr_->imu().orientation.x;
+  opencr_sensor_states_[1] = opencr_->imu().orientation.y;
+  opencr_sensor_states_[2] = opencr_->imu().orientation.z;
+  opencr_sensor_states_[3] = opencr_->imu().orientation.w;
 
-  address = opencr_control_table.imu_orientation_y.address;
-  opencr_sensor_states_[1] =
-    DXL_MAKEDWORD(DXL_MAKEWORD(address + 0, address + 1), DXL_MAKEWORD(address + 2, address + 3));
+  opencr_sensor_states_[4] = opencr_->imu().angular_velocity.x;
+  opencr_sensor_states_[5] = opencr_->imu().angular_velocity.y;
+  opencr_sensor_states_[6] = opencr_->imu().angular_velocity.z;
 
-  address = opencr_control_table.imu_orientation_z.address;
-  opencr_sensor_states_[2] =
-    DXL_MAKEDWORD(DXL_MAKEWORD(address + 0, address + 1), DXL_MAKEWORD(address + 2, address + 3));
-
-  address = opencr_control_table.imu_orientation_w.address;
-  opencr_sensor_states_[3] =
-    DXL_MAKEDWORD(DXL_MAKEWORD(address + 0, address + 1), DXL_MAKEWORD(address + 2, address + 3));
-
-  address = opencr_control_table.imu_angular_velocity_x.address;
-  opencr_sensor_states_[4] =
-    DXL_MAKEDWORD(DXL_MAKEWORD(address + 0, address + 1), DXL_MAKEWORD(address + 2, address + 3));
-
-  address = opencr_control_table.imu_angular_velocity_y.address;
-  opencr_sensor_states_[5] =
-    DXL_MAKEDWORD(DXL_MAKEWORD(address + 0, address + 1), DXL_MAKEWORD(address + 2, address + 3));
-
-  address = opencr_control_table.imu_angular_velocity_z.address;
-  opencr_sensor_states_[6] =
-    DXL_MAKEDWORD(DXL_MAKEWORD(address + 0, address + 1), DXL_MAKEWORD(address + 2, address + 3));
-
-  address = opencr_control_table.imu_linear_acceleration_x.address;
-  opencr_sensor_states_[7] =
-    DXL_MAKEDWORD(DXL_MAKEWORD(address + 0, address + 1), DXL_MAKEWORD(address + 2, address + 3));
-
-  address = opencr_control_table.imu_linear_acceleration_y.address;
-  opencr_sensor_states_[8] =
-    DXL_MAKEDWORD(DXL_MAKEWORD(address + 0, address + 1), DXL_MAKEWORD(address + 2, address + 3));
-
-  address = opencr_control_table.imu_linear_acceleration_z.address;
-  opencr_sensor_states_[9] =
-    DXL_MAKEDWORD(DXL_MAKEWORD(address + 0, address + 1), DXL_MAKEWORD(address + 2, address + 3));
+  opencr_sensor_states_[7] = opencr_->imu().linear_acceleration.x;
+  opencr_sensor_states_[8] = opencr_->imu().linear_acceleration.y;
+  opencr_sensor_states_[9] = opencr_->imu().linear_acceleration.z;
 
   // RCLCPP_INFO(
   //   rclcpp::get_logger("turtlebot3_manipulation"), "Got state %e for interface %s!",
