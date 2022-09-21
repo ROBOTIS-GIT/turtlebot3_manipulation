@@ -68,43 +68,43 @@ void OpenCR::imu_recalibration()
 
 const OpenCR::IMU OpenCR::imu()
 {
-  imu_.angular_velocity.x= get_data<double>(
+  imu_.angular_velocity.x= get_data<float>(
     opencr_control_table.imu_angular_velocity_x.address,
     opencr_control_table.imu_angular_velocity_x.length);
 
-  imu_.angular_velocity.y= get_data<double>(
+  imu_.angular_velocity.y= get_data<float>(
     opencr_control_table.imu_angular_velocity_y.address,
     opencr_control_table.imu_angular_velocity_y.length);
 
-  imu_.angular_velocity.z= get_data<double>(
+  imu_.angular_velocity.z= get_data<float>(
     opencr_control_table.imu_angular_velocity_z.address,
     opencr_control_table.imu_angular_velocity_z.length);
 
-  imu_.linear_acceleration.x= get_data<double>(
+  imu_.linear_acceleration.x= get_data<float>(
     opencr_control_table.imu_linear_acceleration_x.address,
     opencr_control_table.imu_linear_acceleration_x.length);
 
-  imu_.linear_acceleration.y= get_data<double>(
+  imu_.linear_acceleration.y= get_data<float>(
     opencr_control_table.imu_linear_acceleration_y.address,
     opencr_control_table.imu_linear_acceleration_y.length);
 
-  imu_.linear_acceleration.z= get_data<double>(
+  imu_.linear_acceleration.z= get_data<float>(
     opencr_control_table.imu_linear_acceleration_z.address,
     opencr_control_table.imu_linear_acceleration_z.length);
 
-  imu_.orientation.x= get_data<double>(
+  imu_.orientation.x= get_data<float>(
     opencr_control_table.imu_orientation_x.address,
     opencr_control_table.imu_orientation_x.length);
 
-  imu_.orientation.y= get_data<double>(
+  imu_.orientation.y= get_data<float>(
     opencr_control_table.imu_orientation_y.address,
     opencr_control_table.imu_orientation_y.length);
 
-  imu_.orientation.z= get_data<double>(
+  imu_.orientation.z= get_data<float>(
     opencr_control_table.imu_orientation_z.address,
     opencr_control_table.imu_orientation_z.length);
 
-  imu_.orientation.w= get_data<double>(
+  imu_.orientation.w= get_data<float>(
     opencr_control_table.imu_orientation_w.address,
     opencr_control_table.imu_orientation_w.length);
 
