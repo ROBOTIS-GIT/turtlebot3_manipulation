@@ -17,6 +17,7 @@
 #ifndef TURTLEBOT3_MANIPULATION_HARDWARE__OPENCR_DEFINITIONS_HPP_
 #define TURTLEBOT3_MANIPULATION_HARDWARE__OPENCR_DEFINITIONS_HPP_
 
+#include <cmath>
 #include <stdint.h>
 
 namespace robotis
@@ -47,15 +48,32 @@ struct IMU {
 namespace wheels
 {
   // ref) http://emanual.robotis.com/docs/en/dxl/x/xl430-w250/#goal-velocity104
-  // v(m/s) = RPM * (2 * PI * wheel_radius(= 0.033) / 60)
-  constexpr double RPM_TO_MS = 0.229 * 0.0034557519189487725;
+  constexpr double RADIUS = 0.033;
+  constexpr double RPM_TO_MS = 0.229 * (2.0 * M_PI * RADIUS) / 60.0;
 
-  // 0.087890625[deg] * 3.14159265359 / 180 = 0.001533981f
-  constexpr double TICK_TO_RAD = 0.001533981;
+  // ref) https://emanual.robotis.com/docs/en/dxl/x/xl430-w250/#goal-position116
+  constexpr double DEG_PER_PULSE = 0.087890625;
+  constexpr double TICK_TO_RAD = DEG_PER_PULSE * M_PI / 180.0;
 
   constexpr uint8_t LEFT = 0;
   constexpr uint8_t RIGHT = 1;
 }  // namespace wheels
+
+namespace joints
+{
+  constexpr uint32_t MIN_TICK = 0;
+  constexpr uint32_t MAX_TICK = 4096;
+
+  constexpr double MIN_RADIAN = -M_PI;
+  constexpr double MAX_RADIAN = M_PI;
+
+  constexpr uint8_t JOINT1 = 0;
+  constexpr uint8_t JOINT2 = 1;
+  constexpr uint8_t JOINT3 = 2;
+  constexpr uint8_t JOINT4 = 3;
+
+  constexpr double RPM_TO_RAD_PER_SEC = 0.104719755;
+}  // namespace joints
 
 enum SOUND {
   DESCENDING = 0,
