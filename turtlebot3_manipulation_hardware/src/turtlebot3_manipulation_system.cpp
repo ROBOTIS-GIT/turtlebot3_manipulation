@@ -138,20 +138,27 @@ hardware_interface::return_type TurtleBot3ManipulationSystemHardware::start()
   opencr_->joints_torque(opencr::ON);
   opencr_->wheels_torque(opencr::ON);
 
-  std::string log;
+  // std::string log;
+  // opencr_->set_gripper_profile_acceleration(200, log);
+  // opencr_->set_gripper_profile_velocity(20, log);
+  // if (opencr_->set_gripper_position(0.010, log)) {
+  //   RCLCPP_INFO(logger, "Move to gripper pose");
+  // } else {
+  //   RCLCPP_ERROR(logger, "Can't move to gripper pose [%s]", log.c_str());
+  // }
 
-  std::array<int32_t, 4> acceleration = {200, 200, 200, 200};
+  std::string log;
+  std::array<int32_t, 4> acceleration = {20, 20, 20, 20};
   opencr_->set_joint_profile_acceleration(acceleration, log);
 
-  std::array<int32_t, 4> velocity = {20, 20, 20, 20};
+  std::array<int32_t, 4> velocity = {200, 200, 200, 200};
   opencr_->set_joint_profile_velocity(velocity, log);
 
   if (opencr_->set_init_pose(log)) {
-    RCLCPP_INFO(logger, "Move to home pose");
+    RCLCPP_INFO(logger, "Move to init pose");
   } else {
-    RCLCPP_ERROR(logger, "Can't move to home pose [%s]", log.c_str());
+    RCLCPP_ERROR(logger, "Can't move to init pose [%s]", log.c_str());
   }
-  rclcpp::sleep_for(std::chrono::seconds(1));
   std::array<int32_t, 4> zero_acceleration = {0, 0, 0, 0};
   opencr_->set_joint_profile_acceleration(zero_acceleration, log);
 
