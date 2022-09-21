@@ -44,13 +44,18 @@ struct IMU {
   Quaternion orientation;
 };
 
-struct Wheels {
+namespace wheels
+{
   // ref) http://emanual.robotis.com/docs/en/dxl/x/xl430-w250/#goal-velocity104
-  double RPM_TO_MS = 0.229 * 0.0034557519189487725;
+  // v(m/s) = RPM * (2 * PI * wheel_radius(= 0.033) / 60)
+  constexpr double RPM_TO_MS = 0.229 * 0.0034557519189487725;
 
   // 0.087890625[deg] * 3.14159265359 / 180 = 0.001533981f
-  double TICK_TO_RAD = 0.001533981;
-};
+  constexpr double TICK_TO_RAD = 0.001533981;
+
+  constexpr uint8_t LEFT = 0;
+  constexpr uint8_t RIGHT = 1;
+}  // namespace wheels
 
 enum SOUND {
   DESCENDING = 0,
@@ -58,6 +63,9 @@ enum SOUND {
   WARNING,
   ERROR
 };
+
+constexpr uint8_t ON = 1;
+constexpr uint8_t OFF = 0;
 }  // namespace opencr
 }  // namespace turtlebot3_manipulation_hardware
 }  // namespace robotis
