@@ -483,7 +483,7 @@ bool OpenCR::set_gripper_profile_velocity(const int32_t & velocity, std::string 
 
 bool OpenCR::set_init_pose(std::string & log)
 {
-  std::vector<double> init_pose = {0.0, -1.57, 1.50, 0.17};
+  std::vector<double> init_pose = {0.0, -1.57, 1.37, 0.26};
   return set_joint_positions(init_pose, log);
 }
 
