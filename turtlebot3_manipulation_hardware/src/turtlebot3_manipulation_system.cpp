@@ -114,18 +114,25 @@ std::vector<hardware_interface::CommandInterface>
 TurtleBot3ManipulationSystemHardware::export_command_interfaces()
 {
   std::vector<hardware_interface::CommandInterface> command_interfaces;
-  for (uint8_t i = 0; i < info_.joints.size(); i++) {
-    if (info_.joints[i].name.find("wheel") != std::string::npos) {
-      command_interfaces.emplace_back(hardware_interface::CommandInterface(
-        info_.joints[i].name, hardware_interface::HW_IF_VELOCITY, &dxl_wheel_commands_[i]));
-    } else if (info_.joints[i].name.find("gripper") != std::string::npos) {
-      command_interfaces.emplace_back(hardware_interface::CommandInterface(
-        info_.joints[i].name, hardware_interface::HW_IF_POSITION, &dxl_gripper_commands_[i]));
-    } else {
-      command_interfaces.emplace_back(hardware_interface::CommandInterface(
-        info_.joints[i].name, hardware_interface::HW_IF_POSITION, &dxl_joint_commands_[i]));
-    }
-  }
+
+  command_interfaces.emplace_back(hardware_interface::CommandInterface(
+    info_.joints[0].name, hardware_interface::HW_IF_VELOCITY, &dxl_wheel_commands_[0]));
+  command_interfaces.emplace_back(hardware_interface::CommandInterface(
+    info_.joints[1].name, hardware_interface::HW_IF_VELOCITY, &dxl_wheel_commands_[1]));
+
+  command_interfaces.emplace_back(hardware_interface::CommandInterface(
+    info_.joints[2].name, hardware_interface::HW_IF_POSITION, &dxl_joint_commands_[0]));
+  command_interfaces.emplace_back(hardware_interface::CommandInterface(
+    info_.joints[3].name, hardware_interface::HW_IF_POSITION, &dxl_joint_commands_[1]));
+  command_interfaces.emplace_back(hardware_interface::CommandInterface(
+    info_.joints[4].name, hardware_interface::HW_IF_POSITION, &dxl_joint_commands_[2]));
+  command_interfaces.emplace_back(hardware_interface::CommandInterface(
+    info_.joints[5].name, hardware_interface::HW_IF_POSITION, &dxl_joint_commands_[3]));
+
+  command_interfaces.emplace_back(hardware_interface::CommandInterface(
+    info_.joints[6].name, hardware_interface::HW_IF_POSITION, &dxl_gripper_commands_[0]));
+  command_interfaces.emplace_back(hardware_interface::CommandInterface(
+    info_.joints[7].name, hardware_interface::HW_IF_POSITION, &dxl_gripper_commands_[1]));
 
   return command_interfaces;
 }
@@ -154,10 +161,6 @@ hardware_interface::return_type TurtleBot3ManipulationSystemHardware::start()
   opencr_->set_gripper_profile_acceleration(20, log);
   opencr_->set_gripper_profile_velocity(200, log);
   opencr_->init_gripper(log);
-
-  std::array<int32_t, 4> zero = {0, 0, 0, 0};
-  opencr_->set_joint_profile_acceleration(zero, log);
-  opencr_->set_joint_profile_velocity(zero, log);
 
   RCLCPP_INFO(logger, "System starting");
   opencr_->play_sound(opencr::SOUND::ASCENDING);
@@ -210,11 +213,6 @@ hardware_interface::return_type TurtleBot3ManipulationSystemHardware::read()
   dxl_positions_[7] = opencr_->get_gripper_position();
   dxl_velocities_[7] = opencr_->get_gripper_velocity();
 
-  for (uint8_t i = 0; i < dxl_positions_.size(); i++) {
-    RCLCPP_DEBUG(logger, "Got state %.5f  %.5f for joint %s!",
-      dxl_positions_[i], dxl_velocities_[i], info_.joints[i].name.c_str());
-  }
-
   opencr_sensor_states_[0] = opencr_->get_imu().orientation.x;
   opencr_sensor_states_[1] = opencr_->get_imu().orientation.y;
   opencr_sensor_states_[2] = opencr_->get_imu().orientation.z;
@@ -232,15 +230,6 @@ hardware_interface::return_type TurtleBot3ManipulationSystemHardware::read()
   opencr_sensor_states_[11] = opencr_->get_battery().percentage;
   opencr_sensor_states_[12] = opencr_->get_battery().design_capacity;
   opencr_sensor_states_[13] = opencr_->get_battery().present;
-
-  for (uint8_t i = 0, k = 0; i < info_.sensors.size(); i++) {
-    for (uint8_t j = 0; j < info_.sensors[i].state_interfaces.size(); j++) {
-      RCLCPP_DEBUG(logger, "Got state %.5f for %s %s!",
-        opencr_sensor_states_[k++],
-        info_.sensors[i].name.c_str(),
-        info_.sensors[i].state_interfaces[j].name.c_str());
-    }
-  }
 
   return hardware_interface::return_type::OK;
 }
@@ -268,16 +257,6 @@ hardware_interface::return_type TurtleBot3ManipulationSystemHardware::write()
 
   if (opencr_->set_gripper_position(dxl_gripper_commands_[0], log) == false) {
     RCLCPP_ERROR(logger, "Can't control gripper [%s]", log);
-  }
-
-  for (uint8_t i = 0; i < dxl_wheel_commands_.size(); i++) {
-    RCLCPP_DEBUG(logger, "Got command %.5f for wheels!", dxl_wheel_commands_[i]);
-  }
-  for (uint8_t i = 0; i < dxl_joint_commands_.size(); i++) {
-    RCLCPP_DEBUG(logger, "Got command %.5f for joints!", dxl_joint_commands_[i]);
-  }
-  for (uint8_t i = 0; i < dxl_gripper_commands_.size(); i++) {
-    RCLCPP_DEBUG(logger, "Got command %.5f for grippers!", dxl_gripper_commands_[i]);
   }
 
   return hardware_interface::return_type::OK;
