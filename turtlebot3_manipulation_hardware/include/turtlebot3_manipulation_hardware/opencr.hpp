@@ -82,6 +82,8 @@ public:
   void imu_recalibration();
   opencr::IMU get_imu();
 
+  opencr::Battery get_battery();
+
   void joints_torque(uint8_t onoff) const;
   void wheels_torque(uint8_t onoff) const;
 
@@ -128,8 +130,6 @@ private:
   uint8_t data_buffer_[CONTROL_TABLE_SIZE];
 
   std::mutex buffer_m_;
-
-  opencr::IMU imu_;
 };
 }  // namespace turtlebot3_manipulation_hardware
 }  // namespace robotis

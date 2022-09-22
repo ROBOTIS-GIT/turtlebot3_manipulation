@@ -77,7 +77,9 @@ hardware_interface::return_type TurtleBot3ManipulationSystemHardware::configure(
   dxl_positions_.resize(info_.joints.size(), 0.0);
   dxl_velocities_.resize(info_.joints.size(), 0.0);
 
-  opencr_sensor_states_.resize(info_.sensors[0].state_interfaces.size(), 0.0);
+  opencr_sensor_states_.resize(
+    info_.sensors[0].state_interfaces.size() + info_.sensors[1].state_interfaces.size(),
+    0.0);
 
   status_ = hardware_interface::status::CONFIGURED;
   return hardware_interface::return_type::OK;
@@ -94,11 +96,14 @@ TurtleBot3ManipulationSystemHardware::export_state_interfaces()
       info_.joints[i].name, hardware_interface::HW_IF_VELOCITY, &dxl_velocities_[i]));
   }
 
-  for (uint8_t i = 0; i < info_.sensors[0].state_interfaces.size(); i++) {
-    state_interfaces.emplace_back(hardware_interface::StateInterface(
-      info_.sensors[0].name,
-      info_.sensors[0].state_interfaces[i].name,
-      &opencr_sensor_states_[i]));
+  for (uint8_t i = 0, k = 0; i < info_.sensors.size(); i++) {
+    for (uint8_t j = 0; j < info_.sensors[i].state_interfaces.size(); j++) {
+      state_interfaces.emplace_back(hardware_interface::StateInterface(
+        info_.sensors[i].name,
+        info_.sensors[i].state_interfaces[j].name,
+        &opencr_sensor_states_[k++])
+      );
+    }
   }
 
   return state_interfaces;
@@ -204,9 +209,18 @@ hardware_interface::return_type TurtleBot3ManipulationSystemHardware::read()
   opencr_sensor_states_[8] = opencr_->get_imu().linear_acceleration.y;
   opencr_sensor_states_[9] = opencr_->get_imu().linear_acceleration.z;
 
-  for (uint8_t i = 0; i < opencr_sensor_states_.size(); i++) {
-    RCLCPP_DEBUG(logger, "Got state %e for interface %s!",
-      opencr_sensor_states_[i], info_.sensors[0].state_interfaces[i].name.c_str());
+  opencr_sensor_states_[10] = opencr_->get_battery().voltage;
+  opencr_sensor_states_[11] = opencr_->get_battery().percentage;
+  opencr_sensor_states_[12] = opencr_->get_battery().design_capacity;
+  opencr_sensor_states_[13] = opencr_->get_battery().present;
+
+  for (uint8_t i = 0, k = 0; i < info_.sensors.size(); i++) {
+    for (uint8_t j = 0; j < info_.sensors[i].state_interfaces.size(); j++) {
+      RCLCPP_DEBUG(logger, "Got state %.5f for %s %s!",
+        opencr_sensor_states_[k++],
+        info_.sensors[i].name.c_str(),
+        info_.sensors[i].state_interfaces[j].name.c_str());
+    }
   }
 
   return hardware_interface::return_type::OK;

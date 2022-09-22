@@ -70,47 +70,68 @@ void OpenCR::imu_recalibration()
 
 opencr::IMU OpenCR::get_imu()
 {
-  imu_.angular_velocity.x = get_data<float>(
+  opencr::IMU imu;
+
+  imu.angular_velocity.x = get_data<float>(
     opencr_control_table.imu_angular_velocity_x.address,
     opencr_control_table.imu_angular_velocity_x.length);
 
-  imu_.angular_velocity.y = get_data<float>(
+  imu.angular_velocity.y = get_data<float>(
     opencr_control_table.imu_angular_velocity_y.address,
     opencr_control_table.imu_angular_velocity_y.length);
 
-  imu_.angular_velocity.z = get_data<float>(
+  imu.angular_velocity.z = get_data<float>(
     opencr_control_table.imu_angular_velocity_z.address,
     opencr_control_table.imu_angular_velocity_z.length);
 
-  imu_.linear_acceleration.x = get_data<float>(
+  imu.linear_acceleration.x = get_data<float>(
     opencr_control_table.imu_linear_acceleration_x.address,
     opencr_control_table.imu_linear_acceleration_x.length);
 
-  imu_.linear_acceleration.y = get_data<float>(
+  imu.linear_acceleration.y = get_data<float>(
     opencr_control_table.imu_linear_acceleration_y.address,
     opencr_control_table.imu_linear_acceleration_y.length);
 
-  imu_.linear_acceleration.z = get_data<float>(
+  imu.linear_acceleration.z = get_data<float>(
     opencr_control_table.imu_linear_acceleration_z.address,
     opencr_control_table.imu_linear_acceleration_z.length);
 
-  imu_.orientation.x = get_data<float>(
+  imu.orientation.x = get_data<float>(
     opencr_control_table.imu_orientation_x.address,
     opencr_control_table.imu_orientation_x.length);
 
-  imu_.orientation.y = get_data<float>(
+  imu.orientation.y = get_data<float>(
     opencr_control_table.imu_orientation_y.address,
     opencr_control_table.imu_orientation_y.length);
 
-  imu_.orientation.z = get_data<float>(
+  imu.orientation.z = get_data<float>(
     opencr_control_table.imu_orientation_z.address,
     opencr_control_table.imu_orientation_z.length);
 
-  imu_.orientation.w = get_data<float>(
+  imu.orientation.w = get_data<float>(
     opencr_control_table.imu_orientation_w.address,
     opencr_control_table.imu_orientation_w.length);
 
-  return imu_;
+  return imu;
+}
+
+opencr::Battery OpenCR::get_battery()
+{
+  opencr::Battery battery;
+
+  battery.design_capacity = 1.8;
+
+  battery.voltage = 0.01 * get_data<int32_t>(
+    opencr_control_table.battery_voltage.address,
+    opencr_control_table.battery_voltage.length);
+
+  battery.percentage = 0.01 * get_data<int32_t>(
+    opencr_control_table.battery_percentage.address,
+    opencr_control_table.battery_percentage.length);
+
+  battery.voltage <= 7.0 ? battery.present = false : battery.present = true;
+
+  return battery;
 }
 
 void OpenCR::joints_torque(uint8_t onoff) const

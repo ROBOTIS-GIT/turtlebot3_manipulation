@@ -45,6 +45,13 @@ struct IMU {
   Quaternion orientation;
 };
 
+struct Battery {
+  double voltage = 0.0;
+  double percentage = 0.0;
+  double design_capacity = 0.0;
+  bool present = false;
+};
+
 namespace wheels
 {
   // ref) http://emanual.robotis.com/docs/en/dxl/x/xl430-w250/#goal-velocity104

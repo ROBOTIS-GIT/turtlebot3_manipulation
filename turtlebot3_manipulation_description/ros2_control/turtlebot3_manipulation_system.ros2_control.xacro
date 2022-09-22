@@ -58,6 +58,13 @@ https://github.com/ros-controls/ros2_control_demos/blob/foxy/ros2_control_demo_d
         <state_interface name="linear_acceleration.z"/>
       </sensor>
 
+      <sensor name="battery">
+        <state_interface name="voltage"/>
+        <state_interface name="percentage"/>
+        <state_interface name="design_capacity"/>
+        <state_interface name="present"/>
+      </sensor>
+
       <joint name="${prefix}joint1">
         <command_interface name="position">
           <param name="min">${-pi*0.9}</param>
