@@ -407,7 +407,7 @@ bool OpenCR::set_gripper_position(const double & meters, std::string & log)
   bool comm_result = set_gripper_variables(
     opencr_control_table.goal_position_gripper.address, tick, log);
 
-  dxl_sdk_wrapper_->write_byte(opencr_control_table.profile_acceleration_update_write.address, 1);
+  dxl_sdk_wrapper_->write_byte(opencr_control_table.goal_position_update_write.address, 1);
 
   return comm_result;
 }
@@ -438,6 +438,12 @@ bool OpenCR::set_init_pose(std::string & log)
   return set_joint_positions(init_pose, log);
 }
 
+bool OpenCR::set_home_pose(std::string & log)
+{
+  std::array<double, 4> init_pose = {0.0, -1.05, 0.35, 0.70};
+  return set_joint_positions(init_pose, log);
+}
+
 uint8_t OpenCR::read_byte(const uint16_t & address)
 {
   return dxl_sdk_wrapper_->read_byte(address);
@@ -448,10 +454,9 @@ void OpenCR::write_byte(const uint16_t & address, uint8_t data)
   dxl_sdk_wrapper_->write_byte(address, data);
 }
 
-void OpenCR::send_heartbeat()
+void OpenCR::send_heartbeat(const uint8_t & count)
 {
-  static uint8_t count = 0;
-  this->write_byte(opencr_control_table.heartbeat.address, count++);
+  this->write_byte(opencr_control_table.heartbeat.address, count);
 }
 }  // namespace turtlebot3_manipulation_hardware
 }  // namespace robotis

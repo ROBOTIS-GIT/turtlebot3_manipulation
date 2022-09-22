@@ -105,9 +105,10 @@ public:
   bool set_gripper_profile_acceleration(const int32_t & acceleration, std::string & log);
   bool set_gripper_profile_velocity(const int32_t & velocity, std::string & log);
 
+  bool set_home_pose(std::string & log);
   bool set_init_pose(std::string & log);
 
-  void send_heartbeat();
+  void send_heartbeat(const uint8_t & count);
 
   void write_byte(const uint16_t & address, uint8_t data);
   uint8_t read_byte(const uint16_t & address);
