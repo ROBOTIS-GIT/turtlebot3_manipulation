@@ -91,8 +91,11 @@ bool DynamixelSDKWrapper::read(
 uint8_t DynamixelSDKWrapper::read_byte(const uint16_t & address)
 {
   std::string log;
-  uint8_t data[0];
-  return this->read(address, 1, &data[0], log);
+
+  uint8_t data[1];
+  this->read(address, 1, &data[0], log);
+
+  return data[0];
 }
 
 bool DynamixelSDKWrapper::write(
