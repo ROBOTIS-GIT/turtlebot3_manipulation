@@ -383,7 +383,7 @@ bool OpenCR::set_joints_variables(
   return comm_result;
 }
 
-bool OpenCR::set_joint_positions(const std::array<double, 4> & radians, std::string & log)
+bool OpenCR::set_joint_positions(const std::vector<double> & radians, std::string & log)
 {
   std::array<int32_t, 4> tick = {0, 0, 0, 0};
   for (uint8_t i = 0; i < radians.size(); i++) {
@@ -483,19 +483,19 @@ bool OpenCR::set_gripper_profile_velocity(const int32_t & velocity, std::string 
 
 bool OpenCR::set_init_pose(std::string & log)
 {
-  std::array<double, 4> init_pose = {0.0, -1.57, 1.50, 0.17};
+  std::vector<double> init_pose = {0.0, -1.57, 1.50, 0.17};
   return set_joint_positions(init_pose, log);
 }
 
 bool OpenCR::set_zero_pose(std::string & log)
 {
-  std::array<double, 4> zero_pose = {0.0, 0.0, 0.0, 0.0};
+  std::vector<double> zero_pose = {0.0, 0.0, 0.0, 0.0};
   return set_joint_positions(zero_pose, log);
 }
 
 bool OpenCR::set_home_pose(std::string & log)
 {
-  std::array<double, 4> home_pose = {0.0, -1.05, 0.35, 0.70};
+  std::vector<double> home_pose = {0.0, -1.05, 0.35, 0.70};
   return set_joint_positions(home_pose, log);
 }
 

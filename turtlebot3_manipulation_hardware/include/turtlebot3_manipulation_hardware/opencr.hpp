@@ -100,7 +100,7 @@ public:
   double get_gripper_position();
   double get_gripper_velocity();
 
-  bool set_joint_positions(const std::array<double, 4> & radians, std::string & log);
+  bool set_joint_positions(const std::vector<double> & radians, std::string & log);
   bool set_joint_profile_acceleration(
     const std::array<int32_t, 4> & acceleration, std::string & log);
   bool set_joint_profile_velocity(const std::array<int32_t, 4> & velocity, std::string & log);
