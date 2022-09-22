@@ -110,8 +110,8 @@ typedef struct
   ControlItem goal_position_joint_4 = {212, 4};
   ControlItem goal_position_gripper = {216, 4};
 
-  ControlItem goal_position_update_write = {220, 1};
-  ControlItem goal_position_update_read = {221, 1};
+  ControlItem goal_position_write_joints = {220, 1};
+  ControlItem goal_position_write_gripper = {221, 1};
 
   ControlItem present_position_joint_1 = {224, 4};
   ControlItem present_position_joint_2 = {228, 4};
@@ -137,8 +137,8 @@ typedef struct
   ControlItem profile_acceleration_joint_4 = {296, 4};
   ControlItem profile_acceleration_gripper = {300, 4};
 
-  ControlItem profile_acceleration_update_write = {304, 1};
-  ControlItem profile_acceleration_update_read = {305, 1};
+  ControlItem profile_acceleration_write_joints = {304, 1};
+  ControlItem profile_acceleration_write_gripper = {305, 1};
 
   ControlItem profile_velocity_joint_1 = {308, 4};
   ControlItem profile_velocity_joint_2 = {312, 4};
@@ -146,8 +146,8 @@ typedef struct
   ControlItem profile_velocity_joint_4 = {320, 4};
   ControlItem profile_velocity_gripper = {324, 4};
 
-  ControlItem profile_velocity_update_write = {328, 1};
-  ControlItem profile_velocity_update_read = {329, 1};
+  ControlItem profile_velocity_write_joints = {328, 1};
+  ControlItem profile_velocity_write_gripper = {329, 1};
 } ControlTable;
 
 const ControlTable opencr_control_table;
