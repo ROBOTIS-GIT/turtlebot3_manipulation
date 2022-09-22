@@ -78,7 +78,8 @@ hardware_interface::return_type TurtleBot3ManipulationSystemHardware::configure(
   dxl_velocities_.resize(info_.joints.size(), 0.0);
 
   opencr_sensor_states_.resize(
-    info_.sensors[0].state_interfaces.size() + info_.sensors[1].state_interfaces.size(),
+    info_.sensors[0].state_interfaces.size() +
+    info_.sensors[1].state_interfaces.size(),
     0.0);
 
   status_ = hardware_interface::status::CONFIGURED;
@@ -140,10 +141,28 @@ hardware_interface::return_type TurtleBot3ManipulationSystemHardware::start()
   opencr_->joints_torque(opencr::ON);
   opencr_->wheels_torque(opencr::ON);
 
-  status_ = hardware_interface::status::STARTED;
+  RCLCPP_INFO(logger, "Manipulator is moving");
+  std::string log;
+  std::array<int32_t, 4> acceleration = {300, 300, 300, 300};
+  std::array<int32_t, 4> velocity = {1000, 1000, 1000, 1000};
+  opencr_->send_heartbeat(1);
+
+  opencr_->set_joint_profile_acceleration(acceleration, log);
+  opencr_->set_joint_profile_velocity(velocity, log);
+  opencr_->set_init_pose(log);
+
+  opencr_->set_gripper_profile_acceleration(20, log);
+  opencr_->set_gripper_profile_velocity(200, log);
+  opencr_->init_gripper(log);
+
+  std::array<int32_t, 4> zero = {0, 0, 0, 0};
+  opencr_->set_joint_profile_acceleration(zero, log);
+  opencr_->set_joint_profile_velocity(zero, log);
 
   RCLCPP_INFO(logger, "System starting");
   opencr_->play_sound(opencr::SOUND::ASCENDING);
+
+  status_ = hardware_interface::status::STARTED;
 
   return hardware_interface::return_type::OK;
 }
@@ -228,15 +247,6 @@ hardware_interface::return_type TurtleBot3ManipulationSystemHardware::read()
 
 hardware_interface::return_type TurtleBot3ManipulationSystemHardware::write()
 {
-    //  wheel_left_joint!
-    //  wheel_right_joint!
-    //  joint1!
-    //  joint2!
-    //  joint3!
-    //  joint4!
-    //  gripper_left_joint!
-    //  gripper_right_joint!
-
   static uint8_t count = 0;
   opencr_->send_heartbeat(count++);
 
@@ -251,6 +261,14 @@ hardware_interface::return_type TurtleBot3ManipulationSystemHardware::write()
     dxl_joint_commands_[opencr::joints::JOINT3],
     dxl_joint_commands_[opencr::joints::JOINT4],
   };
+
+  if (opencr_->set_joint_positions(joint_commands, log) == false) {
+    RCLCPP_ERROR(logger, "Can't control joints [%s]", log);
+  }
+
+  if (opencr_->set_gripper_position(dxl_gripper_commands_[0], log) == false) {
+    RCLCPP_ERROR(logger, "Can't control gripper [%s]", log);
+  }
 
   for (uint8_t i = 0; i < dxl_wheel_commands_.size(); i++) {
     RCLCPP_DEBUG(logger, "Got command %.5f for wheels!", dxl_wheel_commands_[i]);
