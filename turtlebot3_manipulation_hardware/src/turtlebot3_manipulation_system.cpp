@@ -33,8 +33,7 @@ auto logger = rclcpp::get_logger("turtlebot3_manipulation");
 hardware_interface::return_type TurtleBot3ManipulationSystemHardware::configure(
   const hardware_interface::HardwareInfo & info)
 {
-  if (configure_default(info) != hardware_interface::return_type::OK)
-  {
+  if (configure_default(info) != hardware_interface::return_type::OK) {
     return hardware_interface::return_type::ERROR;
   }
 
@@ -95,8 +94,7 @@ TurtleBot3ManipulationSystemHardware::export_state_interfaces()
       info_.joints[i].name, hardware_interface::HW_IF_VELOCITY, &dxl_velocities_[i]));
   }
 
-  for (uint8_t i = 0; i < info_.sensors[0].state_interfaces.size(); i++)
-  {
+  for (uint8_t i = 0; i < info_.sensors[0].state_interfaces.size(); i++) {
     state_interfaces.emplace_back(hardware_interface::StateInterface(
       info_.sensors[0].name,
       info_.sensors[0].state_interfaces[i].name,
@@ -110,8 +108,7 @@ std::vector<hardware_interface::CommandInterface>
 TurtleBot3ManipulationSystemHardware::export_command_interfaces()
 {
   std::vector<hardware_interface::CommandInterface> command_interfaces;
-  for (uint8_t i = 0; i < info_.joints.size(); i++)
-  {
+  for (uint8_t i = 0; i < info_.joints.size(); i++) {
     if (info_.joints[i].name.find("wheel") != std::string::npos) {
       command_interfaces.emplace_back(hardware_interface::CommandInterface(
         info_.joints[i].name, hardware_interface::HW_IF_VELOCITY, &dxl_wheel_commands_[i]));
@@ -137,33 +134,6 @@ hardware_interface::return_type TurtleBot3ManipulationSystemHardware::start()
   RCLCPP_INFO(logger, "Joints and wheels torque ON");
   opencr_->joints_torque(opencr::ON);
   opencr_->wheels_torque(opencr::ON);
-
-  // std::string log;
-  // opencr_->set_gripper_profile_acceleration(200, log);
-  // opencr_->set_gripper_profile_velocity(20, log);
-  // if (opencr_->set_gripper_position(0.010, log)) {
-  //   RCLCPP_INFO(logger, "Move to gripper pose");
-  // } else {
-  //   RCLCPP_ERROR(logger, "Can't move to gripper pose [%s]", log.c_str());
-  // }
-
-  std::string log;
-  std::array<int32_t, 4> acceleration = {20, 20, 20, 20};
-  opencr_->set_joint_profile_acceleration(acceleration, log);
-
-  std::array<int32_t, 4> velocity = {200, 200, 200, 200};
-  opencr_->set_joint_profile_velocity(velocity, log);
-
-  if (opencr_->set_init_pose(log)) {
-    RCLCPP_INFO(logger, "Move to init pose");
-  } else {
-    RCLCPP_ERROR(logger, "Can't move to init pose [%s]", log.c_str());
-  }
-  std::array<int32_t, 4> zero_acceleration = {0, 0, 0, 0};
-  opencr_->set_joint_profile_acceleration(zero_acceleration, log);
-
-  std::array<int32_t, 4> zero_velocity = {0, 0, 0, 0};
-  opencr_->set_joint_profile_velocity(zero_velocity, log);
 
   status_ = hardware_interface::status::STARTED;
 
@@ -217,7 +187,7 @@ hardware_interface::return_type TurtleBot3ManipulationSystemHardware::read()
   dxl_velocities_[7] = opencr_->get_gripper_velocity();
 
   for (uint8_t i = 0; i < dxl_positions_.size(); i++) {
-    RCLCPP_INFO(logger, "Got state %.5f  %.5f for joint %s!",
+    RCLCPP_DEBUG(logger, "Got state %.5f  %.5f for joint %s!",
       dxl_positions_[i], dxl_velocities_[i], info_.joints[i].name.c_str());
   }
 
@@ -244,7 +214,9 @@ hardware_interface::return_type TurtleBot3ManipulationSystemHardware::read()
 
 hardware_interface::return_type TurtleBot3ManipulationSystemHardware::write()
 {
-  opencr_->send_heartbeat();
+  static uint8_t count = 0;
+  opencr_->send_heartbeat(count++);
+
     //  wheel_left_joint!
     //  wheel_right_joint!
     //  joint1!
@@ -253,24 +225,22 @@ hardware_interface::return_type TurtleBot3ManipulationSystemHardware::write()
     //  joint4!
     //  gripper_left_joint!
     //  gripper_right_joint!
+
   std::array<double, 4> joint_commands = {
     dxl_joint_commands_[opencr::joints::JOINT1],
     dxl_joint_commands_[opencr::joints::JOINT2],
     dxl_joint_commands_[opencr::joints::JOINT3],
     dxl_joint_commands_[opencr::joints::JOINT4],
   };
-  std::string log;
-  // opencr_->set_joint_positions(joint_commands, log);
-  // opencr_->set_gripper_position(hw_commands_[6]);
 
   for (uint8_t i = 0; i < dxl_wheel_commands_.size(); i++) {
-    RCLCPP_WARN(logger, "Got command %.5f for wheels!", dxl_wheel_commands_[i]);
+    RCLCPP_DEBUG(logger, "Got command %.5f for wheels!", dxl_wheel_commands_[i]);
   }
   for (uint8_t i = 0; i < dxl_joint_commands_.size(); i++) {
-    RCLCPP_WARN(logger, "Got command %.5f for joints!", dxl_joint_commands_[i]);
+    RCLCPP_DEBUG(logger, "Got command %.5f for joints!", dxl_joint_commands_[i]);
   }
   for (uint8_t i = 0; i < dxl_gripper_commands_.size(); i++) {
-    RCLCPP_WARN(logger, "Got command %.5f for grippers!", dxl_gripper_commands_[i]);
+    RCLCPP_DEBUG(logger, "Got command %.5f for grippers!", dxl_gripper_commands_[i]);
   }
 
   return hardware_interface::return_type::OK;
