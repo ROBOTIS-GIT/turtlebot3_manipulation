@@ -27,8 +27,8 @@ https://github.com/ros-controls/ros2_control_demos/blob/foxy/ros2_control_demo_d
             <param name="opencr_id">200</param>
             <param name="opencr_usb_port">/dev/ttyACM0</param>
             <param name="opencr_baud_rate">1000000</param>
-            <param name="dxl_joints_profile_acceleration">10</param>
-            <param name="dxl_joints_profile_velocity">1000</param>
+            <param name="dxl_joints_profile_acceleration">100</param>
+            <param name="dxl_joints_profile_velocity">500</param>
             <param name="dxl_gripper_profile_acceleration">20</param>
             <param name="dxl_gripper_profile_velocity">200</param>
           </xacro:unless>
