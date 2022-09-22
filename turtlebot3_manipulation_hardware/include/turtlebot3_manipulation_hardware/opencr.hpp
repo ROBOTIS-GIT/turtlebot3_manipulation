@@ -92,6 +92,8 @@ public:
   std::array<double, 2> get_wheel_positions();
   std::array<double, 2> get_wheel_velocities();
 
+  bool set_wheel_velocities(const std::vector<double> & velocities, std::string & log);
+
   std::array<double, 4> get_joint_positions();
   std::array<double, 4> get_joint_velocities();
 

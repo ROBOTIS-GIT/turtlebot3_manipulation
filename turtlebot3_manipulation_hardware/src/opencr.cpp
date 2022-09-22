@@ -205,6 +205,34 @@ std::array<double, 2> OpenCR::get_wheel_velocities()
   return velocities;
 }
 
+bool OpenCR::set_wheel_velocities(const std::vector<double> & velocities, std::string & log)
+{
+  union Data {
+    int32_t dword[6];
+    uint8_t byte[6 * 4];
+  } data;
+
+  double left_wheel_velocity = velocities[0];
+  double right_wheel_velocity = velocities[1];
+
+  double linear_velocity_x = (right_wheel_velocity + left_wheel_velocity) / 2.0;
+  double angular_velocity_z =
+    (right_wheel_velocity - left_wheel_velocity) / opencr::wheels::SEPERATION;
+
+  data.dword[0] = static_cast<int32_t>(linear_velocity_x * 100);
+  data.dword[1] = 0;
+  data.dword[2] = 0;
+  data.dword[3] = 0;
+  data.dword[4] = 0;
+  data.dword[5] = static_cast<int32_t>(angular_velocity_z * 100);
+
+  uint8_t * p_data = &data.byte[0];
+  bool comm_result = dxl_sdk_wrapper_->write(
+    opencr_control_table.cmd_velocity_linear_x.address, 24, p_data, log);
+
+  return comm_result;
+}
+
 inline int32_t convert_radian_to_tick(
   const double & radian,
   const int32_t & max_tick,
@@ -404,7 +432,7 @@ bool OpenCR::set_gripper_variables(
 {
   union Data {
     int32_t dword[1];
-    uint8_t byte[4];
+    uint8_t byte[1 * 4];
   } data;
 
   data.dword[0] = variable;

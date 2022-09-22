@@ -228,9 +228,6 @@ hardware_interface::return_type TurtleBot3ManipulationSystemHardware::read()
 
 hardware_interface::return_type TurtleBot3ManipulationSystemHardware::write()
 {
-  static uint8_t count = 0;
-  opencr_->send_heartbeat(count++);
-
     //  wheel_left_joint!
     //  wheel_right_joint!
     //  joint1!
@@ -239,6 +236,14 @@ hardware_interface::return_type TurtleBot3ManipulationSystemHardware::write()
     //  joint4!
     //  gripper_left_joint!
     //  gripper_right_joint!
+
+  static uint8_t count = 0;
+  opencr_->send_heartbeat(count++);
+
+  std::string log;
+  if (opencr_->set_wheel_velocities(dxl_wheel_commands_, log) == false) {
+    RCLCPP_ERROR(logger, "Can't control wheels [%s]", log);
+  }
 
   std::array<double, 4> joint_commands = {
     dxl_joint_commands_[opencr::joints::JOINT1],

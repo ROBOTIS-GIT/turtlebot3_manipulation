@@ -54,8 +54,10 @@ struct Battery {
 
 namespace wheels
 {
-  // ref) http://emanual.robotis.com/docs/en/dxl/x/xl430-w250/#goal-velocity104
+  constexpr double SEPERATION = 0.287;
   constexpr double RADIUS = 0.033;
+
+  // ref) http://emanual.robotis.com/docs/en/dxl/x/xl430-w250/#goal-velocity104
   constexpr double RPM_TO_MS = 0.229 * (2.0 * M_PI * RADIUS) / 60.0;
 
   // ref) https://emanual.robotis.com/docs/en/dxl/x/xl430-w250/#goal-position116
