@@ -111,6 +111,11 @@ public:
 
   bool set_home_pose(std::string & log);
   bool set_init_pose(std::string & log);
+  bool set_zero_pose(std::string & log);
+
+  bool open_gripper(std::string & log);
+  bool close_gripper(std::string & log);
+  bool init_gripper(std::string & log);
 
   void send_heartbeat(const uint8_t & count);
 
@@ -118,7 +123,7 @@ public:
   uint8_t read_byte(const uint16_t & address);
 
 private:
-  bool set_joint_variables(
+  bool set_joints_variables(
     const uint16_t & address,
     const std::array<int32_t, 4> & variables,
     std::string & log);
