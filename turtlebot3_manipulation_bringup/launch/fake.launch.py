@@ -25,6 +25,7 @@ from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.substitutions import LaunchConfiguration
 from launch.substitutions import ThisLaunchFileDir
 
+
 def is_valid_to_launch():
     # Path includes model name of Raspberry Pi series
     path = '/sys/firmware/devicetree/base/model'
@@ -44,7 +45,6 @@ def generate_launch_description():
     use_fake_hardware = LaunchConfiguration('use_fake_hardware')
     fake_sensor_commands = LaunchConfiguration('fake_sensor_commands')
     slowdown = LaunchConfiguration('slowdown')
-
 
     return LaunchDescription([
         DeclareLaunchArgument(

@@ -29,7 +29,6 @@ def generate_launch_description():
     prefix = LaunchConfiguration('prefix')
     use_fake_hardware = LaunchConfiguration('use_fake_hardware')
 
-
     return LaunchDescription([
         DeclareLaunchArgument(
             'start_rviz',
