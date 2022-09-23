@@ -64,6 +64,16 @@ public:
   hardware_interface::return_type write() override;
 
 private:
+  uint8_t id_;
+  std::string usb_port_;
+  uint32_t baud_rate_;
+
+  std::array<int32_t, 4> joints_acceleration_;
+  std::array<int32_t, 4> joints_velocity_;
+
+  int32_t gripper_acceleration_;
+  int32_t gripper_velocity_;
+
   std::unique_ptr<OpenCR> opencr_;
 
   std::vector<double> dxl_wheel_commands_;

@@ -83,14 +83,8 @@ def generate_launch_description():
 
         DeclareLaunchArgument(
             'use_gui',
-            default_value='False',
-            description='Whether execute joint_state_publisher_gui node'),
-
-        Node(
-            package='joint_state_publisher',
-            executable='joint_state_publisher',
-            parameters=[{'robot_description': urdf_file}],
-            output='screen'),
+            default_value='true',
+            description='Run joint state publisher gui node'),
 
         Node(
             package='robot_state_publisher',

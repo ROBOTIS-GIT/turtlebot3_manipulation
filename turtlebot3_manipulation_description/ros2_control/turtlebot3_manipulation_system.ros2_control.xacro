@@ -24,6 +24,13 @@ https://github.com/ros-controls/ros2_control_demos/blob/foxy/ros2_control_demo_d
           </xacro:if>
           <xacro:unless value="${use_fake_hardware}">
             <plugin>turtlebot3_manipulation_hardware/TurtleBot3ManipulationSystemHardware</plugin>
+            <param name="opencr_id">200</param>
+            <param name="opencr_usb_port">/dev/ttyACM0</param>
+            <param name="opencr_baud_rate">1000000</param>
+            <param name="dxl_joints_profile_acceleration">100</param>
+            <param name="dxl_joints_profile_velocity">500</param>
+            <param name="dxl_gripper_profile_acceleration">20</param>
+            <param name="dxl_gripper_profile_velocity">200</param>
           </xacro:unless>
         </hardware>
       </xacro:unless>
@@ -56,6 +63,13 @@ https://github.com/ros-controls/ros2_control_demos/blob/foxy/ros2_control_demo_d
         <state_interface name="linear_acceleration.x"/>
         <state_interface name="linear_acceleration.y"/>
         <state_interface name="linear_acceleration.z"/>
+      </sensor>
+
+      <sensor name="battery">
+        <state_interface name="voltage"/>
+        <state_interface name="percentage"/>
+        <state_interface name="design_capacity"/>
+        <state_interface name="present"/>
       </sensor>
 
       <joint name="${prefix}joint1">

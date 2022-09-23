@@ -17,6 +17,7 @@
 #ifndef TURTLEBOT3_MANIPULATION_HARDWARE__OPENCR_HPP_
 #define TURTLEBOT3_MANIPULATION_HARDWARE__OPENCR_HPP_
 
+#include <array>
 #include <memory>
 #include <mutex>
 #include <stdlib.h>
@@ -79,22 +80,63 @@ public:
   void play_sound(uint8_t sound) const;
 
   void imu_recalibration();
-  const opencr::IMU imu();
+  opencr::IMU get_imu();
+
+  opencr::Battery get_battery();
 
   void joints_torque(uint8_t onoff) const;
   void wheels_torque(uint8_t onoff) const;
 
   bool read_all(std::string & log);
 
+  std::array<double, 2> get_wheel_positions();
+  std::array<double, 2> get_wheel_velocities();
+
+  bool set_wheel_velocities(const std::vector<double> & velocities, std::string & log);
+
+  std::array<double, 4> get_joint_positions();
+  std::array<double, 4> get_joint_velocities();
+
+  double get_gripper_position();
+  double get_gripper_velocity();
+
+  bool set_joint_positions(const std::vector<double> & radians, std::string & log);
+  bool set_joint_profile_acceleration(
+    const std::array<int32_t, 4> & acceleration, std::string & log);
+  bool set_joint_profile_velocity(const std::array<int32_t, 4> & velocity, std::string & log);
+
+  bool set_gripper_position(const double & meters, std::string & log);
+  bool set_gripper_profile_acceleration(const int32_t & acceleration, std::string & log);
+  bool set_gripper_profile_velocity(const int32_t & velocity, std::string & log);
+
+  bool set_home_pose(std::string & log);
+  bool set_init_pose(std::string & log);
+  bool set_zero_pose(std::string & log);
+
+  bool open_gripper(std::string & log);
+  bool close_gripper(std::string & log);
+  bool init_gripper(std::string & log);
+
+  void send_heartbeat(const uint8_t & count);
+
+  void write_byte(const uint16_t & address, uint8_t data);
+  uint8_t read_byte(const uint16_t & address);
+
 private:
+  bool set_joints_variables(
+    const uint16_t & address,
+    const std::array<int32_t, 4> & variables,
+    std::string & log);
+
+  bool set_gripper_variables(
+    const uint16_t & address, const int32_t & variables, std::string & log);
+
   std::unique_ptr<DynamixelSDKWrapper> dxl_sdk_wrapper_;
 
   uint8_t data_[CONTROL_TABLE_SIZE];
   uint8_t data_buffer_[CONTROL_TABLE_SIZE];
 
   std::mutex buffer_m_;
-
-  opencr::IMU imu_;
 };
 }  // namespace turtlebot3_manipulation_hardware
 }  // namespace robotis
