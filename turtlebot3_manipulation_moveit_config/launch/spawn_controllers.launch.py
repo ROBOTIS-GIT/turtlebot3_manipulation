@@ -16,28 +16,16 @@
 #
 # Authors: Hye-jong KIM
 
-######## setup assistant (humble) ########
-#from moveit_configs_utils import MoveItConfigsBuilder
-#from moveit_configs_utils.launches import generate_spawn_controllers_launch
+# setup assistant (humble)
+# from moveit_configs_utils import MoveItConfigsBuilder
+# from moveit_configs_utils.launches import generate_spawn_controllers_launch
+# def generate_launch_description():
+#     moveit_config = MoveItConfigsBuilder("turtlebot3_manipulation",
+#     package_name="turtlebot3_manipulation_moveit_config").to_moveit_configs()
+#     return generate_spawn_controllers_launch(moveit_config)
 
-
-#def generate_launch_description():
-#    moveit_config = MoveItConfigsBuilder("turtlebot3_manipulation", package_name="turtlebot3_manipulation_moveit_config").to_moveit_configs()
-#    return generate_spawn_controllers_launch(moveit_config)
-
-##########################################
-import os
-import yaml
 from launch import LaunchDescription
-from launch.actions import DeclareLaunchArgument
-from launch.actions import IncludeLaunchDescription
-from launch.launch_description_sources import PythonLaunchDescriptionSource
-from launch.substitutions import LaunchConfiguration
-from launch.conditions import IfCondition, UnlessCondition
-from launch_ros.actions import Node
 from launch.actions import ExecuteProcess
-from ament_index_python.packages import get_package_share_directory
-import xacro
 
 
 def generate_launch_description():

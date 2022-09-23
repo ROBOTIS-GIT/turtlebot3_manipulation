@@ -16,15 +16,12 @@
 #
 # Authors: Hye-jong KIM
 
-######## setup assistant (humble) ########
-#from moveit_configs_utils import MoveItConfigsBuilder
-#from moveit_configs_utils.launches import generate_setup_assistant_launch
-
-
-#def generate_launch_description():
-#    moveit_config = MoveItConfigsBuilder("turtlebot3_manipulation", package_name="turtlebot3_manipulation_moveit_config").to_moveit_configs()
-#    return generate_setup_assistant_launch(moveit_config)
-
-##########################################
+# setup assistant (humble)
+# from moveit_configs_utils import MoveItConfigsBuilder
+# from moveit_configs_utils.launches import generate_setup_assistant_launch
+# def generate_launch_description():
+#     moveit_config = MoveItConfigsBuilder("turtlebot3_manipulation",
+#     package_name="turtlebot3_manipulation_moveit_config").to_moveit_configs()
+#     return generate_setup_assistant_launch(moveit_config)
 
 # moveit setup assistant is not supported in ros foxy version.

@@ -16,32 +16,32 @@
 #
 # Authors: Hye-jong KIM
 
-######## setup assistant (humble) ########
-#from moveit_configs_utils import MoveItConfigsBuilder
-#from moveit_configs_utils.launches import generate_demo_launch
+# setup assistant (humble)
+# from moveit_configs_utils import MoveItConfigsBuilder
+# from moveit_configs_utils.launches import generate_demo_launch
+# def generate_launch_description():
+#     moveit_config = MoveItConfigsBuilder("turtlebot3_manipulation",
+#     package_name="turtlebot3_manipulation_moveit_config").to_moveit_configs()
+#     return generate_demo_launch(moveit_config)
 
-
-#def generate_launch_description():
-#    moveit_config = MoveItConfigsBuilder("turtlebot3_manipulation", package_name="turtlebot3_manipulation_moveit_config").to_moveit_configs()
-#    return generate_demo_launch(moveit_config)
-##########################################
 import os
-import xacro
 
 from launch import LaunchDescription
 from launch.actions import DeclareLaunchArgument
 from launch.actions import IncludeLaunchDescription
 from launch.launch_description_sources import PythonLaunchDescriptionSource
-from launch.substitutions import LaunchConfiguration
-from launch_ros.actions import Node
 from ament_index_python.packages import get_package_share_directory
 
 
 def generate_launch_description():
 
     ld = LaunchDescription()
-    launch_dir = os.path.join(get_package_share_directory('turtlebot3_manipulation_moveit_config'), 'launch')
-    bringup_launch_dir = os.path.join(get_package_share_directory('turtlebot3_manipulation_bringup'), 'launch')
+    launch_dir = os.path.join(
+        get_package_share_directory(
+            'turtlebot3_manipulation_moveit_config'), 'launch')
+    bringup_launch_dir = os.path.join(
+        get_package_share_directory(
+            'turtlebot3_manipulation_bringup'), 'launch')
 
     # RViz
     rviz_launch = IncludeLaunchDescription(
@@ -49,25 +49,13 @@ def generate_launch_description():
     )
     ld.add_action(rviz_launch)
 
-    # Static TF
-    static_tf_launch = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource([launch_dir, '/static_virtual_joint_tfs.launch.py'])
-    )
-    ld.add_action(static_tf_launch)
-
-    # robot_state_publisher
-    rsp_launch = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource([launch_dir, '/rsp.launch.py'])
-    )
-    ld.add_action(rsp_launch)
-
     # move_group
     move_group_launch = IncludeLaunchDescription(
         PythonLaunchDescriptionSource([launch_dir, '/move_group.launch.py'])
     )
     ld.add_action(move_group_launch)
 
-    # fake_ros2_control
+    # fake_ros2_control with robot_state_publisher
     rviz_arg = DeclareLaunchArgument(
         'start_rviz',
         default_value='false',
@@ -78,7 +66,6 @@ def generate_launch_description():
         PythonLaunchDescriptionSource([bringup_launch_dir, '/fake.launch.py'])
     )
     ld.add_action(fake_ros2_control_launch)
-
 
     # Warehouse mongodb server
     warehouse_db_launch = IncludeLaunchDescription(

@@ -16,30 +16,22 @@
 #
 # Authors: Hye-jong KIM
 
-######## setup assistant (humble) ########
-#from moveit_configs_utils import MoveItConfigsBuilder
-#from moveit_configs_utils.launches import generate_warehouse_db_launch
+# setup assistant (humble)
+# from moveit_configs_utils import MoveItConfigsBuilder
+# from moveit_configs_utils.launches import generate_warehouse_db_launch
+# def generate_launch_description():
+#     moveit_config = MoveItConfigsBuilder("turtlebot3_manipulation",
+#     package_name="turtlebot3_manipulation_moveit_config").to_moveit_configs()
+#     return generate_warehouse_db_launch(moveit_config)
 
-
-#def generate_launch_description():
-#    moveit_config = MoveItConfigsBuilder("turtlebot3_manipulation", package_name="turtlebot3_manipulation_moveit_config").to_moveit_configs()
-#    return generate_warehouse_db_launch(moveit_config)
-##########################################
-import os
-import yaml
 from launch import LaunchDescription
 from launch.actions import DeclareLaunchArgument
 from launch.substitutions import LaunchConfiguration
-from launch.conditions import IfCondition, UnlessCondition
 from launch_ros.actions import Node
-from launch.actions import ExecuteProcess
-from ament_index_python.packages import get_package_share_directory
-import xacro
 
 
 def generate_launch_description():
 
-    """Launch file for warehouse database"""
     ld = LaunchDescription()
 
     # The default DB port for moveit (not default MongoDB port to avoid potential conflicts)
@@ -68,6 +60,5 @@ def generate_launch_description():
         parameters=db_parameters,
     )
     ld.add_action(db_node)
-
 
     return ld
