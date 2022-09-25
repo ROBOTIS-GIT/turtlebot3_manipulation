@@ -349,7 +349,7 @@ double OpenCR::get_gripper_position()
     opencr::joints::MAX_RADIAN,
     opencr::joints::MIN_RADIAN);
 
-  return radian * opencr::joints::GRIPPER_RAD_TO_METER;
+  return radian * opencr::grippers::RAD_TO_METER;
 }
 
 double OpenCR::get_gripper_velocity()
@@ -445,7 +445,7 @@ bool OpenCR::set_gripper_variables(
 
 bool OpenCR::set_gripper_position(const double & meters, std::string & log)
 {
-  double radian = meters / opencr::joints::GRIPPER_RAD_TO_METER;
+  double radian = meters / opencr::grippers::RAD_TO_METER;
   int32_t tick = convert_radian_to_tick(
       radian,
       opencr::joints::MAX_TICK,
@@ -497,6 +497,24 @@ bool OpenCR::set_home_pose(std::string & log)
 {
   std::vector<double> home_pose = {0.0, -1.05, 0.35, 0.70};
   return set_joint_positions(home_pose, log);
+}
+
+bool OpenCR::set_gripper_current(std::string & log)
+{
+  union Data {
+    int16_t word[1];
+    uint8_t byte[1 * 2];
+  } data;
+
+  data.word[0] = opencr::grippers::GOAL_CURRENT;
+
+  uint8_t * p_data = &data.byte[0];
+  bool comm_result = dxl_sdk_wrapper_->write(
+    opencr_control_table.goal_current_gripper.address, 2, p_data, log);
+
+  dxl_sdk_wrapper_->write_byte(opencr_control_table.goal_current_write_gripper.address, 1);
+
+  return comm_result;
 }
 
 bool OpenCR::open_gripper(std::string & log)

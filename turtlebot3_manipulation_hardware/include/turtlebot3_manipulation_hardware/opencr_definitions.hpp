@@ -82,8 +82,13 @@ namespace joints
   constexpr uint8_t JOINT4 = 3;
 
   constexpr double RPM_TO_RAD_PER_SEC = 0.104719755;
-  constexpr double GRIPPER_RAD_TO_METER = -0.015;
 }  // namespace joints
+
+namespace grippers
+{
+  constexpr double RAD_TO_METER = -0.015;
+  constexpr int16_t GOAL_CURRENT = 80;
+}  // namespace grippers
 
 enum SOUND {
   DESCENDING = 0,

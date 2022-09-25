@@ -113,6 +113,8 @@ public:
   bool set_init_pose(std::string & log);
   bool set_zero_pose(std::string & log);
 
+  bool set_gripper_current(std::string & log);
+
   bool open_gripper(std::string & log);
   bool close_gripper(std::string & log);
   bool init_gripper(std::string & log);

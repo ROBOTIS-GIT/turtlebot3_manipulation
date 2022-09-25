@@ -181,6 +181,8 @@ hardware_interface::return_type TurtleBot3ManipulationSystemHardware::start()
   opencr_->set_gripper_profile_acceleration(gripper_acceleration_, log);
   opencr_->set_gripper_profile_velocity(gripper_velocity_, log);
 
+  opencr_->set_gripper_current(log);
+
   RCLCPP_INFO(logger, "System starting");
   opencr_->play_sound(opencr::SOUND::ASCENDING);
 
