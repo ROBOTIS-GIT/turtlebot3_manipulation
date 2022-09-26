@@ -40,6 +40,7 @@ hardware_interface::return_type TurtleBot3ManipulationSystemHardware::configure(
   id_ = stoi(info_.hardware_parameters["opencr_id"]);
   usb_port_ = info_.hardware_parameters["opencr_usb_port"];
   baud_rate_ = stoi(info_.hardware_parameters["opencr_baud_rate"]);
+  heartbeat_ = 0;
 
   joints_acceleration_[0] = stoi(info_.hardware_parameters["dxl_joints_profile_acceleration"]);
   joints_acceleration_[1] = stoi(info_.hardware_parameters["dxl_joints_profile_acceleration"]);
@@ -173,7 +174,7 @@ TurtleBot3ManipulationSystemHardware::export_command_interfaces()
 hardware_interface::return_type TurtleBot3ManipulationSystemHardware::start()
 {
   RCLCPP_INFO(logger, "Ready for start");
-  opencr_->send_heartbeat(1);
+  opencr_->send_heartbeat(heartbeat_++);
 
   RCLCPP_INFO(logger, "Wait for IMU re-calibration");
   opencr_->imu_recalibration();
@@ -183,6 +184,7 @@ hardware_interface::return_type TurtleBot3ManipulationSystemHardware::start()
   opencr_->joints_torque(opencr::ON);
   opencr_->wheels_torque(opencr::ON);
 
+  opencr_->send_heartbeat(heartbeat_++);
   RCLCPP_INFO(logger, "Set profile acceleration and velocity to joints");
   opencr_->set_joint_profile_acceleration(joints_acceleration_);
   opencr_->set_joint_profile_velocity(joints_velocity_);
@@ -270,20 +272,18 @@ hardware_interface::return_type TurtleBot3ManipulationSystemHardware::read()
 hardware_interface::return_type TurtleBot3ManipulationSystemHardware::write()
 {
   RCLCPP_INFO_ONCE(logger, "Start to write wheels and manipulator commands");
-
-  static uint8_t count = 0;
-  opencr_->send_heartbeat(count++);
+  opencr_->send_heartbeat(heartbeat_++);
 
   if (opencr_->set_wheel_velocities(dxl_wheel_commands_) == false) {
-    RCLCPP_ERROR(logger, "Can't control wheels [%s]");
+    RCLCPP_ERROR(logger, "Can't control wheels");
   }
 
   if (opencr_->set_joint_positions(dxl_joint_commands_) == false) {
-    RCLCPP_ERROR(logger, "Can't control joints [%s]");
+    RCLCPP_ERROR(logger, "Can't control joints");
   }
 
   if (opencr_->set_gripper_position(dxl_gripper_commands_[0]) == false) {
-    RCLCPP_ERROR(logger, "Can't control gripper [%s]");
+    RCLCPP_ERROR(logger, "Can't control gripper");
   }
 
   return hardware_interface::return_type::OK;

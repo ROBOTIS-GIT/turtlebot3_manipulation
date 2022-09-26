@@ -67,6 +67,7 @@ private:
   uint8_t id_;
   std::string usb_port_;
   uint32_t baud_rate_;
+  uint8_t heartbeat_;
 
   std::array<int32_t, 4> joints_acceleration_;
   std::array<int32_t, 4> joints_velocity_;
