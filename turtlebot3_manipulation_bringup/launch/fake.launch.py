@@ -44,7 +44,6 @@ def generate_launch_description():
     prefix = LaunchConfiguration('prefix')
     use_fake_hardware = LaunchConfiguration('use_fake_hardware')
     fake_sensor_commands = LaunchConfiguration('fake_sensor_commands')
-    slowdown = LaunchConfiguration('slowdown')
 
     return LaunchDescription([
         DeclareLaunchArgument(
@@ -68,11 +67,6 @@ def generate_launch_description():
             description='Enable fake command interfaces for sensors used for simple simulations. \
             Used only if "use_fake_hardware" parameter is true.'),
 
-        DeclareLaunchArgument(
-            'slowdown',
-            default_value='3.0',
-            description='Slowdown factor.'),
-
         IncludeLaunchDescription(
             PythonLaunchDescriptionSource([ThisLaunchFileDir(), '/base.launch.py']),
             launch_arguments={
@@ -80,7 +74,6 @@ def generate_launch_description():
                 'prefix': prefix,
                 'use_fake_hardware': use_fake_hardware,
                 'fake_sensor_commands': fake_sensor_commands,
-                'slowdown': slowdown,
             }.items(),
         )
     ])

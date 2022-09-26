@@ -43,7 +43,6 @@ def generate_launch_description():
     start_rviz = LaunchConfiguration('start_rviz')
     prefix = LaunchConfiguration('prefix')
     use_sim = LaunchConfiguration('use_sim')
-    slowdown = LaunchConfiguration('slowdown')
 
     return LaunchDescription([
         DeclareLaunchArgument(
@@ -61,18 +60,12 @@ def generate_launch_description():
             default_value='true',
             description='Start robot in Gazebo simulation.'),
 
-        DeclareLaunchArgument(
-            'slowdown',
-            default_value='3.0',
-            description='Slowdown factor.'),
-
         IncludeLaunchDescription(
             PythonLaunchDescriptionSource([ThisLaunchFileDir(), '/base.launch.py']),
             launch_arguments={
                 'start_rviz': start_rviz,
                 'prefix': prefix,
                 'use_sim': use_sim,
-                'slowdown': slowdown,
             }.items(),
         )
     ])

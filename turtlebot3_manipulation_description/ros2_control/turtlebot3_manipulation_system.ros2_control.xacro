@@ -6,7 +6,7 @@ https://github.com/ros-controls/ros2_control_demos/blob/foxy/ros2_control_demo_d
 -->
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
 
-  <xacro:macro name="turtlebot3_manipulation_system" params="name prefix use_sim:=^|false use_fake_hardware:=^|false fake_sensor_commands:=^|false slowdown:=2.0">
+  <xacro:macro name="turtlebot3_manipulation_system" params="name prefix use_sim:=^|false use_fake_hardware:=^|false fake_sensor_commands:=^|false">
 
     <ros2_control name="${name}" type="system">
 
