@@ -33,6 +33,8 @@ OpenCR::OpenCR(const uint8_t & id)
 
 OpenCR::~OpenCR()
 {
+  send_heartbeat(1);
+
   std::array<int32_t, 4> tick = {2048, 750, 3040, 2500};
   set_joints_variables(opencr_control_table.goal_position_joint_1.address, tick);
   dxl_sdk_wrapper_->write_byte(opencr_control_table.goal_position_write_joints.address, 1);
