@@ -65,7 +65,9 @@ void OpenCR::play_sound(uint8_t sound) const
 
 void OpenCR::imu_recalibration()
 {
-  dxl_sdk_wrapper_->write_byte(opencr_control_table.imu_re_calibration.address, 1);
+  dxl_sdk_wrapper_->write_byte(
+    opencr_control_table.imu_re_calibration.address,
+    opencr_control_table.imu_re_calibration.length);
 }
 
 opencr::IMU OpenCR::get_imu()
@@ -504,7 +506,9 @@ bool OpenCR::set_gripper_current()
 
   uint8_t * p_data = &data.byte[0];
   bool comm_result = dxl_sdk_wrapper_->write(
-    opencr_control_table.goal_current_gripper.address, 2, p_data);
+    opencr_control_table.goal_current_gripper.address,
+    opencr_control_table.goal_current_gripper.length,
+    p_data);
 
   dxl_sdk_wrapper_->write_byte(opencr_control_table.goal_current_write_gripper.address, 1);
 
