@@ -16,15 +16,39 @@
 #
 # Author: Darby Lim
 
+import os
+
 from launch import LaunchDescription
 from launch.actions import DeclareLaunchArgument
 from launch.actions import IncludeLaunchDescription
 from launch.launch_description_sources import PythonLaunchDescriptionSource
+from launch.substitutions import PathJoinSubstitution
 from launch.substitutions import LaunchConfiguration
 from launch.substitutions import ThisLaunchFileDir
 
+from launch_ros.substitutions import FindPackageShare
+
 
 def generate_launch_description():
+    LDS_MODEL = os.environ['LDS_MODEL']
+
+    if LDS_MODEL == 'LDS-01':
+        lidar_launch = PathJoinSubstitution(
+            [
+                FindPackageShare('hls_lfcd_lds_driver'),
+                'launch',
+                'hlds_laser.launch.py'
+            ]
+        )
+    elif LDS_MODEL == 'LDS-02':
+        lidar_launch = PathJoinSubstitution(
+            [
+                FindPackageShare('ld08_driver'),
+                'launch',
+                'ld08.launch.py'
+            ]
+        )
+
     start_rviz = LaunchConfiguration('start_rviz')
     prefix = LaunchConfiguration('prefix')
     use_fake_hardware = LaunchConfiguration('use_fake_hardware')
@@ -52,5 +76,17 @@ def generate_launch_description():
                 'prefix': prefix,
                 'use_fake_hardware': use_fake_hardware,
             }.items(),
-        )
+        ),
+
+        IncludeLaunchDescription(
+            PythonLaunchDescriptionSource(
+                [
+                    lidar_launch
+                ]
+            ),
+            launch_arguments={
+                'port': '/dev/ttyUSB0',
+                'frame_id': 'base_scan',
+            }.items(),
+        ),
     ])
