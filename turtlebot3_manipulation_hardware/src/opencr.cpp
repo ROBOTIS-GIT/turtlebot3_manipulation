@@ -16,7 +16,10 @@
 
 #include "turtlebot3_manipulation_hardware/opencr.hpp"
 
+#include <algorithm>
+#include <memory>
 #include <string>
+#include <vector>
 
 namespace robotis
 {
@@ -29,8 +32,6 @@ OpenCR::OpenCR(const uint8_t & id)
 
 OpenCR::~OpenCR()
 {
-  joints_torque(opencr::OFF);
-  wheels_torque(opencr::OFF);
 }
 
 bool OpenCR::open_port(const std::string & usb_port)
@@ -305,7 +306,7 @@ std::array<double, 4> OpenCR::get_joint_positions()
       opencr::joints::MIN_TICK,
       opencr::joints::MAX_RADIAN,
       opencr::joints::MIN_RADIAN);
-  };
+  }
 
   return positions;
 }
@@ -331,7 +332,7 @@ std::array<double, 4> OpenCR::get_joint_velocities()
 
   for (uint8_t i = 0; i < rpms.size(); i++) {
     velocities[i] = rpms[i] * opencr::joints::RPM_TO_RAD_PER_SEC;
-  };
+  }
 
   return velocities;
 }
@@ -376,7 +377,7 @@ bool OpenCR::set_joints_variables(
 
   for (uint8_t i = 0; i < variables.size(); i++) {
     data.dword[i] = variables[i];
-  };
+  }
 
   uint8_t * p_data = &data.byte[0];
   bool comm_result = dxl_sdk_wrapper_->write(address, 4 * 4, p_data);
@@ -394,7 +395,7 @@ bool OpenCR::set_joint_positions(const std::vector<double> & radians)
       opencr::joints::MIN_TICK,
       opencr::joints::MAX_RADIAN,
       opencr::joints::MIN_RADIAN);
-  };
+  }
 
   bool comm_result = set_joints_variables(
     opencr_control_table.goal_position_joint_1.address, tick);
@@ -443,11 +444,11 @@ bool OpenCR::set_gripper_position(const double & meters)
 {
   double radian = meters / opencr::grippers::RAD_TO_METER;
   int32_t tick = convert_radian_to_tick(
-      radian,
-      opencr::joints::MAX_TICK,
-      opencr::joints::MIN_TICK,
-      opencr::joints::MAX_RADIAN,
-      opencr::joints::MIN_RADIAN);
+    radian,
+    opencr::joints::MAX_TICK,
+    opencr::joints::MIN_TICK,
+    opencr::joints::MAX_RADIAN,
+    opencr::joints::MIN_RADIAN);
 
   bool comm_result = set_gripper_variables(
     opencr_control_table.goal_position_gripper.address, tick);

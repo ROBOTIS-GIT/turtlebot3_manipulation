@@ -113,18 +113,21 @@ TurtleBot3ManipulationSystemHardware::export_state_interfaces()
 {
   std::vector<hardware_interface::StateInterface> state_interfaces;
   for (uint8_t i = 0; i < info_.joints.size(); i++) {
-    state_interfaces.emplace_back(hardware_interface::StateInterface(
-      info_.joints[i].name, hardware_interface::HW_IF_POSITION, &dxl_positions_[i]));
-    state_interfaces.emplace_back(hardware_interface::StateInterface(
-      info_.joints[i].name, hardware_interface::HW_IF_VELOCITY, &dxl_velocities_[i]));
+    state_interfaces.emplace_back(
+      hardware_interface::StateInterface(
+        info_.joints[i].name, hardware_interface::HW_IF_POSITION, &dxl_positions_[i]));
+    state_interfaces.emplace_back(
+      hardware_interface::StateInterface(
+        info_.joints[i].name, hardware_interface::HW_IF_VELOCITY, &dxl_velocities_[i]));
   }
 
   for (uint8_t i = 0, k = 0; i < info_.sensors.size(); i++) {
     for (uint8_t j = 0; j < info_.sensors[i].state_interfaces.size(); j++) {
-      state_interfaces.emplace_back(hardware_interface::StateInterface(
-        info_.sensors[i].name,
-        info_.sensors[i].state_interfaces[j].name,
-        &opencr_sensor_states_[k++])
+      state_interfaces.emplace_back(
+        hardware_interface::StateInterface(
+          info_.sensors[i].name,
+          info_.sensors[i].state_interfaces[j].name,
+          &opencr_sensor_states_[k++])
       );
     }
   }
@@ -137,24 +140,32 @@ TurtleBot3ManipulationSystemHardware::export_command_interfaces()
 {
   std::vector<hardware_interface::CommandInterface> command_interfaces;
 
-  command_interfaces.emplace_back(hardware_interface::CommandInterface(
-    info_.joints[0].name, hardware_interface::HW_IF_VELOCITY, &dxl_wheel_commands_[0]));
-  command_interfaces.emplace_back(hardware_interface::CommandInterface(
-    info_.joints[1].name, hardware_interface::HW_IF_VELOCITY, &dxl_wheel_commands_[1]));
+  command_interfaces.emplace_back(
+    hardware_interface::CommandInterface(
+      info_.joints[0].name, hardware_interface::HW_IF_VELOCITY, &dxl_wheel_commands_[0]));
+  command_interfaces.emplace_back(
+    hardware_interface::CommandInterface(
+      info_.joints[1].name, hardware_interface::HW_IF_VELOCITY, &dxl_wheel_commands_[1]));
 
-  command_interfaces.emplace_back(hardware_interface::CommandInterface(
-    info_.joints[2].name, hardware_interface::HW_IF_POSITION, &dxl_joint_commands_[0]));
-  command_interfaces.emplace_back(hardware_interface::CommandInterface(
-    info_.joints[3].name, hardware_interface::HW_IF_POSITION, &dxl_joint_commands_[1]));
-  command_interfaces.emplace_back(hardware_interface::CommandInterface(
-    info_.joints[4].name, hardware_interface::HW_IF_POSITION, &dxl_joint_commands_[2]));
-  command_interfaces.emplace_back(hardware_interface::CommandInterface(
-    info_.joints[5].name, hardware_interface::HW_IF_POSITION, &dxl_joint_commands_[3]));
+  command_interfaces.emplace_back(
+    hardware_interface::CommandInterface(
+      info_.joints[2].name, hardware_interface::HW_IF_POSITION, &dxl_joint_commands_[0]));
+  command_interfaces.emplace_back(
+    hardware_interface::CommandInterface(
+      info_.joints[3].name, hardware_interface::HW_IF_POSITION, &dxl_joint_commands_[1]));
+  command_interfaces.emplace_back(
+    hardware_interface::CommandInterface(
+      info_.joints[4].name, hardware_interface::HW_IF_POSITION, &dxl_joint_commands_[2]));
+  command_interfaces.emplace_back(
+    hardware_interface::CommandInterface(
+      info_.joints[5].name, hardware_interface::HW_IF_POSITION, &dxl_joint_commands_[3]));
 
-  command_interfaces.emplace_back(hardware_interface::CommandInterface(
-    info_.joints[6].name, hardware_interface::HW_IF_POSITION, &dxl_gripper_commands_[0]));
-  command_interfaces.emplace_back(hardware_interface::CommandInterface(
-    info_.joints[7].name, hardware_interface::HW_IF_POSITION, &dxl_gripper_commands_[1]));
+  command_interfaces.emplace_back(
+    hardware_interface::CommandInterface(
+      info_.joints[6].name, hardware_interface::HW_IF_POSITION, &dxl_gripper_commands_[0]));
+  command_interfaces.emplace_back(
+    hardware_interface::CommandInterface(
+      info_.joints[7].name, hardware_interface::HW_IF_POSITION, &dxl_gripper_commands_[1]));
 
   return command_interfaces;
 }
@@ -277,8 +288,8 @@ hardware_interface::return_type TurtleBot3ManipulationSystemHardware::write()
 
   return hardware_interface::return_type::OK;
 }
-}  // turtlebot3_manipulation_hardware
-}  // robotis
+}  // namespace turtlebot3_manipulation_hardware
+}  // namespace robotis
 
 #include "pluginlib/class_list_macros.hpp"
 PLUGINLIB_EXPORT_CLASS(

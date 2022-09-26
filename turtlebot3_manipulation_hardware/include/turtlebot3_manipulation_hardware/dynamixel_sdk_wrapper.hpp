@@ -17,8 +17,8 @@
 #ifndef TURTLEBOT3_MANIPULATION_HARDWARE__DYNAMIXEL_SDK_WRAPPER_HPP_
 #define TURTLEBOT3_MANIPULATION_HARDWARE__DYNAMIXEL_SDK_WRAPPER_HPP_
 
-#include <mutex>
 #include <stdlib.h>
+#include <mutex>
 #include <string>
 
 #include "dynamixel_sdk/dynamixel_sdk.h"

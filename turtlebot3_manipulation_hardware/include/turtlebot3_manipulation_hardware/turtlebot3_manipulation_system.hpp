@@ -37,7 +37,7 @@ namespace robotis
 namespace turtlebot3_manipulation_hardware
 {
 class TurtleBot3ManipulationSystemHardware
-: public hardware_interface::BaseInterface<hardware_interface::SystemInterface>
+  : public hardware_interface::BaseInterface<hardware_interface::SystemInterface>
 {
 public:
   RCLCPP_SHARED_PTR_DEFINITIONS(TurtleBot3ManipulationSystemHardware);
@@ -85,6 +85,6 @@ private:
 
   std::vector<double> opencr_sensor_states_;
 };
-}  // turtlebot3_manipulation_hardware
-}  // robotis
+}  // namespace turtlebot3_manipulation_hardware
+}  // namespace robotis
 #endif  // TURTLEBOT3_MANIPULATION_HARDWARE__TURTLEBOT3_MANIPULATION_SYSTEM_HPP_

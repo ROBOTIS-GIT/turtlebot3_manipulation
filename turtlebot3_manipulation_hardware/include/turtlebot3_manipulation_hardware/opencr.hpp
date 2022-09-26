@@ -17,11 +17,12 @@
 #ifndef TURTLEBOT3_MANIPULATION_HARDWARE__OPENCR_HPP_
 #define TURTLEBOT3_MANIPULATION_HARDWARE__OPENCR_HPP_
 
+#include <stdlib.h>
 #include <array>
 #include <memory>
 #include <mutex>
-#include <stdlib.h>
 #include <string>
+#include <vector>
 
 #include "turtlebot3_manipulation_hardware/dynamixel_sdk_wrapper.hpp"
 #include "turtlebot3_manipulation_hardware/opencr_control_table.hpp"
@@ -142,4 +143,3 @@ private:
 }  // namespace turtlebot3_manipulation_hardware
 }  // namespace robotis
 #endif  // TURTLEBOT3_MANIPULATION_HARDWARE__OPENCR_HPP_
-
