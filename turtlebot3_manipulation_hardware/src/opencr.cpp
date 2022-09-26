@@ -16,6 +16,7 @@
 
 #include "turtlebot3_manipulation_hardware/opencr.hpp"
 
+#include <unistd.h>
 #include <algorithm>
 #include <memory>
 #include <string>
@@ -32,6 +33,16 @@ OpenCR::OpenCR(const uint8_t & id)
 
 OpenCR::~OpenCR()
 {
+  std::array<int32_t, 4> tick = {2048, 750, 3040, 2500};
+  set_joints_variables(opencr_control_table.goal_position_joint_1.address, tick);
+  dxl_sdk_wrapper_->write_byte(opencr_control_table.goal_position_write_joints.address, 1);
+
+  init_gripper();
+
+  sleep(3);
+
+  joints_torque(opencr::OFF);
+  wheels_torque(opencr::OFF);
 }
 
 bool OpenCR::open_port(const std::string & usb_port)
