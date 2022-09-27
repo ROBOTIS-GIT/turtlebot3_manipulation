@@ -5,8 +5,6 @@ Panels:
     Property Tree Widget:
       Expanded:
         - /Global Options1
-        - /Status1
-        - /TF1
         - /Odometry1/Covariance1/Position1
       Splitter Ratio: 0.5055555701255798
     Tree Height: 784
@@ -136,12 +134,12 @@ Visualization Manager:
           Show Axes: false
           Show Trail: false
           Value: true
-        gripper_link:
+        gripper_left_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        gripper_link_sub:
+        gripper_right_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -213,9 +211,19 @@ Visualization Manager:
           Value: true
         end_effector_link:
           Value: true
+        gripper_left_link:
+          Value: true
+        gripper_right_link:
+          Value: true
         imu_link:
           Value: true
         link1:
+          Value: true
+        link2:
+          Value: true
+        link3:
+          Value: true
+        link4:
           Value: true
         link5:
           Value: true
@@ -247,7 +255,16 @@ Visualization Manager:
               imu_link:
                 {}
               link1:
-                {}
+                link2:
+                  link3:
+                    link4:
+                      link5:
+                        end_effector_link:
+                          {}
+                        gripper_left_link:
+                          {}
+                        gripper_right_link:
+                          {}
               wheel_left_link:
                 {}
               wheel_right_link:
@@ -360,5 +377,5 @@ Window Geometry:
   Views:
     collapsed: true
   Width: 1279
-  X: 44
-  Y: 27
+  X: 623
+  Y: 385
