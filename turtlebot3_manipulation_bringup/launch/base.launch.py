@@ -66,7 +66,7 @@ def generate_launch_description():
         [
             FindPackageShare('turtlebot3_manipulation_bringup'),
             'config',
-            'controller_manager.yaml',
+            'hardware_controller_manager.yaml',
         ]
     )
 
