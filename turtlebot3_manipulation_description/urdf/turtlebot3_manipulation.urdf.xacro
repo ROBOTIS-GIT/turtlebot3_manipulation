@@ -45,7 +45,7 @@
 
   <gazebo>
     <plugin name="gazebo_ros2_control" filename="libgazebo_ros2_control.so">
-      <parameters>$(find turtlebot3_manipulation_bringup)/config/controller_manager.yaml</parameters>
+      <parameters>$(find turtlebot3_manipulation_bringup)/config/gazebo_controller_manager.yaml</parameters>
     </plugin>
   </gazebo>
 
