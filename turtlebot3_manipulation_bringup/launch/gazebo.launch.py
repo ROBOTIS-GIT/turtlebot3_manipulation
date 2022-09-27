@@ -29,6 +29,7 @@ from launch.substitutions import ThisLaunchFileDir
 from launch_ros.actions import Node
 from launch_ros.substitutions import FindPackageShare
 
+
 def is_valid_to_launch():
     # Path includes model name of Raspberry Pi series
     path = '/sys/firmware/devicetree/base/model'
@@ -47,8 +48,9 @@ def generate_launch_description():
     prefix = LaunchConfiguration('prefix')
     use_sim = LaunchConfiguration('use_sim')
 
-    world = LaunchConfiguration('world',
-        default = PathJoinSubstitution(
+    world = LaunchConfiguration(
+        'world',
+        default=PathJoinSubstitution(
             [
                 FindPackageShare('turtlebot3_manipulation_bringup'),
                 'worlds',
