@@ -24,8 +24,6 @@ from launch.substitutions import Command
 from launch.substitutions import FindExecutable
 from launch.substitutions import LaunchConfiguration
 from launch.substitutions import PathJoinSubstitution
-from launch.actions import IncludeLaunchDescription
-from launch.launch_description_sources import PythonLaunchDescriptionSource
 
 from launch_ros.actions import Node
 from launch_ros.substitutions import FindPackageShare
@@ -133,33 +131,6 @@ def generate_launch_description():
             },
             condition=UnlessCondition(use_sim)
         ),
-
-        IncludeLaunchDescription(
-            PythonLaunchDescriptionSource(
-                [
-                    PathJoinSubstitution(
-                        [
-                            FindPackageShare('gazebo_ros'),
-                            'launch',
-                            'gazebo.launch.py'
-                        ]
-                    )
-                ]
-            ),
-            launch_arguments={'verbose': 'false'}.items(),
-            condition=IfCondition(use_sim)
-        ),
-
-        Node(
-            package='gazebo_ros',
-            executable='spawn_entity.py',
-            arguments=[
-                '-topic', 'robot_description',
-                '-entity', 'turtlebot3_manipulation_system'],
-            output='screen',
-            condition=IfCondition(use_sim)
-        ),
-
 
         Node(
             package='controller_manager',
