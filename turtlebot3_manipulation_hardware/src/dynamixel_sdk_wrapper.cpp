@@ -16,6 +16,7 @@
 
 #include "turtlebot3_manipulation_hardware/dynamixel_sdk_wrapper.hpp"
 
+#include <iostream>
 #include <string>
 
 namespace robotis
@@ -32,6 +33,11 @@ DynamixelSDKWrapper::~DynamixelSDKWrapper()
   port_handler_->closePort();
 }
 
+inline void error_print(const char * log)
+{
+  std::cerr << "\033[1;31m[ERROR] [DynamixelSDKWrapper] " << log << "\033[0m" << std::endl;
+}
+
 bool DynamixelSDKWrapper::open_port(const std::string & usb_port)
 {
   port_handler_ = dynamixel::PortHandler::getPortHandler(usb_port.c_str());
@@ -44,7 +50,7 @@ bool DynamixelSDKWrapper::set_baud_rate(const uint32_t & baud_rate)
   return port_handler_->setBaudRate(baud_rate);
 }
 
-uint16_t DynamixelSDKWrapper::ping(std::string & log)
+uint16_t DynamixelSDKWrapper::ping()
 {
   std::lock_guard<std::mutex> lock(sdk_handler_m_);
 
@@ -55,9 +61,9 @@ uint16_t DynamixelSDKWrapper::ping(std::string & log)
   dxl_comm_result = packet_handler_->ping(port_handler_, id_, &model_number, &dxl_error);
 
   if (dxl_comm_result != COMM_SUCCESS) {
-    log = std::string(packet_handler_->getTxRxResult(dxl_comm_result));
+    error_print(packet_handler_->getTxRxResult(dxl_comm_result));
   } else if (dxl_error != 0) {
-    log = std::string(packet_handler_->getRxPacketError(dxl_error));
+    error_print(packet_handler_->getRxPacketError(dxl_error));
   }
 
   return model_number;
@@ -66,8 +72,7 @@ uint16_t DynamixelSDKWrapper::ping(std::string & log)
 bool DynamixelSDKWrapper::read(
   const uint16_t & address,
   const uint16_t & length,
-  uint8_t * data,
-  std::string & log)
+  uint8_t * data)
 {
   std::lock_guard<std::mutex> lock(sdk_handler_m_);
 
@@ -78,10 +83,10 @@ bool DynamixelSDKWrapper::read(
     port_handler_, id_, address, length, data, &dxl_error);
 
   if (dxl_comm_result != COMM_SUCCESS) {
-    log = std::string(packet_handler_->getTxRxResult(dxl_comm_result));
+    error_print(packet_handler_->getTxRxResult(dxl_comm_result));
     return false;
   } else if (dxl_error != 0) {
-    log = std::string(packet_handler_->getRxPacketError(dxl_error));
+    error_print(packet_handler_->getRxPacketError(dxl_error));
     return false;
   }
 
@@ -90,10 +95,8 @@ bool DynamixelSDKWrapper::read(
 
 uint8_t DynamixelSDKWrapper::read_byte(const uint16_t & address)
 {
-  std::string log;
-
   uint8_t data[1];
-  this->read(address, 1, &data[0], log);
+  this->read(address, 1, &data[0]);
 
   return data[0];
 }
@@ -101,8 +104,7 @@ uint8_t DynamixelSDKWrapper::read_byte(const uint16_t & address)
 bool DynamixelSDKWrapper::write(
   const uint16_t & address,
   const uint16_t & length,
-  uint8_t * data,
-  std::string & log)
+  uint8_t * data)
 {
   std::lock_guard<std::mutex> lock(sdk_handler_m_);
 
@@ -113,10 +115,10 @@ bool DynamixelSDKWrapper::write(
     port_handler_, id_, address, length, data, &dxl_error);
 
   if (dxl_comm_result != COMM_SUCCESS) {
-    log = std::string(packet_handler_->getTxRxResult(dxl_comm_result));
+    error_print(packet_handler_->getTxRxResult(dxl_comm_result));
     return false;
   } else if (dxl_error != 0) {
-    log = std::string(packet_handler_->getRxPacketError(dxl_error));
+    error_print(packet_handler_->getRxPacketError(dxl_error));
     return false;
   }
 
@@ -125,9 +127,8 @@ bool DynamixelSDKWrapper::write(
 
 void DynamixelSDKWrapper::write_byte(const uint16_t & address, uint8_t data)
 {
-  std::string log;
   uint8_t * data_ptr = &data;
-  this->write(address, 1, &data_ptr[0], log);
+  this->write(address, 1, &data_ptr[0]);
 }
 }  // namespace turtlebot3_manipulation_hardware
 }  // namespace robotis

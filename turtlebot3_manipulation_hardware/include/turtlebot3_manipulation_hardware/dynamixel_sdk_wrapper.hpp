@@ -18,8 +18,8 @@
 #define TURTLEBOT3_MANIPULATION_HARDWARE__DYNAMIXEL_SDK_WRAPPER_HPP_
 
 #include <stdlib.h>
-#include <string>
 #include <mutex>
+#include <string>
 
 #include "dynamixel_sdk/dynamixel_sdk.h"
 
@@ -36,21 +36,19 @@ public:
   bool open_port(const std::string & usb_port);
   bool set_baud_rate(const uint32_t & baud_rate);
 
-  uint16_t ping(std::string & log);
+  uint16_t ping();
 
   bool read(
     const uint16_t & address,
     const uint16_t & length,
-    uint8_t * data,
-    std::string & log);
+    uint8_t * data);
 
   uint8_t read_byte(const uint16_t & address);
 
   bool write(
     const uint16_t & address,
     const uint16_t & length,
-    uint8_t * data,
-    std::string & log);
+    uint8_t * data);
 
   void write_byte(const uint16_t & address, uint8_t data);
 

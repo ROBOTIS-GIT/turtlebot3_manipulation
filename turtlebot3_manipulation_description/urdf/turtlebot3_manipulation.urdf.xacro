@@ -6,7 +6,6 @@
 
   <xacro:arg name="use_fake_hardware" default="false" />
   <xacro:arg name="fake_sensor_commands" default="false" />
-  <xacro:arg name="slowdown" default="2.0" />
 
   <!-- Import materials macro -->
   <xacro:include filename="$(find turtlebot3_manipulation_description)/gazebo/materials.xacro" />
@@ -42,8 +41,7 @@
   <xacro:turtlebot3_manipulation_system
     name="TurtleBot3ManipulationSystem" prefix="$(arg prefix)" use_sim="$(arg use_sim)"
     use_fake_hardware="$(arg use_fake_hardware)"
-    fake_sensor_commands="$(arg fake_sensor_commands)"
-    slowdown="$(arg slowdown)"/>
+    fake_sensor_commands="$(arg fake_sensor_commands)"/>
 
   <gazebo>
     <plugin name="gazebo_ros2_control" filename="libgazebo_ros2_control.so">

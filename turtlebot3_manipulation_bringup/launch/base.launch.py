@@ -36,7 +36,6 @@ def generate_launch_description():
     use_sim = LaunchConfiguration('use_sim')
     use_fake_hardware = LaunchConfiguration('use_fake_hardware')
     fake_sensor_commands = LaunchConfiguration('fake_sensor_commands')
-    slowdown = LaunchConfiguration('slowdown')
 
     urdf_file = Command(
         [
@@ -61,9 +60,6 @@ def generate_launch_description():
             ' ',
             'fake_sensor_commands:=',
             fake_sensor_commands,
-            ' ',
-            'slowdown:=',
-            slowdown,
         ]
     )
 
@@ -109,11 +105,6 @@ def generate_launch_description():
             default_value='false',
             description='Enable fake command interfaces for sensors used for simple simulations. \
             Used only if "use_fake_hardware" parameter is true.'),
-
-        DeclareLaunchArgument(
-            'slowdown',
-            default_value='3.0',
-            description='Slowdown factor.'),
 
         Node(
             package='robot_state_publisher',

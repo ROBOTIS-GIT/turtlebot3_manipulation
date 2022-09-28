@@ -19,7 +19,7 @@
 
 #include <stdint.h>
 
-#define CONTROL_TABLE_SIZE 330
+#define CONTROL_TABLE_SIZE 344
 
 namespace robotis
 {
@@ -148,6 +148,15 @@ typedef struct
 
   ControlItem profile_velocity_write_joints = {328, 1};
   ControlItem profile_velocity_write_gripper = {329, 1};
+
+  ControlItem goal_current_joint_1 = {332, 2};
+  ControlItem goal_current_joint_2 = {334, 2};
+  ControlItem goal_current_joint_3 = {336, 2};
+  ControlItem goal_current_joint_4 = {338, 2};
+  ControlItem goal_current_gripper = {340, 2};
+
+  ControlItem goal_current_write_joints = {342, 1};
+  ControlItem goal_current_write_gripper = {343, 1};
 } ControlTable;
 
 const ControlTable opencr_control_table;

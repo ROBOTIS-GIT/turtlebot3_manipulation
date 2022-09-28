@@ -16,7 +16,10 @@
 
 #include "turtlebot3_manipulation_hardware/opencr.hpp"
 
+#include <algorithm>
+#include <memory>
 #include <string>
+#include <vector>
 
 namespace robotis
 {
@@ -29,8 +32,6 @@ OpenCR::OpenCR(const uint8_t & id)
 
 OpenCR::~OpenCR()
 {
-  joints_torque(opencr::OFF);
-  wheels_torque(opencr::OFF);
 }
 
 bool OpenCR::open_port(const std::string & usb_port)
@@ -43,9 +44,9 @@ bool OpenCR::set_baud_rate(const uint32_t & baud_rate)
   return dxl_sdk_wrapper_->set_baud_rate(baud_rate);
 }
 
-uint16_t OpenCR::ping(std::string & log)
+uint16_t OpenCR::ping()
 {
-  return dxl_sdk_wrapper_->ping(log);
+  return dxl_sdk_wrapper_->ping();
 }
 
 bool OpenCR::is_connect_manipulator()
@@ -65,7 +66,9 @@ void OpenCR::play_sound(uint8_t sound) const
 
 void OpenCR::imu_recalibration()
 {
-  dxl_sdk_wrapper_->write_byte(opencr_control_table.imu_re_calibration.address, 1);
+  dxl_sdk_wrapper_->write_byte(
+    opencr_control_table.imu_re_calibration.address,
+    opencr_control_table.imu_re_calibration.length);
 }
 
 opencr::IMU OpenCR::get_imu()
@@ -144,9 +147,9 @@ void OpenCR::wheels_torque(uint8_t onoff) const
   dxl_sdk_wrapper_->write_byte(opencr_control_table.torque_wheels.address, onoff);
 }
 
-bool OpenCR::read_all(std::string & log)
+bool OpenCR::read_all()
 {
-  bool comm_result = dxl_sdk_wrapper_->read(0, CONTROL_TABLE_SIZE, &data_buffer_[0], log);
+  bool comm_result = dxl_sdk_wrapper_->read(0, CONTROL_TABLE_SIZE, &data_buffer_[0]);
 
   if (comm_result) {
     std::lock_guard<std::mutex> lock(buffer_m_);
@@ -205,7 +208,7 @@ std::array<double, 2> OpenCR::get_wheel_velocities()
   return velocities;
 }
 
-bool OpenCR::set_wheel_velocities(const std::vector<double> & velocities, std::string & log)
+bool OpenCR::set_wheel_velocities(const std::vector<double> & velocities)
 {
   union Data {
     int32_t dword[6];
@@ -228,7 +231,7 @@ bool OpenCR::set_wheel_velocities(const std::vector<double> & velocities, std::s
 
   uint8_t * p_data = &data.byte[0];
   bool comm_result = dxl_sdk_wrapper_->write(
-    opencr_control_table.cmd_velocity_linear_x.address, 24, p_data, log);
+    opencr_control_table.cmd_velocity_linear_x.address, 24, p_data);
 
   return comm_result;
 }
@@ -303,7 +306,7 @@ std::array<double, 4> OpenCR::get_joint_positions()
       opencr::joints::MIN_TICK,
       opencr::joints::MAX_RADIAN,
       opencr::joints::MIN_RADIAN);
-  };
+  }
 
   return positions;
 }
@@ -329,7 +332,7 @@ std::array<double, 4> OpenCR::get_joint_velocities()
 
   for (uint8_t i = 0; i < rpms.size(); i++) {
     velocities[i] = rpms[i] * opencr::joints::RPM_TO_RAD_PER_SEC;
-  };
+  }
 
   return velocities;
 }
@@ -349,7 +352,7 @@ double OpenCR::get_gripper_position()
     opencr::joints::MAX_RADIAN,
     opencr::joints::MIN_RADIAN);
 
-  return radian * opencr::joints::GRIPPER_RAD_TO_METER;
+  return radian * opencr::grippers::RAD_TO_METER;
 }
 
 double OpenCR::get_gripper_velocity()
@@ -365,8 +368,7 @@ double OpenCR::get_gripper_velocity()
 
 bool OpenCR::set_joints_variables(
   const uint16_t & address,
-  const std::array<int32_t, 4> & variables,
-  std::string & log)
+  const std::array<int32_t, 4> & variables)
 {
   union Data {
     int32_t dword[4];
@@ -375,15 +377,15 @@ bool OpenCR::set_joints_variables(
 
   for (uint8_t i = 0; i < variables.size(); i++) {
     data.dword[i] = variables[i];
-  };
+  }
 
   uint8_t * p_data = &data.byte[0];
-  bool comm_result = dxl_sdk_wrapper_->write(address, 4 * 4, p_data, log);
+  bool comm_result = dxl_sdk_wrapper_->write(address, 4 * 4, p_data);
 
   return comm_result;
 }
 
-bool OpenCR::set_joint_positions(const std::vector<double> & radians, std::string & log)
+bool OpenCR::set_joint_positions(const std::vector<double> & radians)
 {
   std::array<int32_t, 4> tick = {0, 0, 0, 0};
   for (uint8_t i = 0; i < radians.size(); i++) {
@@ -393,42 +395,37 @@ bool OpenCR::set_joint_positions(const std::vector<double> & radians, std::strin
       opencr::joints::MIN_TICK,
       opencr::joints::MAX_RADIAN,
       opencr::joints::MIN_RADIAN);
-  };
+  }
 
   bool comm_result = set_joints_variables(
-    opencr_control_table.goal_position_joint_1.address, tick, log);
+    opencr_control_table.goal_position_joint_1.address, tick);
 
   dxl_sdk_wrapper_->write_byte(opencr_control_table.goal_position_write_joints.address, 1);
 
   return comm_result;
 }
 
-bool OpenCR::set_joint_profile_acceleration(
-  const std::array<int32_t, 4> & acceleration,
-  std::string & log)
+bool OpenCR::set_joint_profile_acceleration(const std::array<int32_t, 4> & acceleration)
 {
   bool comm_result = set_joints_variables(
-    opencr_control_table.profile_acceleration_joint_1.address, acceleration, log);
+    opencr_control_table.profile_acceleration_joint_1.address, acceleration);
 
   dxl_sdk_wrapper_->write_byte(opencr_control_table.profile_acceleration_write_joints.address, 1);
 
   return comm_result;
 }
 
-bool OpenCR::set_joint_profile_velocity(
-  const std::array<int32_t, 4> & velocity,
-  std::string & log)
+bool OpenCR::set_joint_profile_velocity(const std::array<int32_t, 4> & velocity)
 {
   bool comm_result = set_joints_variables(
-    opencr_control_table.profile_velocity_joint_1.address, velocity, log);
+    opencr_control_table.profile_velocity_joint_1.address, velocity);
 
   dxl_sdk_wrapper_->write_byte(opencr_control_table.profile_velocity_write_joints.address, 1);
 
   return comm_result;
 }
 
-bool OpenCR::set_gripper_variables(
-  const uint16_t & address, const int32_t & variable, std::string & log)
+bool OpenCR::set_gripper_variables(const uint16_t & address, const int32_t & variable)
 {
   union Data {
     int32_t dword[1];
@@ -438,80 +435,100 @@ bool OpenCR::set_gripper_variables(
   data.dword[0] = variable;
 
   uint8_t * p_data = &data.byte[0];
-  bool comm_result = dxl_sdk_wrapper_->write(address, 4, p_data, log);
+  bool comm_result = dxl_sdk_wrapper_->write(address, 4, p_data);
 
   return comm_result;
 }
 
-bool OpenCR::set_gripper_position(const double & meters, std::string & log)
+bool OpenCR::set_gripper_position(const double & meters)
 {
-  double radian = meters / opencr::joints::GRIPPER_RAD_TO_METER;
+  double radian = meters / opencr::grippers::RAD_TO_METER;
   int32_t tick = convert_radian_to_tick(
-      radian,
-      opencr::joints::MAX_TICK,
-      opencr::joints::MIN_TICK,
-      opencr::joints::MAX_RADIAN,
-      opencr::joints::MIN_RADIAN);
+    radian,
+    opencr::joints::MAX_TICK,
+    opencr::joints::MIN_TICK,
+    opencr::joints::MAX_RADIAN,
+    opencr::joints::MIN_RADIAN);
 
   bool comm_result = set_gripper_variables(
-    opencr_control_table.goal_position_gripper.address, tick, log);
+    opencr_control_table.goal_position_gripper.address, tick);
 
   dxl_sdk_wrapper_->write_byte(opencr_control_table.goal_position_write_gripper.address, 1);
 
   return comm_result;
 }
 
-bool OpenCR::set_gripper_profile_acceleration(const int32_t & acceleration, std::string & log)
+bool OpenCR::set_gripper_profile_acceleration(const int32_t & acceleration)
 {
   bool comm_result = set_gripper_variables(
-    opencr_control_table.profile_acceleration_gripper.address, acceleration, log);
+    opencr_control_table.profile_acceleration_gripper.address, acceleration);
 
   dxl_sdk_wrapper_->write_byte(opencr_control_table.profile_acceleration_write_gripper.address, 1);
 
   return comm_result;
 }
 
-bool OpenCR::set_gripper_profile_velocity(const int32_t & velocity, std::string & log)
+bool OpenCR::set_gripper_profile_velocity(const int32_t & velocity)
 {
   bool comm_result = set_gripper_variables(
-    opencr_control_table.profile_velocity_gripper.address, velocity, log);
+    opencr_control_table.profile_velocity_gripper.address, velocity);
 
   dxl_sdk_wrapper_->write_byte(opencr_control_table.profile_velocity_write_gripper.address, 1);
 
   return comm_result;
 }
 
-bool OpenCR::set_init_pose(std::string & log)
+bool OpenCR::set_init_pose()
 {
   std::vector<double> init_pose = {0.0, -1.57, 1.37, 0.26};
-  return set_joint_positions(init_pose, log);
+  return set_joint_positions(init_pose);
 }
 
-bool OpenCR::set_zero_pose(std::string & log)
+bool OpenCR::set_zero_pose()
 {
   std::vector<double> zero_pose = {0.0, 0.0, 0.0, 0.0};
-  return set_joint_positions(zero_pose, log);
+  return set_joint_positions(zero_pose);
 }
 
-bool OpenCR::set_home_pose(std::string & log)
+bool OpenCR::set_home_pose()
 {
   std::vector<double> home_pose = {0.0, -1.05, 0.35, 0.70};
-  return set_joint_positions(home_pose, log);
+  return set_joint_positions(home_pose);
 }
 
-bool OpenCR::open_gripper(std::string & log)
+bool OpenCR::set_gripper_current()
 {
-  return set_gripper_position(0.01, log);
+  union Data {
+    int16_t word[1];
+    uint8_t byte[1 * 2];
+  } data;
+
+  data.word[0] = opencr::grippers::GOAL_CURRENT;
+
+  uint8_t * p_data = &data.byte[0];
+  bool comm_result = dxl_sdk_wrapper_->write(
+    opencr_control_table.goal_current_gripper.address,
+    opencr_control_table.goal_current_gripper.length,
+    p_data);
+
+  dxl_sdk_wrapper_->write_byte(opencr_control_table.goal_current_write_gripper.address, 1);
+
+  return comm_result;
 }
 
-bool OpenCR::close_gripper(std::string & log)
+bool OpenCR::open_gripper()
 {
-  return set_gripper_position(-0.01, log);
+  return set_gripper_position(0.01);
 }
 
-bool OpenCR::init_gripper(std::string & log)
+bool OpenCR::close_gripper()
 {
-  return set_gripper_position(0.0, log);
+  return set_gripper_position(-0.01);
+}
+
+bool OpenCR::init_gripper()
+{
+  return set_gripper_position(0.0);
 }
 
 uint8_t OpenCR::read_byte(const uint16_t & address)

@@ -17,11 +17,12 @@
 #ifndef TURTLEBOT3_MANIPULATION_HARDWARE__OPENCR_HPP_
 #define TURTLEBOT3_MANIPULATION_HARDWARE__OPENCR_HPP_
 
+#include <stdlib.h>
 #include <array>
 #include <memory>
 #include <mutex>
-#include <stdlib.h>
 #include <string>
+#include <vector>
 
 #include "turtlebot3_manipulation_hardware/dynamixel_sdk_wrapper.hpp"
 #include "turtlebot3_manipulation_hardware/opencr_control_table.hpp"
@@ -72,7 +73,7 @@ public:
   bool open_port(const std::string & usb_port);
   bool set_baud_rate(const uint32_t & baud_rate);
 
-  uint16_t ping(std::string & log);
+  uint16_t ping();
 
   bool is_connect_manipulator();
   bool is_connect_wheels();
@@ -87,12 +88,12 @@ public:
   void joints_torque(uint8_t onoff) const;
   void wheels_torque(uint8_t onoff) const;
 
-  bool read_all(std::string & log);
+  bool read_all();
 
   std::array<double, 2> get_wheel_positions();
   std::array<double, 2> get_wheel_velocities();
 
-  bool set_wheel_velocities(const std::vector<double> & velocities, std::string & log);
+  bool set_wheel_velocities(const std::vector<double> & velocities);
 
   std::array<double, 4> get_joint_positions();
   std::array<double, 4> get_joint_velocities();
@@ -100,22 +101,24 @@ public:
   double get_gripper_position();
   double get_gripper_velocity();
 
-  bool set_joint_positions(const std::vector<double> & radians, std::string & log);
+  bool set_joint_positions(const std::vector<double> & radians);
   bool set_joint_profile_acceleration(
-    const std::array<int32_t, 4> & acceleration, std::string & log);
-  bool set_joint_profile_velocity(const std::array<int32_t, 4> & velocity, std::string & log);
+    const std::array<int32_t, 4> & acceleration);
+  bool set_joint_profile_velocity(const std::array<int32_t, 4> & velocity);
 
-  bool set_gripper_position(const double & meters, std::string & log);
-  bool set_gripper_profile_acceleration(const int32_t & acceleration, std::string & log);
-  bool set_gripper_profile_velocity(const int32_t & velocity, std::string & log);
+  bool set_gripper_position(const double & meters);
+  bool set_gripper_profile_acceleration(const int32_t & acceleration);
+  bool set_gripper_profile_velocity(const int32_t & velocity);
 
-  bool set_home_pose(std::string & log);
-  bool set_init_pose(std::string & log);
-  bool set_zero_pose(std::string & log);
+  bool set_home_pose();
+  bool set_init_pose();
+  bool set_zero_pose();
 
-  bool open_gripper(std::string & log);
-  bool close_gripper(std::string & log);
-  bool init_gripper(std::string & log);
+  bool set_gripper_current();
+
+  bool open_gripper();
+  bool close_gripper();
+  bool init_gripper();
 
   void send_heartbeat(const uint8_t & count);
 
@@ -125,11 +128,10 @@ public:
 private:
   bool set_joints_variables(
     const uint16_t & address,
-    const std::array<int32_t, 4> & variables,
-    std::string & log);
+    const std::array<int32_t, 4> & variables);
 
   bool set_gripper_variables(
-    const uint16_t & address, const int32_t & variables, std::string & log);
+    const uint16_t & address, const int32_t & variables);
 
   std::unique_ptr<DynamixelSDKWrapper> dxl_sdk_wrapper_;
 
@@ -141,4 +143,3 @@ private:
 }  // namespace turtlebot3_manipulation_hardware
 }  // namespace robotis
 #endif  // TURTLEBOT3_MANIPULATION_HARDWARE__OPENCR_HPP_
-
