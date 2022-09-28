@@ -16,6 +16,7 @@
   <exec_depend>turtlebot3_manipulation_description</exec_depend>
   <exec_depend>turtlebot3_manipulation_hardware</exec_depend>
   <exec_depend>turtlebot3_manipulation_moveit_config</exec_depend>
+  <exec_depend>turtlebot3_manipulation_navigation2</exec_depend>
   <export>
     <build_type>ament_cmake</build_type>
   </export>
