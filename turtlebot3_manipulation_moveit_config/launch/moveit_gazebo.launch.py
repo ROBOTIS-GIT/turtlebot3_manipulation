@@ -67,10 +67,4 @@ def generate_launch_description():
     )
     ld.add_action(gazebo_control_launch)
 
-    # Warehouse mongodb server
-    warehouse_db_launch = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource([launch_dir, '/warehouse_db.launch.py'])
-    )
-    ld.add_action(warehouse_db_launch)
-
     return ld

@@ -38,7 +38,7 @@
         <joint name="gripper_left_joint" value="0.01"/>
     </group_state>
     <!--END EFFECTOR: Purpose: Represent information about an end effector.-->
-    <end_effector name="linear_grippper" parent_link="end_effector_joint" group="gripper"/>
+    <end_effector name="end_effector_link" parent_link="end_effector_joint" group="gripper"/>
     <!--VIRTUAL JOINT: Purpose: this element defines a virtual joint between a robot link and an external frame of reference (considered fixed with respect to the robot)-->
     <virtual_joint name="virtual_joint" type="fixed" parent_frame="odom" child_link="base_footprint"/>
     <!--DISABLE COLLISIONS: By default it is assumed that any link of the robot could potentially come into collision with any other link in the robot. This tag disables collision checking between a specified pair of links. -->
