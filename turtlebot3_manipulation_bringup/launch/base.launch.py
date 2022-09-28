@@ -125,6 +125,7 @@ def generate_launch_description():
                 {'robot_description': urdf_file},
                 controller_manager_config
             ],
+            remappings=[('~/cmd_vel_unstamped', 'cmd_vel')],
             output={
                 'stdout': 'screen',
                 'stderr': 'screen',
@@ -144,6 +145,7 @@ def generate_launch_description():
             executable='spawner.py',
             arguments=['diff_drive_controller'],
             output='screen',
+            condition=UnlessCondition(use_sim)
         ),
 
         Node(
