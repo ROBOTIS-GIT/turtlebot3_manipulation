@@ -29,7 +29,9 @@ import os
 from launch import LaunchDescription
 from launch.actions import DeclareLaunchArgument
 from launch.actions import IncludeLaunchDescription
+from launch.substitutions import PathJoinSubstitution
 from launch.launch_description_sources import PythonLaunchDescriptionSource
+from launch_ros.substitutions import FindPackageShare
 from ament_index_python.packages import get_package_share_directory
 
 
@@ -51,8 +53,11 @@ def generate_launch_description():
 
     # move_group
     move_group_launch = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource([launch_dir, '/move_group.launch.py'])
-    )
+            PythonLaunchDescriptionSource([launch_dir, '/move_group.launch.py']),
+            launch_arguments={
+                'use_sim': 'true',
+            }.items(),
+        )
     ld.add_action(move_group_launch)
 
     # gazebo_control with robot_state_publisher
@@ -62,9 +67,26 @@ def generate_launch_description():
         description='Whether execute rviz2')
     ld.add_action(rviz_arg)
 
-    gazebo_control_launch = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource([bringup_launch_dir, '/gazebo.launch.py'])
+    empty_world_path = PathJoinSubstitution(
+        [
+            FindPackageShare('turtlebot3_manipulation_bringup'),
+            'worlds',
+            'empty_world.model'
+        ]
     )
+
+    gazebo_control_launch = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource([bringup_launch_dir, '/gazebo.launch.py']),
+            launch_arguments={
+                'world': empty_world_path,
+                'x_pose': '0.0',
+                'y_pose': '0.0',
+                'z_pose': '0.0',
+                'roll': '0.0',
+                'pitch': '0.0',
+                'yaw': '0.0',
+            }.items(),
+        )
     ld.add_action(gazebo_control_launch)
 
     return ld
