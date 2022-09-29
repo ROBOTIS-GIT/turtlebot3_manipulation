@@ -30,6 +30,8 @@ import yaml
 import xacro
 
 from launch import LaunchDescription
+from launch.actions import DeclareLaunchArgument
+from launch.substitutions import LaunchConfiguration
 from launch_ros.actions import Node
 from ament_index_python.packages import get_package_share_directory
 
@@ -121,6 +123,12 @@ def generate_launch_description():
     }
 
     ld = LaunchDescription()
+    use_sim = LaunchConfiguration('use_sim')
+    declare_use_sim = DeclareLaunchArgument(
+        'use_sim',
+        default_value='false',
+        description='Start robot in Gazebo simulation.')
+    ld.add_action(declare_use_sim)
 
     move_group_node = Node(
         package="moveit_ros_move_group",
@@ -134,6 +142,7 @@ def generate_launch_description():
             trajectory_execution,
             moveit_controllers,
             planning_scene_monitor_parameters,
+            {'use_sim_time': use_sim},
         ],
     )
 
