@@ -30,11 +30,14 @@ namespace robotis
 namespace turtlebot3_manipulation_hardware
 {
 auto logger = rclcpp::get_logger("turtlebot3_manipulation");
-hardware_interface::return_type TurtleBot3ManipulationSystemHardware::configure(
+hardware_interface::CallbackReturn TurtleBot3ManipulationSystemHardware::on_init(
   const hardware_interface::HardwareInfo & info)
 {
-  if (configure_default(info) != hardware_interface::return_type::OK) {
-    return hardware_interface::return_type::ERROR;
+  if (
+    hardware_interface::SystemInterface::on_init(info) !=
+    hardware_interface::CallbackReturn::SUCCESS)
+  {
+    return hardware_interface::CallbackReturn::ERROR;
   }
 
   id_ = stoi(info_.hardware_parameters["opencr_id"]);
@@ -60,14 +63,14 @@ hardware_interface::return_type TurtleBot3ManipulationSystemHardware::configure(
     RCLCPP_INFO(logger, "Succeeded to open port");
   } else {
     RCLCPP_FATAL(logger, "Failed to open port");
-    return hardware_interface::return_type::ERROR;
+    return hardware_interface::CallbackReturn::ERROR;
   }
 
   if (opencr_->set_baud_rate(baud_rate_)) {
     RCLCPP_INFO(logger, "Succeeded to set baudrate");
   } else {
     RCLCPP_FATAL(logger, "Failed to set baudrate");
-    return hardware_interface::return_type::ERROR;
+    return hardware_interface::CallbackReturn::ERROR;
   }
 
   int32_t model_number = opencr_->ping();
@@ -77,14 +80,14 @@ hardware_interface::return_type TurtleBot3ManipulationSystemHardware::configure(
     RCLCPP_INFO(logger, "Connected manipulator");
   } else {
     RCLCPP_FATAL(logger, "Not connected manipulator");
-    return hardware_interface::return_type::ERROR;
+    return hardware_interface::CallbackReturn::ERROR;
   }
 
   if (opencr_->is_connect_wheels()) {
     RCLCPP_INFO(logger, "Connected wheels");
   } else {
     RCLCPP_FATAL(logger, "Not connected wheels");
-    return hardware_interface::return_type::ERROR;
+    return hardware_interface::CallbackReturn::ERROR;
   }
 
   dxl_wheel_commands_.resize(2, 0.0);
@@ -105,8 +108,7 @@ hardware_interface::return_type TurtleBot3ManipulationSystemHardware::configure(
     info_.sensors[1].state_interfaces.size(),
     0.0);
 
-  status_ = hardware_interface::status::CONFIGURED;
-  return hardware_interface::return_type::OK;
+  return hardware_interface::CallbackReturn::SUCCESS;
 }
 
 std::vector<hardware_interface::StateInterface>
@@ -171,7 +173,8 @@ TurtleBot3ManipulationSystemHardware::export_command_interfaces()
   return command_interfaces;
 }
 
-hardware_interface::return_type TurtleBot3ManipulationSystemHardware::start()
+hardware_interface::CallbackReturn TurtleBot3ManipulationSystemHardware::on_activate(
+  const rclcpp_lifecycle::State & /*previous_state*/)
 {
   RCLCPP_INFO(logger, "Ready for start");
   opencr_->send_heartbeat(heartbeat_++);
@@ -199,24 +202,22 @@ hardware_interface::return_type TurtleBot3ManipulationSystemHardware::start()
   RCLCPP_INFO(logger, "System starting");
   opencr_->play_sound(opencr::SOUND::ASCENDING);
 
-  status_ = hardware_interface::status::STARTED;
-
-  return hardware_interface::return_type::OK;
+  return hardware_interface::CallbackReturn::SUCCESS;
 }
 
-hardware_interface::return_type TurtleBot3ManipulationSystemHardware::stop()
+hardware_interface::CallbackReturn TurtleBot3ManipulationSystemHardware::on_deactivate(
+  const rclcpp_lifecycle::State & /*previous_state*/)
 {
   RCLCPP_INFO(logger, "Ready for stop");
   opencr_->play_sound(opencr::SOUND::DESCENDING);
 
-  status_ = hardware_interface::status::STOPPED;
-
   RCLCPP_INFO(logger, "System stopped");
 
-  return hardware_interface::return_type::OK;
+  return hardware_interface::CallbackReturn::SUCCESS;
 }
 
-hardware_interface::return_type TurtleBot3ManipulationSystemHardware::read()
+hardware_interface::return_type TurtleBot3ManipulationSystemHardware::read(
+  const rclcpp::Time & /*time*/, const rclcpp::Duration & /*period*/)
 {
   RCLCPP_INFO_ONCE(logger, "Start to read wheels and manipulator states");
 
@@ -269,7 +270,8 @@ hardware_interface::return_type TurtleBot3ManipulationSystemHardware::read()
   return hardware_interface::return_type::OK;
 }
 
-hardware_interface::return_type TurtleBot3ManipulationSystemHardware::write()
+hardware_interface::return_type TurtleBot3ManipulationSystemHardware::write(
+  const rclcpp::Time & /*time*/, const rclcpp::Duration & /*period*/)
 {
   RCLCPP_INFO_ONCE(logger, "Start to write wheels and manipulator commands");
   opencr_->send_heartbeat(heartbeat_++);
