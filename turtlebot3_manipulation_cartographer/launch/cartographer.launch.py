@@ -42,7 +42,6 @@ def generate_launch_description():
     configuration_basename = LaunchConfiguration('configuration_basename')
 
     resolution = LaunchConfiguration('resolution')
-    publish_period_sec = LaunchConfiguration('publish_period_sec')
 
     rviz_config_file = PathJoinSubstitution(
         [
@@ -78,11 +77,6 @@ def generate_launch_description():
             default_value='0.05',
             description='Resolution of a grid cell of occupancy grid'),
 
-        DeclareLaunchArgument(
-            'publish_period_sec',
-            default_value='1.0',
-            description='Publishing period of occupancy grid'),
-
         Node(
             package='cartographer_ros',
             executable='cartographer_node',
@@ -91,14 +85,12 @@ def generate_launch_description():
             arguments=['-configuration_directory', cartographer_config_dir,
                        '-configuration_basename', configuration_basename]),
 
-        IncludeLaunchDescription(
-            PythonLaunchDescriptionSource([ThisLaunchFileDir(), '/occupancy_grid.launch.py']),
-            launch_arguments={
-                'use_sim': use_sim,
-                'resolution': resolution,
-                'publish_period_sec': publish_period_sec,
-            }.items(),
-        ),
+        Node(
+            package='cartographer_ros',
+            executable='cartographer_occupancy_grid_node',
+            output='screen',
+            parameters=[{'use_sim_time': use_sim}],
+            arguments=['-resolution', resolution]),
 
         Node(
             package='rviz2',
