@@ -35,6 +35,8 @@ def generate_launch_description():
     params_file = LaunchConfiguration('params_file')
     default_bt_xml_filename = LaunchConfiguration('default_bt_xml_filename')
     autostart = LaunchConfiguration('autostart')
+    use_composition = LaunchConfiguration('use_composition')
+    use_respawn = LaunchConfiguration('use_respawn')
 
     map_yaml_file = LaunchConfiguration(
         'map_yaml_file',
@@ -112,6 +114,17 @@ def generate_launch_description():
             default_value='true',
             description='Automatically startup the nav2 stack'),
 
+        DeclareLaunchArgument(
+            'use_composition',
+            default_value='true',
+            description='Whether to use composed bringup'),
+
+        DeclareLaunchArgument(
+            'use_respawn',
+            default_value='false',
+            description='Whether to respawn if a node crashes. \
+                Applied when composition is disabled.'),
+
         IncludeLaunchDescription(
             PythonLaunchDescriptionSource([nav2_launch_file_dir, '/bringup_launch.py']),
             launch_arguments={
@@ -120,6 +133,8 @@ def generate_launch_description():
                 'params_file': params_file,
                 'default_bt_xml_filename': default_bt_xml_filename,
                 'autostart': autostart,
+                'use_composition': use_composition,
+                'use_respawn': use_respawn,
             }.items(),
         ),
 
