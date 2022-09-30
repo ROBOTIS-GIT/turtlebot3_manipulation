@@ -18,8 +18,10 @@
 
 from launch import LaunchDescription
 from launch.actions import DeclareLaunchArgument
+from launch.actions import RegisterEventHandler
 from launch.conditions import IfCondition
 from launch.conditions import UnlessCondition
+from launch.event_handlers import OnProcessExit
 from launch.substitutions import Command
 from launch.substitutions import FindExecutable
 from launch.substitutions import LaunchConfiguration
@@ -30,6 +32,48 @@ from launch_ros.substitutions import FindPackageShare
 
 
 def generate_launch_description():
+    declared_arguments = []
+    declared_arguments.append(
+        DeclareLaunchArgument(
+            'start_rviz',
+            default_value='false',
+            description='Whether execute rviz2'
+        )
+    )
+
+    declared_arguments.append(
+        DeclareLaunchArgument(
+            'prefix',
+            default_value='""',
+            description='Prefix of the joint and link names'
+        )
+    )
+
+    declared_arguments.append(
+        DeclareLaunchArgument(
+            'use_sim',
+            default_value='false',
+            description='Start robot in Gazebo simulation.'
+        )
+    )
+
+    declared_arguments.append(
+        DeclareLaunchArgument(
+            'use_fake_hardware',
+            default_value='false',
+            description='Start robot with fake hardware mirroring command to its states.'
+        )
+    )
+
+    declared_arguments.append(
+        DeclareLaunchArgument(
+            'fake_sensor_commands',
+            default_value='false',
+            description='Enable fake command interfaces for sensors used for simple simulations. \
+            Used only if "use_fake_hardware" parameter is true.'
+        )
+    )
+
     start_rviz = LaunchConfiguration('start_rviz')
     prefix = LaunchConfiguration('prefix')
     use_sim = LaunchConfiguration('use_sim')
@@ -78,94 +122,116 @@ def generate_launch_description():
         ]
     )
 
-    return LaunchDescription([
-        DeclareLaunchArgument(
-            'start_rviz',
-            default_value='false',
-            description='Whether execute rviz2'),
+    control_node = Node(
+        package='controller_manager',
+        executable='ros2_control_node',
+        parameters=[
+            {'robot_description': urdf_file},
+            controller_manager_config
+        ],
+        remappings=[('~/cmd_vel_unstamped', 'cmd_vel')],
+        output="both",
+        condition=UnlessCondition(use_sim))
 
-        DeclareLaunchArgument(
-            'prefix',
-            default_value='""',
-            description='Prefix of the joint and link names'),
+    robot_state_pub_node = Node(
+        package='robot_state_publisher',
+        executable='robot_state_publisher',
+        parameters=[{'robot_description': urdf_file, 'use_sim_time': use_sim}],
+        output='screen'
+    )
 
-        DeclareLaunchArgument(
-            'use_sim',
-            default_value='false',
-            description='Start robot in Gazebo simulation.'),
+    rviz_node = Node(
+        package='rviz2',
+        executable='rviz2',
+        arguments=['-d', rviz_config_file],
+        output='screen',
+        condition=IfCondition(start_rviz)
+    )
 
-        DeclareLaunchArgument(
-            'use_fake_hardware',
-            default_value='false',
-            description='Start robot with fake hardware mirroring command to its states.'),
+    joint_state_broadcaster_spawner = Node(
+        package='controller_manager',
+        executable='spawner',
+        arguments=['joint_state_broadcaster', '--controller-manager', '/controller_manager'],
+        output='screen',
+    )
 
-        DeclareLaunchArgument(
-            'fake_sensor_commands',
-            default_value='false',
-            description='Enable fake command interfaces for sensors used for simple simulations. \
-            Used only if "use_fake_hardware" parameter is true.'),
+    diff_drive_controller_spawner = Node(
+        package='controller_manager',
+        executable='spawner',
+        arguments=['diff_drive_controller', '-c', '/controller_manager'],
+        output='screen',
+        condition=UnlessCondition(use_sim)
+    )
 
-        Node(
-            package='robot_state_publisher',
-            executable='robot_state_publisher',
-            parameters=[{'robot_description': urdf_file, 'use_sim_time': use_sim}],
-            output='screen'),
+    imu_broadcaster_spawner = Node(
+        package='controller_manager',
+        executable='spawner',
+        arguments=['imu_broadcaster'],
+        output='screen',
+    )
 
-        Node(
-            package='rviz2',
-            executable='rviz2',
-            arguments=['-d', rviz_config_file],
-            output='screen',
-            condition=IfCondition(start_rviz)),
+    arm_controller_spawner = Node(
+        package='controller_manager',
+        executable='spawner',
+        arguments=['arm_controller'],
+        output='screen',
+    )
 
-        Node(
-            package='controller_manager',
-            executable='ros2_control_node',
-            parameters=[
-                {'robot_description': urdf_file},
-                controller_manager_config
-            ],
-            remappings=[('~/cmd_vel_unstamped', 'cmd_vel')],
-            output={
-                'stdout': 'screen',
-                'stderr': 'screen',
-            },
-            condition=UnlessCondition(use_sim)
-        ),
+    gripper_controller_spawner = Node(
+        package='controller_manager',
+        executable='spawner',
+        arguments=['gripper_controller'],
+        output='screen',
+    )
 
-        Node(
-            package='controller_manager',
-            executable='spawner.py',
-            arguments=['joint_state_broadcaster'],
-            output='screen',
-        ),
+    delay_rviz_after_joint_state_broadcaster_spawner = RegisterEventHandler(
+        event_handler=OnProcessExit(
+            target_action=joint_state_broadcaster_spawner,
+            on_exit=[rviz_node],
+        )
+    )
 
-        Node(
-            package='controller_manager',
-            executable='spawner.py',
-            arguments=['diff_drive_controller'],
-            output='screen',
-            condition=UnlessCondition(use_sim)
-        ),
+    delay_diff_drive_controller_spawner_after_joint_state_broadcaster_spawner = \
+        RegisterEventHandler(
+            event_handler=OnProcessExit(
+                target_action=joint_state_broadcaster_spawner,
+                on_exit=[diff_drive_controller_spawner],
+            )
+        )
 
-        Node(
-            package='controller_manager',
-            executable='spawner.py',
-            arguments=['imu_broadcaster'],
-            output='screen',
-        ),
+    delay_imu_broadcaster_spawner_after_joint_state_broadcaster_spawner = \
+        RegisterEventHandler(
+            event_handler=OnProcessExit(
+                target_action=joint_state_broadcaster_spawner,
+                on_exit=[imu_broadcaster_spawner],
+            )
+        )
 
-        Node(
-            package='controller_manager',
-            executable='spawner.py',
-            arguments=['arm_controller'],
-            output='screen',
-        ),
+    delay_arm_controller_spawner_after_joint_state_broadcaster_spawner = \
+        RegisterEventHandler(
+            event_handler=OnProcessExit(
+                target_action=joint_state_broadcaster_spawner,
+                on_exit=[arm_controller_spawner],
+            )
+        )
 
-        Node(
-            package='controller_manager',
-            executable='spawner.py',
-            arguments=['gripper_controller'],
-            output='screen',
-        ),
-    ])
+    delay_gripper_controller_spawner_after_joint_state_broadcaster_spawner = \
+        RegisterEventHandler(
+            event_handler=OnProcessExit(
+                target_action=joint_state_broadcaster_spawner,
+                on_exit=[gripper_controller_spawner],
+            )
+        )
+
+    nodes = [
+        control_node,
+        robot_state_pub_node,
+        joint_state_broadcaster_spawner,
+        delay_rviz_after_joint_state_broadcaster_spawner,
+        delay_diff_drive_controller_spawner_after_joint_state_broadcaster_spawner,
+        delay_imu_broadcaster_spawner_after_joint_state_broadcaster_spawner,
+        delay_arm_controller_spawner_after_joint_state_broadcaster_spawner,
+        delay_gripper_controller_spawner_after_joint_state_broadcaster_spawner,
+    ]
+
+    return LaunchDescription(declared_arguments + nodes)
