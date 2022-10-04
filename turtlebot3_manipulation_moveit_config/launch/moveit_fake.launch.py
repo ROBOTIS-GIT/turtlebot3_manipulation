@@ -55,7 +55,7 @@ def generate_launch_description():
     )
     ld.add_action(move_group_launch)
 
-    # fake_ros2_control with robot_state_publisher
+    # fake controller
     rviz_arg = DeclareLaunchArgument(
         'start_rviz',
         default_value='false',

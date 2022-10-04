@@ -16,14 +16,6 @@
 #
 # Authors: Hye-jong KIM
 
-# setup assistant (humble)
-# from moveit_configs_utils import MoveItConfigsBuilder
-# from moveit_configs_utils.launches import generate_demo_launch
-# def generate_launch_description():
-#     moveit_config = MoveItConfigsBuilder("turtlebot3_manipulation",
-#     package_name="turtlebot3_manipulation_moveit_config").to_moveit_configs()
-#     return generate_demo_launch(moveit_config)
-
 import os
 
 from launch import LaunchDescription
@@ -51,18 +43,5 @@ def generate_launch_description():
         PythonLaunchDescriptionSource([launch_dir, '/move_group.launch.py'])
     )
     ld.add_action(move_group_launch)
-
-    # gazebo_control with robot_state_publisher
-    rviz_arg = DeclareLaunchArgument(
-        'start_rviz',
-        default_value='false',
-        description='Whether execute rviz2')
-    ld.add_action(rviz_arg)
-
-    # Warehouse mongodb server
-    warehouse_db_launch = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource([launch_dir, '/warehouse_db.launch.py'])
-    )
-    ld.add_action(warehouse_db_launch)
 
     return ld
