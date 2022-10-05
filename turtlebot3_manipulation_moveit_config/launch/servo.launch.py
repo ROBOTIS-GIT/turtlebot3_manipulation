@@ -63,6 +63,15 @@ def generate_launch_description():
         "robot_description_semantic": robot_description_semantic_config
     }
 
+        # kinematics yaml
+    kinematics_yaml_path = os.path.join(
+        get_package_share_directory("turtlebot3_manipulation_moveit_config"),
+        "config",
+        "kinematics.yaml",
+    )
+    with open(kinematics_yaml_path, "r") as file:
+        kinematics_yaml = yaml.safe_load(file)
+
     # Get parameters for the Servo node
     servo_yaml_path = os.path.join(
         get_package_share_directory("turtlebot3_manipulation_moveit_config"),
@@ -84,6 +93,7 @@ def generate_launch_description():
             servo_params,
             robot_description,
             robot_description_semantic,
+            kinematics_yaml,
         ]
     )
     ld.add_action(servo_node)
