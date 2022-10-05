@@ -73,8 +73,8 @@
 
 // Some constants used in the Servo Teleop demo
 const char BASE_TWIST_TOPIC[] = "cmd_vel";
-const char ARM_TWIST_TOPIC[] = "/servo_server/delta_twist_cmds";
-const char ARM_JOINT_TOPIC[] = "/servo_server/delta_joint_cmds";
+const char ARM_TWIST_TOPIC[] = "/servo_node/delta_twist_cmds";
+const char ARM_JOINT_TOPIC[] = "/servo_node/delta_joint_cmds";
 
 const size_t ROS_QUEUE_SIZE = 10;
 

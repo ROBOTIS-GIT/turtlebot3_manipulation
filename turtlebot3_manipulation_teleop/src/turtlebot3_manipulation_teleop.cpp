@@ -55,9 +55,9 @@ KeyboardServo::KeyboardServo()
   nh_ = rclcpp::Node::make_shared("servo_keyboard_input");
 
   servo_start_client_ =
-    nh_->create_client<std_srvs::srv::Trigger>("/servo_server/start_servo");
+    nh_->create_client<std_srvs::srv::Trigger>("/servo_node/start_servo");
   servo_stop_client_ =
-    nh_->create_client<std_srvs::srv::Trigger>("/servo_server/stop_servo");
+    nh_->create_client<std_srvs::srv::Trigger>("/servo_node/stop_servo");
 
   base_twist_pub_ =
     nh_->create_publisher<geometry_msgs::msg::Twist>(BASE_TWIST_TOPIC, ROS_QUEUE_SIZE);
