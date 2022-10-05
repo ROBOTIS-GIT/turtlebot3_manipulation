@@ -14,6 +14,9 @@
 //
 // Author: Hye-jong KIM
 
+#include <algorithm>
+#include <memory>
+
 #include "turtlebot3_manipulation_teleop/turtlebot3_manipulation_teleop.hpp"
 
 // KeyboardReader
@@ -274,7 +277,7 @@ void KeyboardServo::start_moveit_servo()
   RCLCPP_INFO_STREAM(nh_->get_logger(), "call 'moveit_servo' start srv.");
   auto future = servo_start_client_->async_send_request(
     std::make_shared<std_srvs::srv::Trigger::Request>());
-  auto result = future.wait_for(1s);
+  auto result = future.wait_for(std::chrono::seconds(1));
   if (result == std::future_status::ready) {
     RCLCPP_INFO_STREAM(nh_->get_logger(), "SUCCESS to start 'moveit_servo'");
     future.get();
@@ -289,7 +292,7 @@ void KeyboardServo::stop_moveit_servo()
   RCLCPP_INFO_STREAM(nh_->get_logger(), "call 'moveit_servo' END srv.");
   auto future = servo_stop_client_->async_send_request(
     std::make_shared<std_srvs::srv::Trigger::Request>());
-  auto result = future.wait_for(1s);
+  auto result = future.wait_for(std::chrono::seconds(1));
   if (result == std::future_status::ready) {
     RCLCPP_INFO_STREAM(nh_->get_logger(), "SUCCESS to stop 'moveit_servo'");
     future.get();
@@ -315,7 +318,7 @@ void KeyboardServo::pub()
     }
     // Base pub
     base_twist_pub_->publish(cmd_vel_);
-    rclcpp::sleep_for(10ms);
+    rclcpp::sleep_for(std::chrono::milliseconds(10));
   }
 }
 

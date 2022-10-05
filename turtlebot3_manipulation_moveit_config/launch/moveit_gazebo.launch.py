@@ -69,15 +69,15 @@ def generate_launch_description():
 
     gazebo_control_launch = IncludeLaunchDescription(
         PythonLaunchDescriptionSource([bringup_launch_dir, '/gazebo.launch.py']),
-            launch_arguments={
-                'world': empty_world_path,
-                'x_pose': '0.0',
-                'y_pose': '0.0',
-                'z_pose': '0.0',
-                'roll': '0.0',
-                'pitch': '0.0',
-                'yaw': '0.0',
-            }.items(),
+        launch_arguments={
+            'world': empty_world_path,
+            'x_pose': '0.0',
+            'y_pose': '0.0',
+            'z_pose': '0.0',
+            'roll': '0.0',
+            'pitch': '0.0',
+            'yaw': '0.0',
+        }.items(),
         )
     ld.add_action(gazebo_control_launch)
 

@@ -14,6 +14,9 @@
 //
 // Author: Hye-jong KIM
 
+#ifndef TURTLEBOT3_MANIPULATION_TELEOP__TURTLEBOT3_MANIPULATION_TELEOP_HPP_
+#define TURTLEBOT3_MANIPULATION_TELEOP__TURTLEBOT3_MANIPULATION_TELEOP_HPP_
+
 #include <rclcpp/rclcpp.hpp>
 #include <std_srvs/srv/trigger.hpp>
 #include <geometry_msgs/msg/twist_stamped.hpp>
@@ -24,6 +27,7 @@
 #include <termios.h>
 #include <unistd.h>
 #include <chrono>
+#include <string>
 
 // Define used keys
 #define KEYCODE_UP 0x41     // Base Front
@@ -67,11 +71,10 @@
 #define KEYCODE_SEMICOLON 0x3B
 #define KEYCODE_PERIOD 0x2E
 
-
 // Some constants used in the Servo Teleop demo
-const std::string BASE_TWIST_TOPIC = "cmd_vel";
-const std::string ARM_TWIST_TOPIC = "/servo_server/delta_twist_cmds";
-const std::string ARM_JOINT_TOPIC = "/servo_server/delta_joint_cmds";
+const char BASE_TWIST_TOPIC[] = "cmd_vel";
+const char ARM_TWIST_TOPIC[] = "/servo_server/delta_twist_cmds";
+const char ARM_JOINT_TOPIC[] = "/servo_server/delta_joint_cmds";
 
 const size_t ROS_QUEUE_SIZE = 10;
 
@@ -81,13 +84,10 @@ const double BASE_LINEAR_VEL_STEP = 0.01;  // m/s
 const double BASE_ANGULAR_VEL_MAX = 1.8;  // rad/s
 const double BASE_ANGULAR_VEL_STEP = 0.1;  // rad/s
 
-const std::string BASE_FRAME_ID = "link2";
+const char BASE_FRAME_ID[] = "link2";
 
 const double ARM_TWIST_VEL = 0.2;  // m/s
 const double ARM_JOINT_VEL = 1.0;  // rad/s
-
-
-using namespace std::chrono_literals;
 
 // A class for reading the key inputs from the terminal
 class KeyboardReader
@@ -159,3 +159,5 @@ int main(int argc, char ** argv)
 
   return rc;
 }
+
+#endif  // TURTLEBOT3_MANIPULATION_TELEOP__TURTLEBOT3_MANIPULATION_TELEOP_HPP_
