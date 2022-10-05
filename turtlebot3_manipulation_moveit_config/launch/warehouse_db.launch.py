@@ -16,49 +16,11 @@
 #
 # Authors: Hye-jong KIM
 
-# setup assistant (humble)
-# from moveit_configs_utils import MoveItConfigsBuilder
-# from moveit_configs_utils.launches import generate_warehouse_db_launch
-# def generate_launch_description():
-#     moveit_config = MoveItConfigsBuilder("turtlebot3_manipulation",
-#     package_name="turtlebot3_manipulation_moveit_config").to_moveit_configs()
-#     return generate_warehouse_db_launch(moveit_config)
-
-from launch import LaunchDescription
-from launch.actions import DeclareLaunchArgument
-from launch.substitutions import LaunchConfiguration
-from launch_ros.actions import Node
+from moveit_configs_utils import MoveItConfigsBuilder
+from moveit_configs_utils.launches import generate_warehouse_db_launch
 
 
 def generate_launch_description():
-
-    ld = LaunchDescription()
-
-    # The default DB port for moveit (not default MongoDB port to avoid potential conflicts)
-    ld.add_action(DeclareLaunchArgument("moveit_warehouse_port", default_value="33829"))
-
-    # The default DB host for moveit
-    ld.add_action(
-        DeclareLaunchArgument("moveit_warehouse_host", default_value="localhost")
-    )
-
-    # Load warehouse parameters
-    db_parameters = [
-        {
-            "overwrite": False,
-            "warehouse_port": LaunchConfiguration("moveit_warehouse_port"),
-            "warehouse_host": LaunchConfiguration("moveit_warehouse_host"),
-            "warehouse_exec": "mongod",
-            "warehouse_plugin": "warehouse_ros_mongo::MongoDatabaseConnection",
-        },
-    ]
-
-    # Run the DB server
-    db_node = Node(
-        package="warehouse_ros_mongo",
-        executable="mongo_wrapper_ros.py",
-        parameters=db_parameters,
-    )
-    ld.add_action(db_node)
-
-    return ld
+    moveit_config = MoveItConfigsBuilder("turtlebot3_manipulation",
+    package_name="turtlebot3_manipulation_moveit_config").to_moveit_configs()
+    return generate_warehouse_db_launch(moveit_config)

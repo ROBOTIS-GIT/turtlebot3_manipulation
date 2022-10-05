@@ -1,7 +1,7 @@
 ###############################################
 # Modify all parameters related to servoing here
 ###############################################
-use_gazebo: false # Whether the robot is started in a Gazebo simulation environment
+# use_gazebo: false # Whether the robot is started in a Gazebo simulation environment
 
 ## Properties of incoming commands
 command_in_type: "unitless" # "unitless"> in the range [-1:1], as if from joystick. "speed_units"> cmds are in m/s and rad/s
@@ -22,7 +22,7 @@ command_out_type: trajectory_msgs/JointTrajectory
 
 # What to publish? Can save some bandwidth as most robots only require positions or velocities
 publish_joint_positions: true
-publish_joint_velocities: false
+publish_joint_velocities: true
 publish_joint_accelerations: false
 
 ## Incoming Joint State properties
@@ -37,7 +37,7 @@ ee_frame_name: end_effector_link  # The name of the end effector link, used to r
 robot_link_command_frame: base_link  # commands must be given in the frame of a robot link. Usually either the base or end effector
 
 ## Stopping behaviour
-incoming_command_timeout:  1.0  # Stop servoing if X seconds elapse without a new command
+incoming_command_timeout:  0.1  # Stop servoing if X seconds elapse without a new command
 # If 0, republish commands forever even if the robot is stationary. Otherwise, specify num. to publish.
 # Important because ROS may drop some messages and we need the robot to halt reliably.
 num_outgoing_halt_msgs_to_publish: 4

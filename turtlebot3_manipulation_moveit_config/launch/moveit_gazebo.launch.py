@@ -16,14 +16,6 @@
 #
 # Authors: Hye-jong KIM
 
-# setup assistant (humble)
-# from moveit_configs_utils import MoveItConfigsBuilder
-# from moveit_configs_utils.launches import generate_demo_launch
-# def generate_launch_description():
-#     moveit_config = MoveItConfigsBuilder("turtlebot3_manipulation",
-#     package_name="turtlebot3_manipulation_moveit_config").to_moveit_configs()
-#     return generate_demo_launch(moveit_config)
-
 import os
 
 from launch import LaunchDescription
@@ -74,18 +66,17 @@ def generate_launch_description():
             'empty_world.model'
         ]
     )
-
     gazebo_control_launch = IncludeLaunchDescription(
         PythonLaunchDescriptionSource([bringup_launch_dir, '/gazebo.launch.py']),
-            launch_arguments={
-                'world': empty_world_path,
-                'x_pose': '0.0',
-                'y_pose': '0.0',
-                'z_pose': '0.0',
-                'roll': '0.0',
-                'pitch': '0.0',
-                'yaw': '0.0',
-            }.items(),
+        launch_arguments={
+            'world': empty_world_path,
+            'x_pose': '0.0',
+            'y_pose': '0.0',
+            'z_pose': '0.0',
+            'roll': '0.0',
+            'pitch': '0.0',
+            'yaw': '0.0',
+        }.items(),
         )
     ld.add_action(gazebo_control_launch)
 

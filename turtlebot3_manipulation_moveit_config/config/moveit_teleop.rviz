@@ -5,8 +5,7 @@ Panels:
     Property Tree Widget:
       Expanded:
         - /Global Options1
-        - /Status1
-      Splitter Ratio: 0.4941176474094391
+      Splitter Ratio: 0.5
     Tree Height: 746
   - Class: rviz_common/Selection
     Name: Selection
@@ -199,7 +198,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz_default_plugins/Orbit
-      Distance: 2.0386223793029785
+      Distance: 1.9508342742919922
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
@@ -217,7 +216,7 @@ Visualization Manager:
       Pitch: 0.785398006439209
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 1.215397834777832
+      Yaw: 0.785398006439209
     Saved: ~
 Window Geometry:
   Displays:

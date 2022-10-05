@@ -16,35 +16,11 @@
 #
 # Authors: Hye-jong KIM
 
-# setup assistant (humble)
-# from moveit_configs_utils import MoveItConfigsBuilder
-# from moveit_configs_utils.launches import generate_spawn_controllers_launch
-# def generate_launch_description():
-#     moveit_config = MoveItConfigsBuilder("turtlebot3_manipulation",
-#     package_name="turtlebot3_manipulation_moveit_config").to_moveit_configs()
-#     return generate_spawn_controllers_launch(moveit_config)
-
-from launch import LaunchDescription
-from launch.actions import ExecuteProcess
+from moveit_configs_utils import MoveItConfigsBuilder
+from moveit_configs_utils.launches import generate_spawn_controllers_launch
 
 
 def generate_launch_description():
-    ld = LaunchDescription()
-
-    # Load controllers
-    load_controllers = []
-    for controller in [
-        "arm_controller",
-        "gripper_controller",
-        "joint_state_broadcaster",
-    ]:
-        load_controllers += [
-            ExecuteProcess(
-                cmd=["ros2 run controller_manager spawner.py {}".format(controller)],
-                shell=True,
-                output="screen",
-            )
-        ]
-    ld.add_action(load_controllers)
-
-    return ld
+    moveit_config = MoveItConfigsBuilder("turtlebot3_manipulation",
+    package_name="turtlebot3_manipulation_moveit_config").to_moveit_configs()
+    return generate_spawn_controllers_launch(moveit_config)
