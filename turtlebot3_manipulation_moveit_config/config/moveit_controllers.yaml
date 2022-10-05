@@ -17,5 +17,4 @@ gripper_controller:
   default: true
   joints:
     - gripper_left_joint
-    - gripper_right_joint_mimic
 
