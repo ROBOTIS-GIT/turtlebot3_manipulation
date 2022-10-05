@@ -89,7 +89,7 @@ def generate_launch_description():
         package="moveit_servo",
         executable="servo_node_main",
         parameters=[
-            {'use_gazebo':use_sim}
+            {'use_gazebo':use_sim},
             servo_params,
             robot_description,
             robot_description_semantic,
