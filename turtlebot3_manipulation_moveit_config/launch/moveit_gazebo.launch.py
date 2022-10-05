@@ -66,6 +66,7 @@ def generate_launch_description():
             'empty_world.model'
         ]
     )
+
     gazebo_control_launch = IncludeLaunchDescription(
         PythonLaunchDescriptionSource([bringup_launch_dir, '/gazebo.launch.py']),
         launch_arguments={
