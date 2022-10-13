@@ -113,6 +113,7 @@ public:
   void connect_moveit_servo();
   void start_moveit_servo();
   void stop_moveit_servo();
+  void print_usage();
 
 private:
   void spin();
