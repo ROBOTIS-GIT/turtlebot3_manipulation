@@ -4,27 +4,19 @@
 cmake_minimum_required(VERSION 3.5)
 project(turtlebot3_manipulation_description)
 
-if(NOT CMAKE_CXX_STANDARD)
-  set(CMAKE_CXX_STANDARD 14)
-endif()
-
-if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
-  add_compile_options(-Wall -Wextra -Wpedantic)
-endif()
-
 ################################################################################
 # Find ament packages and libraries for ament and system dependencies
 ################################################################################
 find_package(ament_cmake REQUIRED)
-find_package(urdf REQUIRED)
 
 ################################################################################
 # Install
 ################################################################################
-install(DIRECTORY launch rviz urdf
+install(DIRECTORY launch rviz urdf gazebo meshes ros2_control
   DESTINATION share/${PROJECT_NAME}
 )
 
+ament_environment_hooks("${CMAKE_CURRENT_SOURCE_DIR}/env-hooks/${PROJECT_NAME}.dsv.in")
 ################################################################################
 # Macro for ament package
 ################################################################################

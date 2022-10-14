@@ -1,0 +1,9 @@
+<library path="turtlebot3_manipulation_hardware">
+  <class name="turtlebot3_manipulation_hardware/TurtleBot3ManipulationSystemHardware"
+         type="robotis::turtlebot3_manipulation_hardware::TurtleBot3ManipulationSystemHardware"
+         base_class_type="hardware_interface::SystemInterface">
+    <description>
+      Add description
+    </description>
+  </class>
+</library>

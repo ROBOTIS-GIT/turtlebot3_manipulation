@@ -1,9 +1,7 @@
-################################################################################
-# Set minimum required version of cmake, project name and compile options
-################################################################################
 cmake_minimum_required(VERSION 3.5)
 project(turtlebot3_manipulation_teleop)
 
+# Default to C++14
 if(NOT CMAKE_CXX_STANDARD)
   set(CMAKE_CXX_STANDARD 14)
 endif()
@@ -12,72 +10,41 @@ if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
   add_compile_options(-Wall -Wextra -Wpedantic)
 endif()
 
-################################################################################
-# Find and load build settings from external packages
-################################################################################
+# find dependencies
 find_package(ament_cmake REQUIRED)
+find_package(rclcpp REQUIRED)
+find_package(turtlebot3_manipulation_bringup REQUIRED)
+find_package(turtlebot3_manipulation_moveit_config REQUIRED)
+find_package(turtlebot3_manipulation_description REQUIRED)
 find_package(geometry_msgs REQUIRED)
 find_package(nav_msgs REQUIRED)
-find_package(open_manipulator_msgs REQUIRED)
-find_package(rclcpp REQUIRED)
+find_package(control_msgs REQUIRED)
 find_package(sensor_msgs REQUIRED)
+find_package(std_srvs REQUIRED)
 
-################################################################################
-# Declare ROS messages, services and actions
-################################################################################
-
-################################################################################
-# Build
-################################################################################
-include_directories(
-  include
-)
-
-set(dependencies
+add_executable(turtlebot3_manipulation_teleop src/turtlebot3_manipulation_teleop.cpp)
+target_include_directories(turtlebot3_manipulation_teleop PUBLIC
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+  $<INSTALL_INTERFACE:include>)
+ament_target_dependencies(
+  turtlebot3_manipulation_teleop
+  "rclcpp"
+  "turtlebot3_manipulation_bringup"
+  "turtlebot3_manipulation_moveit_config"
+  "turtlebot3_manipulation_description"
   "geometry_msgs"
   "nav_msgs"
-  "open_manipulator_msgs"
-  "rclcpp"
+  "control_msgs"
   "sensor_msgs"
+  "std_srvs"
 )
 
-set(JOYSTICK_EXEC_NAME "turtlebot3_manipulation_teleop_joystick")
-set(KEYBOARD_EXEC_NAME "turtlebot3_manipulation_teleop_keyboard")
+install(TARGETS turtlebot3_manipulation_teleop
+  DESTINATION lib/${PROJECT_NAME})
 
-add_executable(${JOYSTICK_EXEC_NAME} src/turtlebot3_manipulation_teleop_joystick.cpp)
-ament_target_dependencies(${JOYSTICK_EXEC_NAME} ${dependencies})
-
-add_executable(${KEYBOARD_EXEC_NAME} src/turtlebot3_manipulation_teleop_keyboard.cpp)
-ament_target_dependencies(${KEYBOARD_EXEC_NAME} ${dependencies})
-
-################################################################################
-# Install
-################################################################################
-install(TARGETS ${JOYSTICK_EXEC_NAME} ${KEYBOARD_EXEC_NAME}
-  DESTINATION lib/${PROJECT_NAME} 
-)
-
-install(DIRECTORY launch 
-  DESTINATION share/${PROJECT_NAME}
-)
-
-################################################################################
-# Test
-################################################################################
 if(BUILD_TESTING)
-  find_package(ament_cmake_gtest REQUIRED)
-  find_package(ament_cmake_pytest REQUIRED)
   find_package(ament_lint_auto REQUIRED)
   ament_lint_auto_find_test_dependencies()
 endif()
 
-################################################################################
-# Macro for ament package
-################################################################################
-ament_export_include_directories(include)
-ament_export_dependencies(geometry_msgs)
-ament_export_dependencies(nav_msgs)
-ament_export_dependencies(open_manipulator_msgs)
-ament_export_dependencies(rclcpp)
-ament_export_dependencies(sensor_msgs)
 ament_package()

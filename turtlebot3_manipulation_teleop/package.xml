@@ -2,24 +2,28 @@
 <?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <package format="3">
   <name>turtlebot3_manipulation_teleop</name>
-  <version>2.2.0</version>
-  <description>
-    ROS 2 package for turtlebot3_manipulation_teleop
-  </description>
-  <author email="thlim@robotis.com">Darby Lim</author>
-  <author email="jhshim@robotis.com">Ryan Shim</author>
-  <maintainer email="pyo@robotis.com">Pyo</maintainer>
+  <version>1.2.0</version>
+  <description>ROS2 Package of the turtlebot3_manipulation_teleop</description>
+  <maintainer email="willson@robotis.com">Will Son</maintainer>
   <license>Apache 2.0</license>
-  <url type="website">http://wiki.ros.org/open_manipulator_with_tb3_tools</url>
-  <url type="emanual">http://emanual.robotis.com/docs/en/platform/turtlebot3/manipulation</url>
-  <url type="repository">https://github.com/ROBOTIS-GIT/open_manipulator_with_tb3</url>
-  <url type="bugtracker">https://github.com/ROBOTIS-GIT/open_manipulator_with_tb3/issues</url>
+  <url type="website">https://emanual.robotis.com/docs/en/platform/turtlebot3/manipulation/</url>
+  <url type="repository">https://github.com/ROBOTIS-GIT/turtlebot3_manipulation</url>
+  <url type="bugtracker">https://github.com/ROBOTIS-GIT/turtlebot3_manipulation/issues</url>
+  <author email="hjkim@robotis.com">Hye-jong KIM</author>
   <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <depend>rclcpp</depend>
+  <depend>turtlebot3_manipulation_bringup</depend>
+  <depend>turtlebot3_manipulation_moveit_config</depend>
+  <depend>turtlebot3_manipulation_description</depend>
   <depend>geometry_msgs</depend>
   <depend>nav_msgs</depend>
-  <depend>open_manipulator_msgs</depend>
-  <depend>rclcpp</depend>
+  <depend>control_msgs</depend>
   <depend>sensor_msgs</depend>
+
+  <test_depend>ament_lint_auto</test_depend>
+  <test_depend>ament_lint_common</test_depend>
+
   <export>
     <build_type>ament_cmake</build_type>
   </export>
