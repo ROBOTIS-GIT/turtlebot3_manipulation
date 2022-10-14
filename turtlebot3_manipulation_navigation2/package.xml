@@ -2,9 +2,9 @@
 <?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <package format="3">
   <name>turtlebot3_manipulation_navigation2</name>
-  <version>2.1.4</version>
+  <version>1.2.0</version>
   <description>
-    ROS 2 launch scripts for navigation2
+    ROS2 launch scripts for navigation2
   </description>
   <maintainer email="willson@robotis.com">Will Son</maintainer>
   <license>Apache 2.0</license>
