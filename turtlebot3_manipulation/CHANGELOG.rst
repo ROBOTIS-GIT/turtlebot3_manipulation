@@ -2,7 +2,7 @@
 Changelog for package turtlebot3_manipulation
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-1.2.0 (2022-10-14)
+2.1.0 (2022-10-14)
 ------------------
 * Support ROS2 Foxy
 * MoveIt environment configured (backported from Humble)
