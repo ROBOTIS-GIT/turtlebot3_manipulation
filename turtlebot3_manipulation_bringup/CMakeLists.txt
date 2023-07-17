@@ -8,7 +8,15 @@ project(turtlebot3_manipulation_bringup)
 # Find and load build settings from external packages
 ################################################################################
 find_package(ament_cmake REQUIRED)
-
+find_package(hardware_interface REQUIRED)
+find_package(imu_sensor_broadcaster REQUIRED)
+find_package(diff_drive_controller REQUIRED)
+find_package(position_controllers REQUIRED)
+find_package(joint_trajectory_controller REQUIRED)
+find_package(joint_state_broadcaster)
+find_package(controller_manager REQUIRED)
+find_package(xacro REQUIRED)
+find_package(gripper_controllers REQUIRED)
 ################################################################################
 # Install
 ################################################################################
