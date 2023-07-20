@@ -10,7 +10,15 @@
   <license>Apache 2.0</license>
   <author email="thlim@robotis.com">Darby Lim</author>
   <author email="hjkim@robotis.com">Hye-jong KIM</author>
+  <author email="yyk@robotis.com">YeongKyu Yoon</author>
   <buildtool_depend>ament_cmake</buildtool_depend>
+  <depend>hardware_interface</depend>
+  <depend>imu_sensor_broadcaster</depend>
+  <depend>diff_drive_controller</depend>
+  <depend>position_controllers</depend>
+  <depend>joint_trajectory_controller</depend>
+  <depend>joint_state_broadcaster</depend>
+  <depend>controller_manager</depend>
   <exec_depend>gazebo_ros</exec_depend>
   <exec_depend>robot_state_publisher</exec_depend>
   <exec_depend>ros2_control</exec_depend>
