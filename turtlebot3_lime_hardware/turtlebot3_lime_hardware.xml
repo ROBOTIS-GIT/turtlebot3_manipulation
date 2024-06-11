@@ -1,0 +1,7 @@
+<library path="turtlebot3_lime_hardware">
+  <class name="turtlebot3_lime_hardware/TurtleBot3LimeSystemHardware" type="robotis::turtlebot3_lime_hardware::TurtleBot3LimeSystemHardware" base_class_type="hardware_interface::SystemInterface">
+    <description>
+      Add description
+    </description>
+  </class>
+</library>

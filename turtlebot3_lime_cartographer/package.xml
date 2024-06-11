@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>turtlebot3_lime_cartographer</name>
+  <version>2.1.1</version>
+  <description>
+    ROS 2 launch scripts for cartographer
+  </description>
+  <maintainer email="willson@robotis.com">Will Son</maintainer>
+  <license>Apache 2.0</license>
+  <url type="website">https://emanual.robotis.com/docs/en/platform/turtlebot3/lime/</url>
+  <url type="repository">https://github.com/ROBOTIS-GIT/turtlebot3_lime</url>
+  <url type="bugtracker">https://github.com/ROBOTIS-GIT/turtlebot3_lime/issues</url>
+  <author email="thlim@robotis.com">Darby Lim</author>
+  <author email="pyo@robotis.com">Pyo</author>
+  <buildtool_depend>ament_cmake</buildtool_depend>
+  <exec_depend>cartographer_ros</exec_depend>
+  <exec_depend>rviz2</exec_depend>
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>
