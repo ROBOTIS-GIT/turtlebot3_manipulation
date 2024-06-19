@@ -80,11 +80,11 @@ const char ARM_JOINT_TOPIC[] = "/servo_node/delta_joint_cmds";
 
 const size_t ROS_QUEUE_SIZE = 10;
 
-const double BASE_LINEAR_VEL_MAX = 0.26;  // m/s
-const double BASE_LINEAR_VEL_STEP = 0.01;  // m/s
+const double BASE_LINEAR_VEL_MAX = 0.483;  // m/s
+const double BASE_LINEAR_VEL_STEP = 0.02;  // m/s
 
-const double BASE_ANGULAR_VEL_MAX = 1.8;  // rad/s
-const double BASE_ANGULAR_VEL_STEP = 0.1;  // rad/s
+const double BASE_ANGULAR_VEL_MAX = 3.28;  // rad/s
+const double BASE_ANGULAR_VEL_STEP = 0.2;  // rad/s
 
 const char BASE_FRAME_ID[] = "link2";
 
