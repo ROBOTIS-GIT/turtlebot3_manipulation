@@ -1,11 +1,10 @@
-# OpenManipulator with TurtleBot3
+# TurtleBot3 Lime
+
 <img src="https://github.com/ROBOTIS-GIT/emanual/blob/master/assets/images/platform/turtlebot3/lime/tb3_with_opm_logo.png">
 <img src="https://github.com/ROBOTIS-GIT/emanual/blob/master/assets/images/platform/turtlebot3/lime/hardware_setup.png">
 
-## ROS Packages for OpenManipulator with TurtleBot3
-|                                                                           Version                                                                           |                                                                       Kinetic + Ubuntu Xenial                                                                        |                                                                       Melodic + Ubuntu Bionic                                                                        |
-| :---------------------------------------------------------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
-| [![GitHub version](https://badge.fury.io/gh/ROBOTIS-GIT%2Fopen_manipulator_with_tb3.svg)](https://badge.fury.io/gh/ROBOTIS-GIT%2Fopen_manipulator_with_tb3) | [![Build Status](https://travis-ci.org/ROBOTIS-GIT/open_manipulator_with_tb3.svg?branch=kinetic-devel)](https://travis-ci.org/ROBOTIS-GIT/open_manipulator_with_tb3) | [![Build Status](https://travis-ci.org/ROBOTIS-GIT/open_manipulator_with_tb3.svg?branch=melodic-devel)](https://travis-ci.org/ROBOTIS-GIT/open_manipulator_with_tb3) |
+
+[セットアップ手順（Quick Start Guide）](./turtlebot3_lime/documentation/tb3_lime_setup.md)
 
 ## ROBOTIS e-Manual for OpenManipulator with TurtleBot3
 - [ROBOTIS e-Manual for OpenManipulator with TurtleBot3](http://emanual.robotis.com/docs/en/platform/turtlebot3/manipulation/#manipulation)
