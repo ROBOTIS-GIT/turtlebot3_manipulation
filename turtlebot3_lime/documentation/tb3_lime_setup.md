@@ -101,7 +101,7 @@ $ cd ~/turtlebot3_ws && colcon build --symlink-install
 
 その他の必要なROS2パッケージをインストールします．
 ```
-$ sudo apt install -y ros-humble-cartographer ros-humble-cartographer-ros ros-humble-navigation2 ros-humble-nav2-bringup ros-humble-dynamixel-sdk ros-humble-ros2-control ros-humble-ros2-controllers ros-humble-gripper-controllers ros-humble-moveit ros-humble-realsense2-description
+$ sudo apt install -y ros-humble-cartographer ros-humble-cartographer-ros ros-humble-navigation2 ros-humble-nav2-bringup ros-humble-dynamixel-sdk ros-humble-ros2-control ros-humble-ros2-controllers ros-humble-gripper-controllers ros-humble-moveit
 $ cd ~/turtlebot3_ws/src
 $ git clone -b humble-devel https://github.com/ROBOTIS-JAPAN-GIT/turtlebot3_lime.git
 $ git clone  https://github.com/ldrobotSensorTeam/ldlidar_stl_ros2.git
@@ -227,7 +227,7 @@ $ cd ~/turtlebot3_ws && colcon build --symlink-install
 
 その他の必要なROS2パッケージをインストールします．
 ```
-$ sudo apt install -y ros-humble-cartographer ros-humble-cartographer-ros ros-humble-navigation2 ros-humble-nav2-bringup ros-humble-dynamixel-sdk ros-humble-ros2-control ros-humble-ros2-controllers ros-humble-gripper-controllers ros-humble-moveit ros-humble-realsense2-description ros-humble-gazebo-*
+$ sudo apt install -y ros-humble-cartographer ros-humble-cartographer-ros ros-humble-navigation2 ros-humble-nav2-bringup ros-humble-dynamixel-sdk ros-humble-ros2-control ros-humble-ros2-controllers ros-humble-gripper-controllers ros-humble-moveit ros-humble-gazebo-*
 $ cd ~/turtlebot3_ws/src
 $ git clone -b humble-devel https://github.com/ROBOTIS-JAPAN-GIT/turtlebot3_lime.git
 $ git clone  https://github.com/ldrobotSensorTeam/ldlidar_stl_ros2.git
