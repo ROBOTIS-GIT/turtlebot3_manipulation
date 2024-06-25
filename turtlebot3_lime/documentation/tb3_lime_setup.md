@@ -46,7 +46,7 @@ $ sudo apt install -y software-properties-common
 $ sudo add-apt-repository universe
 ```
 
-ROS 2 Hulmleをインストールします．
+ROS 2 Humbleをインストールします．
 ```
 $ sudo apt update && sudo apt -y install curl gnupg lsb-release
 $ sudo curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -o /usr/share/keyrings/ros-archive-keyring.gpg
@@ -89,7 +89,7 @@ ROSでlibrealsenseを読み込むために，realsense-rosをインストール�
 ```
 $ cd ~/turtlebot3_ws/src
 $ git clone https://github.com/IntelRealSense/realsense-ros.git -b ros2-development
-$ cd ~/ros2_ws
+$ cd ~/turtlebot3_ws
 $ sudo apt install -y python3-rosdep
 $ sudo rosdep init
 $ rosdep update
@@ -173,7 +173,7 @@ Turtlebot3 Limeのファームウェアが正しくアップロードされた�
     $ sudo add-apt-repository universe
     ```
 
-    ROS 2 Hulmleをインストールします．
+    ROS 2 Humbleをインストールします．
     ```
     $ sudo apt update && sudo apt -y install curl gnupg lsb-release
     $ sudo curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -o /usr/share/keyrings/ros-archive-keyring.gpg
@@ -214,7 +214,7 @@ ROSでlibrealsenseを読み込むために，realsense-rosをインストール�
 ```
 $ cd ~/turtlebot3_ws/src
 $ git clone https://github.com/IntelRealSense/realsense-ros.git -b ros2-development
-$ cd ~/ros2_ws
+$ cd ~/turtlebot3_ws
 $ sudo apt install -y python3-rosdep
 $ sudo rosdep init
 $ rosdep update
