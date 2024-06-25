@@ -88,7 +88,7 @@ ROSでlibrealsenseを読み込むために，realsense-rosをインストール�
 
 ```
 $ cd ~/turtlebot3_ws/src
-$ git clone https://github.com/IntelRealSense/realsense-ros.git -b ros2-development
+$ git clone https://github.com/IntelRealSense/realsense-ros v4.55.1
 $ cd ~/turtlebot3_ws
 $ sudo apt install -y python3-rosdep
 $ sudo rosdep init
@@ -113,7 +113,7 @@ $ cd ~/turtlebot3_ws && colcon build --symlink-install
 OpenCRと通信するために，権限を付与します．
 
 ```
-$ sudo curl -sSL https://github.com/ROBOTIS-GIT/turtlebot3/blob/feature-humble/turtlebot3_bringup/script/99-turtlebot3-cdc.rules -o /etc/udev/rules.d/99-turtlebot3-cdc.rules
+$ sudo curl -sSL https://raw.githubusercontent.com/ROBOTIS-GIT/turtlebot3/feature-humble/turtlebot3_bringup/script/99-turtlebot3-cdc.rules -o /etc/udev/rules.d/99-turtlebot3-cdc.rules
 $ sudo udevadm control --reload-rules
 $ sudo udevadm trigger
 ```
@@ -241,7 +241,7 @@ $ cd ~/turtlebot3_ws && colcon build --symlink-install
 OpenCRと通信するために，権限を付与します．
 
 ```
-$ sudo curl -sSL https://github.com/ROBOTIS-GIT/turtlebot3/blob/feature-humble/turtlebot3_bringup/script/99-turtlebot3-cdc.rules -o /etc/udev/rules.d/99-turtlebot3-cdc.rules
+$ sudo curl -sSL https://raw.githubusercontent.com/ROBOTIS-GIT/turtlebot3/feature-humble/turtlebot3_bringup/script/99-turtlebot3-cdc.rules -o /etc/udev/rules.d/99-turtlebot3-cdc.rules
 $ sudo udevadm control --reload-rules
 $ sudo udevadm trigger
 ```
