@@ -70,7 +70,7 @@ $ cd ~/turtlebot3_ws && colcon build --symlink-install
 librealsenseでCUDAを有効化するために，Jetson Orin Nanoでビルドしてインストールします．
 
 ```
-$ sudo apt-get install git libssl-dev libusb-1.0-0-dev pkg-config libgtk-3-dev -y
+$ sudo apt install -y git libssl-dev libusb-1.0-0-dev pkg-config libgtk-3-dev
 $ mkdir -p ~/src
 $ cd ~/src
 $ git clone https://github.com/IntelRealSense/librealsense.git
@@ -90,7 +90,7 @@ ROSでlibrealsenseを読み込むために，realsense-rosをインストール�
 $ cd ~/turtlebot3_ws/src
 $ git clone https://github.com/IntelRealSense/realsense-ros.git -b ros2-development
 $ cd ~/ros2_ws
-$ sudo apt-get install python3-rosdep -y
+$ sudo apt install -y python3-rosdep
 $ sudo rosdep init
 $ rosdep update
 $ rosdep install -i --from-path src --rosdistro $ROS_DISTRO --skip-keys=librealsense2 -y
@@ -124,8 +124,8 @@ OpenCRを Jetson Orin Nano を通して，セットアップを行います。
 
 ```
 $ sudo dpkg --add-architecture armhf
-$ sudo apt-get update
-$ sudo apt-get install libc6:armhf
+$ sudo apt update
+$ sudo apt install -y libc6:armhf
 $ export OPENCR_PORT=/dev/ttyACM0
 $ export OPENCR_MODEL=lime
 $ rm -rf ./opencr_update.tar.bz2
@@ -215,7 +215,7 @@ ROSでlibrealsenseを読み込むために，realsense-rosをインストール�
 $ cd ~/turtlebot3_ws/src
 $ git clone https://github.com/IntelRealSense/realsense-ros.git -b ros2-development
 $ cd ~/ros2_ws
-$ sudo apt-get install python3-rosdep -y
+$ sudo apt install -y python3-rosdep
 $ sudo rosdep init
 $ rosdep update
 $ rosdep install -i --from-path src --rosdistro $ROS_DISTRO --skip-keys=librealsense2 -y
