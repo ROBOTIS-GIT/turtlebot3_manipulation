@@ -55,6 +55,7 @@ $ sudo apt update
 $ sudo apt install -y ros-humble-desktop
 $ echo "source /opt/ros/humble/setup.bash" >> ~/.bashrc
 $ echo 'export ROS_DOMAIN_ID=30 #TURTLEBOT3' >> ~/.bashrc
+$ echo '. ~/turtlebot3_ws/install/setup.bash' >> ~/.bashrc
 $ source ~/.bashrc
 $ sudo apt install -y python3-colcon-common-extensions python3-pip
 ```
@@ -182,6 +183,7 @@ Turtlebot3 Limeのファームウェアが正しくアップロードされた�
     $ sudo apt install -y ros-humble-desktop
     $ echo "source /opt/ros/humble/setup.bash" >> ~/.bashrc
     $ echo 'export ROS_DOMAIN_ID=30 #TURTLEBOT3' >> ~/.bashrc
+    $ echo '. ~/turtlebot3_ws/install/setup.bash' >> ~/.bashrc
     $ source ~/.bashrc
     $ sudo apt install -y python3-colcon-common-extensions python3-pip
     ```
