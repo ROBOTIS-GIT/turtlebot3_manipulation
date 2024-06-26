@@ -54,8 +54,6 @@ $ echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/ros
 $ sudo apt update
 $ sudo apt install -y ros-humble-desktop
 $ echo "source /opt/ros/humble/setup.bash" >> ~/.bashrc
-$ echo 'export ROS_DOMAIN_ID=30 #TURTLEBOT3' >> ~/.bashrc
-$ echo '. ~/turtlebot3_ws/install/setup.bash' >> ~/.bashrc
 $ source ~/.bashrc
 $ sudo apt install -y python3-colcon-common-extensions python3-pip
 ```
@@ -65,16 +63,20 @@ $ sudo apt install -y python3-colcon-common-extensions python3-pip
 $ mkdir -p ~/turtlebot3_ws/src
 $ cd ~/turtlebot3_ws && colcon build --symlink-install
 ```
+ワークスペースやROS_DOMAINを設定します．
+```
+$ echo '. ~/turtlebot3_ws/install/setup.bash' >> ~/.bashrc
+$ echo 'export ROS_DOMAIN_ID=30 #TURTLEBOT3' >> ~/.bashrc
+$ source ~/.bashrc
+```
 
-#### 1.3. librealsenseのインストール
+#### 1.3. Intel RealSense SDK 2.0のインストール
 
-librealsenseでCUDAを有効化するために，Jetson Orin Nanoでビルドしてインストールします．
-
+Intel RealSense SDK 2.0でCUDAを有効化するために，Jetson Orin Nanoでビルドしてインストールします．
 ```
 $ sudo apt install -y git libssl-dev libusb-1.0-0-dev pkg-config libgtk-3-dev
-$ mkdir -p ~/src
-$ cd ~/src
-$ git clone https://github.com/IntelRealSense/librealsense.git
+$ cd ~/Downloads/
+$ git clone https://github.com/IntelRealSense/librealsense.git -b v2.55.1
 $ cd ./librealsense/
 $ sudo cp config/99-realsense-libusb.rules /etc/udev/rules.d/
 $ sudo cp config/99-realsense-d4xx-mipi-dfu.rules /etc/udev/rules.d/
@@ -83,9 +85,21 @@ $ mkdir build && cd build
 $ cmake .. -DBUILD_EXAMPLES=true -DCMAKE_BUILD_TYPE=release -DFORCE_RSUSB_BACKEND=true -DBUILD_WITH_CUDA=true && make -j$(($(nproc)-1)) && sudo make install
 ```
 
-#### 1.4. realsense-rosのインストール
+#### 1.4. Realsense D435 のセットアップ
 
-ROSでlibrealsenseを読み込むために，realsense-rosをインストールします．
+Realsense D435内部のファームウェアのバージョンをIntel RealSense SDK 2.0のバージョンと合わせる必要があります．
+
+Realsense D435を Jetson Orin Nano を通して，セットアップを行います．
+```
+$ cd ~/Downloads/ && curl -sSL --output ./Signed_Image_UVC_5_16_0_1.zip https://www.intelrealsense.com/download/23422/?tmstv=1713899242
+$ unzip ./Signed_Image_UVC_5_16_0_1.zip
+$ cd ./Signed_Image_UVC_5_16_0_1/
+$ rs-fw-update -f ./Signed_Image_UVC_5_16_0_1.bin
+```
+
+#### 1.5. realsense-rosのインストール
+
+ROSでIntel Realsense SDK 2.0を読み込むために，realsense-rosをインストールします．
 
 ```
 $ cd ~/turtlebot3_ws/src
@@ -94,22 +108,26 @@ $ cd ~/turtlebot3_ws
 $ sudo apt install -y python3-rosdep
 $ sudo rosdep init
 $ rosdep update
+```
+
+一度，ターミナルに入り直してください．
+```
 $ rosdep install -i --from-path src --rosdistro $ROS_DISTRO --skip-keys=librealsense2 -y
 $ cd ~/turtlebot3_ws && colcon build --symlink-install
 ```
 
-#### 1.5. その他の必要なROS2パッケージのインストール
+#### 1.6. その他の必要なROS2パッケージのインストール
 
 その他の必要なROS2パッケージをインストールします．
 ```
 $ sudo apt install -y ros-humble-cartographer ros-humble-cartographer-ros ros-humble-navigation2 ros-humble-nav2-bringup ros-humble-dynamixel-sdk ros-humble-ros2-control ros-humble-ros2-controllers ros-humble-gripper-controllers ros-humble-moveit
 $ cd ~/turtlebot3_ws/src
 $ git clone -b humble-devel https://github.com/ROBOTIS-JAPAN-GIT/turtlebot3_lime.git
-$ git clone  https://github.com/ldrobotSensorTeam/ldlidar_stl_ros2.git
+$ git clone https://github.com/ldrobotSensorTeam/ldlidar_stl_ros2.git
 $ cd ~/turtlebot3_ws && colcon build --symlink-install
 ```
 
-#### 1.6. OpenCRに権限を付与する
+#### 1.7. OpenCRに権限を付与する
 
 OpenCRと通信するために，権限を付与します．
 
@@ -119,9 +137,9 @@ $ sudo udevadm control --reload-rules
 $ sudo udevadm trigger
 ```
 
-#### 1.7. OpenCRをセットアップ
+#### 1.8. OpenCRのセットアップ
 
-OpenCRを Jetson Orin Nano を通して，セットアップを行います。
+OpenCRを Jetson Orin Nano を通して，セットアップを行います
 
 ```
 $ sudo dpkg --add-architecture armhf
@@ -130,13 +148,13 @@ $ sudo apt install -y libc6:armhf
 $ export OPENCR_PORT=/dev/ttyACM0
 $ export OPENCR_MODEL=lime
 $ rm -rf ./opencr_update.tar.bz2
-$ wget https://github.com/ROBOTIS-JAPAN-GIT/OpenCR_jp_custom/releases/download/ros2v1.0.1/opencr_update_jp_custom.tar.bz2
+$ cd ~/Downloads/ && wget https://github.com/ROBOTIS-JAPAN-GIT/OpenCR_jp_custom/releases/download/ros2v1.0.1/opencr_update_jp_custom.tar.bz2
 $ tar -xvf opencr_update_jp_custom.tar.bz2
 $ cd ./opencr_update
 $ ./update.sh $OPENCR_PORT $OPENCR_MODEL.opencr
 ```
 
-Turtlebot3 Limeのファームウェアが正しくアップロードされたら，以下のようなメッセージが出力されます。(イメージ図)
+Turtlebot3 Limeのファームウェアが正しくアップロードされたら，以下のようなメッセージが出力されます(イメージ図)
 ![TB3 Lime OpenCR Success Output](/turtlebot3/documentation/tb3_lime_opencr.png)
 
 ### 2. リモートPCの環境設定
@@ -149,16 +167,16 @@ Turtlebot3 Limeのファームウェアが正しくアップロードされた�
 
 - ROS 2 がインストールされている場合
 
-    ワークスペースを作成してください
+    ワークスペースを作成します．
     ```
     $ mkdir -p ~/turtlebot3_ws/src
     $ cd ~/turtlebot3_ws && colcon build --symlink-install
     ```
-    Turtlebot3 Limeと通信する際は，ROS_DOMAINを設定する必要があります．
-    
-    自動的に設定する場合は以下のコマンドを実行してください．
+    ワークスペースやROS_DOMAINを設定します．
     ```
+    $ echo '. ~/turtlebot3_ws/install/setup.bash' >> ~/.bashrc
     $ echo 'export ROS_DOMAIN_ID=30 #TURTLEBOT3' >> ~/.bashrc
+    $ source ~/.bashrc
     ```
 
 
@@ -167,7 +185,6 @@ Turtlebot3 Limeのファームウェアが正しくアップロードされた�
     <details>
     <summary><a href="#12-ros-2-humble-のインストール">1.2. ROS 2 Humble のインストール</a>と同様です．</summary>
     <a href="[#12-ros-2-humble-のインストール](https://docs.ros.org/en/humble/Installation/Ubuntu-Install-Debians.html))">ROS 公式のインストールガイド</a>に従って，ROS 2 Humbleをインストールします．
-
     まず，Ubuntu Universe リポジトリが有効になっていることを確認します．
     ```
     $ sudo apt install -y software-properties-common
@@ -182,8 +199,6 @@ Turtlebot3 Limeのファームウェアが正しくアップロードされた�
     $ sudo apt update
     $ sudo apt install -y ros-humble-desktop
     $ echo "source /opt/ros/humble/setup.bash" >> ~/.bashrc
-    $ echo 'export ROS_DOMAIN_ID=30 #TURTLEBOT3' >> ~/.bashrc
-    $ echo '. ~/turtlebot3_ws/install/setup.bash' >> ~/.bashrc
     $ source ~/.bashrc
     $ sudo apt install -y python3-colcon-common-extensions python3-pip
     ```
@@ -193,9 +208,15 @@ Turtlebot3 Limeのファームウェアが正しくアップロードされた�
     $ mkdir -p ~/turtlebot3_ws/src
     $ cd ~/turtlebot3_ws && colcon build --symlink-install
     ```
+    ワークスペースやROS_DOMAINを設定します．
+    ```
+    $ echo '. ~/turtlebot3_ws/install/setup.bash' >> ~/.bashrc
+    $ echo 'export ROS_DOMAIN_ID=30 #TURTLEBOT3' >> ~/.bashrc
+    $ source ~/.bashrc
+    ```
     </details>
 
-#### 2.3. librealsenseのインストール
+#### 2.3. Intel Realsense SDK 2.0のインストール
 
 公式インストール手順に従い，バイナリパッケージをインストールします．
 ```
@@ -210,8 +231,8 @@ $ sudo apt install -y librealsense2-dkms librealsense2-utils librealsense2-dev l
 #### 2.4. realsense-rosのインストール
 
 <details>
-<summary><a href="#14-realsense-rosのインストール">1.4. realsense-rosのインストール</a>と同様です．</summary>
-ROSでlibrealsenseを読み込むために，realsense-rosをインストールします．
+<summary><a href="#15-realsense-rosのインストール">1.5. realsense-rosのインストール</a>と同様です．</summary>
+ROSでIntel Realsense SDK 2.0を読み込むために，realsense-rosをインストールします．
 
 ```
 $ cd ~/turtlebot3_ws/src
@@ -232,14 +253,14 @@ $ cd ~/turtlebot3_ws && colcon build --symlink-install
 $ sudo apt install -y ros-humble-cartographer ros-humble-cartographer-ros ros-humble-navigation2 ros-humble-nav2-bringup ros-humble-dynamixel-sdk ros-humble-ros2-control ros-humble-ros2-controllers ros-humble-gripper-controllers ros-humble-moveit ros-humble-gazebo-*
 $ cd ~/turtlebot3_ws/src
 $ git clone -b humble-devel https://github.com/ROBOTIS-JAPAN-GIT/turtlebot3_lime.git
-$ git clone  https://github.com/ldrobotSensorTeam/ldlidar_stl_ros2.git
+$ git clone https://github.com/ldrobotSensorTeam/ldlidar_stl_ros2.git
 $ git clone -b foxy-devel https://github.com/pal-robotics/realsense_gazebo_plugin.git
 $ cd ~/turtlebot3_ws && colcon build --symlink-install
 ```
 
 #### 2.6. OpenCRに権限を付与する
 <details>
-<summary><a href="#16-opencrに権限を付与する">1.6. OpenCRに権限を付与する</a>と同様です．</summary>
+<summary><a href="#17-opencrに権限を付与する">1.7. OpenCRに権限を付与する</a>と同様です．</summary>
 OpenCRと通信するために，権限を付与します．
 
 ```
