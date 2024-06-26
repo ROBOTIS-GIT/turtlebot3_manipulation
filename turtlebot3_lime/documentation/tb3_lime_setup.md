@@ -17,7 +17,7 @@
 
 ## Gazebo環境での動作検証
 
-|              Gazebo環境 + Rviz              |
+|              Gazebo環境 + Rviz              |https://github.com/ROBOTIS-JAPAN-GIT/turtlebot3_lime/blob/humble-devel/turtlebot3_lime/documentation/tb3_lime_setup.md#13-intel-realsense-sdk-20%E3%81%AE%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB
 | :-----------------------------------------: |
 | ![TB3 Lime BACK](./gif/tb3_lime_nav_x5.gif) |
 
@@ -85,11 +85,11 @@ $ mkdir build && cd build
 $ cmake .. -DBUILD_EXAMPLES=true -DCMAKE_BUILD_TYPE=release -DFORCE_RSUSB_BACKEND=true -DBUILD_WITH_CUDA=true && make -j$(($(nproc)-1)) && sudo make install
 ```
 
-#### 1.4. Realsense D435 のセットアップ
+#### 1.4. Realsense D435i のセットアップ
 
-Realsense D435内部のファームウェアのバージョンをIntel RealSense SDK 2.0のバージョンと合わせる必要があります．
+Realsense D435i内部のファームウェアのバージョンをIntel RealSense SDK 2.0のバージョンと合わせる必要があります．
 
-Realsense D435を Jetson Orin Nano を通して，セットアップを行います．
+Realsense D435iを Jetson Orin Nano を通して，セットアップを行います．
 ```
 $ cd ~/Downloads/ && curl -sSL --output ./Signed_Image_UVC_5_16_0_1.zip https://www.intelrealsense.com/download/23422/?tmstv=1713899242
 $ unzip ./Signed_Image_UVC_5_16_0_1.zip
