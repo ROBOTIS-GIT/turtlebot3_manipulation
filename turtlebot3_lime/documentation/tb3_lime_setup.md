@@ -103,7 +103,7 @@ ROSでIntel Realsense SDK 2.0を読み込むために，realsense-rosをイン�
 
 ```
 $ cd ~/turtlebot3_ws/src
-$ git clone https://github.com/IntelRealSense/realsense-ros v4.55.1
+$ git clone https://github.com/IntelRealSense/realsense-ros -b 4.55.1
 $ cd ~/turtlebot3_ws
 $ sudo apt install -y python3-rosdep
 $ sudo rosdep init
@@ -236,7 +236,7 @@ ROSでIntel Realsense SDK 2.0を読み込むために，realsense-rosをイン�
 
 ```
 $ cd ~/turtlebot3_ws/src
-$ git clone https://github.com/IntelRealSense/realsense-ros.git -b ros2-development
+$ git clone https://github.com/IntelRealSense/realsense-ros -b 4.55.1
 $ cd ~/turtlebot3_ws
 $ sudo apt install -y python3-rosdep
 $ sudo rosdep init
@@ -257,18 +257,6 @@ $ git clone https://github.com/ldrobotSensorTeam/ldlidar_stl_ros2.git
 $ git clone -b foxy-devel https://github.com/pal-robotics/realsense_gazebo_plugin.git
 $ cd ~/turtlebot3_ws && colcon build --symlink-install
 ```
-
-#### 2.6. OpenCRに権限を付与する
-<details>
-<summary><a href="#17-opencrに権限を付与する">1.7. OpenCRに権限を付与する</a>と同様です．</summary>
-OpenCRと通信するために，権限を付与します．
-
-```
-$ sudo curl -sSL https://raw.githubusercontent.com/ROBOTIS-GIT/turtlebot3/feature-humble/turtlebot3_bringup/script/99-turtlebot3-cdc.rules -o /etc/udev/rules.d/99-turtlebot3-cdc.rules
-$ sudo udevadm control --reload-rules
-$ sudo udevadm trigger
-```
-</details>
 
 ### 3. 実機での動かし方
 
