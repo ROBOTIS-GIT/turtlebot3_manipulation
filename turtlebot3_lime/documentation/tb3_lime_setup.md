@@ -327,14 +327,16 @@ $ ros2 launch turtlebot3_lime_bringup gazebo.launch.py
 
 ドライバを立ち上げます．
 ```
-$ ros2 launch turtlebot3_lime_moveit_config servo.launch.py
+$ ros2 launch turtlebot3_lime_moveit_config servo.launch.py use_sim:=true
 ```
 
 #### 4.2. 地図を作る (SLAM)
 
+![cartographer](./gazebo/cartographer.gif?raw=true)
+
 SLAMを立ち上げます．
 ```
-$ ros2 launch turtlebot3_lime_cartographer cartographer.launch.py
+$ ros2 launch turtlebot3_lime_cartographer cartographer.launch.py use_sim:=true
 ```
 
 テレオペを立ち上げます．
@@ -349,19 +351,25 @@ $ ros2 run nav2_map_server map_saver_cli -f ~/map
 
 #### 4.3. Navigation 2
 
+![navigation](./gazebo/navigation.gif?raw=true)
+
 Navigation 2を実行します．
 ```
-$ ros2 launch turtlebot3_lime_navigation2 navigation2.launch.py map_yaml_file:=$HOME/map.yaml
+$ ros2 launch turtlebot3_lime_navigation2 navigation2_use_sim_time.launch.py map_yaml_file:=$HOME/map.yaml
 ```
 
 #### 4.4. Moveit 2
 
+![moveit](./gazebo/moveit.gif?raw=true)
+
 Moveit 2を実行します．
 ```
-$ ros2 launch turtlebot3_lime_moveit_config moveit_core.launch.py
+$ ros2 launch turtlebot3_lime_moveit_config moveit_core.launch.py use_sim:=true
 ```
 
 #### 4.5. Navigation 2 と Moveit 2 を同時に実行する
+
+![moveit_navigation](./gazebo/moveit_navigation.gif?raw=true)
 
 以下のコマンドを実行します．
 ```
