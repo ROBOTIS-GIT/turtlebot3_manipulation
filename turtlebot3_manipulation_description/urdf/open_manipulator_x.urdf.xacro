@@ -207,6 +207,12 @@ https://github.com/ROBOTIS-GIT/open_manipulator/blob/kinetic-devel/open_manipula
       </inertial>
     </link>
 
+    <joint name="${prefix}gripper_right_joint_mimic" type="fixed">
+      <parent link="${prefix}link5" />
+      <child link="dummy_mimic_fix" />
+    </joint>
+    <link name="dummy_mimic_fix"/>
+
     <joint name="${prefix}gripper_right_joint" type="prismatic">
       <parent link="${prefix}link5"/>
       <child link="${prefix}gripper_right_link"/>

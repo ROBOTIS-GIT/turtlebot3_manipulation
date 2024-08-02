@@ -102,6 +102,8 @@ int KeyboardServo::keyLoop()
     }
 
     RCLCPP_INFO(nh_->get_logger(), "value: 0x%02X", c);
+    joint_msg_.joint_names.clear();
+    joint_msg_.velocities.clear();
 
     // Use read key-press
     switch (c) {
