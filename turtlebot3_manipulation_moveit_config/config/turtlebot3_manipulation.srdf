@@ -94,9 +94,11 @@
     <disable_collisions link1="link1" link2="wheel_left_link" reason="Never"/>
     <disable_collisions link1="link1" link2="wheel_right_link" reason="Never"/>
     <disable_collisions link1="link2" link2="link3" reason="Adjacent"/>
+    <disable_collisions link1="link2" link2="link4" reason="Adjacent"/>
     <disable_collisions link1="link2" link2="wheel_left_link" reason="Never"/>
     <disable_collisions link1="link2" link2="wheel_right_link" reason="Never"/>
     <disable_collisions link1="link3" link2="link4" reason="Adjacent"/>
+    <disable_collisions link1="link3" link2="link5" reason="Never"/>
     <disable_collisions link1="link3" link2="wheel_left_link" reason="Never"/>
     <disable_collisions link1="link3" link2="wheel_right_link" reason="Never"/>
     <disable_collisions link1="link4" link2="link5" reason="Adjacent"/>
