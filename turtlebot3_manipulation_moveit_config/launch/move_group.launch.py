@@ -128,7 +128,7 @@ def generate_launch_description():
     use_sim = LaunchConfiguration('use_sim')
     declare_use_sim = DeclareLaunchArgument(
         'use_sim',
-        default_value='false',
+        default_value='true',
         description='Start robot in Gazebo simulation.')
     ld.add_action(declare_use_sim)
 
