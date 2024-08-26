@@ -39,7 +39,7 @@ https://github.com/ROBOTIS-GIT/open_manipulator/blob/kinetic-devel/open_manipula
       <origin xyz="0.012 0.0 0.017" rpy="0 0 0"/>
       <axis xyz="0 0 1"/>
       <limit velocity="4.8" effort="1" lower="${-pi*0.9}" upper="${pi*0.9}" />
-      <dynamics damping="0.1"/>
+      <dynamics damping="0.7" friction="1.0"/>
     </joint>
 
     <link name="${prefix}link2">
@@ -71,7 +71,7 @@ https://github.com/ROBOTIS-GIT/open_manipulator/blob/kinetic-devel/open_manipula
       <origin xyz="0.0 0.0 0.0595" rpy="0 0 0"/>
       <axis xyz="0 1 0"/>
       <limit velocity="4.8" effort="1" lower="${-pi*0.65}" upper="${pi*0.67}" />
-      <dynamics damping="0.1"/>
+      <dynamics damping="0.7" friction="1.0"/>
     </joint>
 
     <link name="${prefix}link3">
@@ -103,7 +103,7 @@ https://github.com/ROBOTIS-GIT/open_manipulator/blob/kinetic-devel/open_manipula
       <origin xyz="0.0 0 0.124" rpy="0 0 0"/>
       <axis xyz="0 1 0"/>
       <limit velocity="4.8" effort="1" lower="${-pi*0.60}" upper="${pi*0.68}" />
-      <dynamics damping="0.1"/>
+      <dynamics damping="0.7" friction="1.0"/>
     </joint>
 
     <link name="${prefix}link4">
@@ -135,7 +135,7 @@ https://github.com/ROBOTIS-GIT/open_manipulator/blob/kinetic-devel/open_manipula
       <origin xyz="0.0 0.0 0.045" rpy="0 0 0"/>
       <axis xyz="0 0 1"/>
       <limit velocity="4.8" effort="1" lower="${-pi*0.9}" upper="${pi*0.9}" />
-      <dynamics damping="0.1"/>
+      <dynamics damping="0.7" friction="1.0"/>
     </joint>
 
     <link name="${prefix}link5">
@@ -167,7 +167,7 @@ https://github.com/ROBOTIS-GIT/open_manipulator/blob/kinetic-devel/open_manipula
       <origin xyz="0.0 0.0 0.0595" rpy="0 0 0"/>
       <axis xyz="0 1 0"/>
       <limit velocity="4.8" effort="1" lower="${-pi*0.63}" upper="${pi*0.67}" />
-      <dynamics damping="0.1"/>
+      <dynamics damping="0.7" friction="1.0"/>
     </joint>
 
     <link name="${prefix}link6">
@@ -205,7 +205,7 @@ https://github.com/ROBOTIS-GIT/open_manipulator/blob/kinetic-devel/open_manipula
       <origin xyz="0.0 0.0 0.0475" rpy="0 0 0"/>
       <axis xyz="0 0 1"/>
       <limit velocity="4.8" effort="1" lower="${-pi*0.9}" upper="${pi*0.9}" />
-      <dynamics damping="0.1"/>
+      <dynamics damping="0.7" friction="1.0"/>
     </joint>
 
     <link name="${prefix}link7">
@@ -214,7 +214,7 @@ https://github.com/ROBOTIS-GIT/open_manipulator/blob/kinetic-devel/open_manipula
         <geometry>
           <mesh filename="${meshes_file_direction}/link7.stl" scale="0.001 0.001 0.001"/>
         </geometry>
-        <!-- <material name="grey"/> -->
+        <material name="grey"/>
       </visual>
 
       <collision>
@@ -260,7 +260,7 @@ https://github.com/ROBOTIS-GIT/open_manipulator/blob/kinetic-devel/open_manipula
       <origin xyz="0.0 0.021 0.0707" rpy="0 0 0"/>
       <axis xyz="0 1 0"/>
       <limit velocity="4.8" effort="1" lower="-0.010" upper="0.019" />
-      <dynamics damping="0.1"/>
+      <dynamics damping="0.7" friction="1.0"/>
     </joint>
 
     <link name="${prefix}gripper_right_link">
@@ -293,7 +293,7 @@ https://github.com/ROBOTIS-GIT/open_manipulator/blob/kinetic-devel/open_manipula
       <axis xyz="0 -1 0"/>
       <limit velocity="4.8" effort="1" lower="-0.010" upper="0.019" />
       <mimic joint="${prefix}gripper_left_joint" multiplier="1"/>
-      <dynamics damping="0.1"/>
+      <dynamics damping="0.7" friction="1.0"/>
     </joint>
 
     <joint name="${prefix}end_effector_joint" type="fixed">

@@ -48,6 +48,9 @@ https://github.com/ROBOTIS-GIT/turtlebot3/blob/kinetic-devel/turtlebot3_descript
       <child link="${prefix}wheel_left_link"/>
       <origin xyz="0.0 0.147125 0.0" rpy="-1.57 0 0"/>
       <axis xyz="0 0 1"/>
+      <!--XM430-W210-->
+      <limit velocity="8.063" effort="3.0"/>
+      <dynamics damping="0.7" friction="1.0"/>
     </joint>
 
     <link name="${prefix}wheel_left_link">
@@ -78,6 +81,8 @@ https://github.com/ROBOTIS-GIT/turtlebot3/blob/kinetic-devel/turtlebot3_descript
       <child link="${prefix}wheel_right_link"/>
       <origin xyz="0.0 -0.147125 0.0" rpy="-1.57 0 0"/>
       <axis xyz="0 0 1"/>
+      <!--XM430-W210-->
+      <limit velocity="8.063" effort="3.0"/>
     </joint>
 
     <link name="${prefix}wheel_right_link">
@@ -181,9 +186,9 @@ https://github.com/ROBOTIS-GIT/turtlebot3/blob/kinetic-devel/turtlebot3_descript
       </visual>
 
       <collision>
-        <origin xyz="0.0 0 -0.0065" rpy="0 0 0"/>
+        <origin xyz="0.0 0 -0.0111" rpy="0 0 0"/>
         <geometry>
-          <cylinder length="0.0315" radius="0.055"/>
+          <cylinder length="0.0378" radius="0.025"/>
         </geometry>
       </collision>
 

@@ -16,8 +16,8 @@ https://github.com/ROBOTIS-GIT/turtlebot3/blob/kinetic-devel/turtlebot3_descript
     </gazebo>
 
     <gazebo reference="${prefix}wheel_left_link">
-      <mu1>0.3</mu1>
-      <mu2>0.3</mu2>
+      <mu1>1.0</mu1>
+      <mu2>1.0</mu2>
       <kp>500000.0</kp>
       <kd>10.0</kd>
       <minDepth>0.001</minDepth>
@@ -27,8 +27,8 @@ https://github.com/ROBOTIS-GIT/turtlebot3/blob/kinetic-devel/turtlebot3_descript
     </gazebo>
 
     <gazebo reference="${prefix}wheel_right_link">
-      <mu1>0.3</mu1>
-      <mu2>0.3</mu2>
+      <mu1>1.0</mu1>
+      <mu2>1.0</mu2>
       <kp>500000.0</kp>
       <kd>10.0</kd>
       <minDepth>0.001</minDepth>
