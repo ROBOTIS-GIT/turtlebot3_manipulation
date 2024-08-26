@@ -17,7 +17,7 @@
 
 ## Gazebo環境での動作検証
 
-|              Gazebo環境 + Rviz              |https://github.com/ROBOTIS-JAPAN-GIT/turtlebot3_lime/blob/humble-devel/turtlebot3_lime/documentation/tb3_lime_setup.md#13-intel-realsense-sdk-20%E3%81%AE%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB
+|              Gazebo環境 + Rviz              | https://github.com/ROBOTIS-JAPAN-GIT/turtlebot3_lime/blob/humble-devel/turtlebot3_lime/documentation/tb3_lime_setup.md#13-intel-realsense-sdk-20%E3%81%AE%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB |
 | :-----------------------------------------: |
 | ![TB3 Lime BACK](./gif/tb3_lime_nav_x5.gif) |
 
@@ -216,41 +216,11 @@ Turtlebot3 Limeのファームウェアが正しくアップロードされた�
     ```
     </details>
 
-#### 2.3. Intel Realsense SDK 2.0のインストール
-
-公式インストール手順に従い，バイナリパッケージをインストールします．
-```
-$ sudo mkdir -p /etc/apt/keyrings
-$ curl -sSf https://librealsense.intel.com/Debian/librealsense.pgp | sudo tee /etc/apt/keyrings/librealsense.pgp > /dev/null
-$ echo "deb [signed-by=/etc/apt/keyrings/librealsense.pgp] https://librealsense.intel.com/Debian/apt-repo `lsb_release -cs` main" | \
-$ sudo tee /etc/apt/sources.list.d/librealsense.list
-$ sudo apt update
-$ sudo apt install -y librealsense2-dkms librealsense2-utils librealsense2-dev librealsense2-dbg
-```
-
-#### 2.4. realsense-rosのインストール
-
-<details>
-<summary><a href="#15-realsense-rosのインストール">1.5. realsense-rosのインストール</a>と同様です．</summary>
-ROSでIntel Realsense SDK 2.0を読み込むために，realsense-rosをインストールします．
-
-```
-$ cd ~/turtlebot3_ws/src
-$ git clone https://github.com/IntelRealSense/realsense-ros -b 4.55.1
-$ cd ~/turtlebot3_ws
-$ sudo apt install -y python3-rosdep
-$ sudo rosdep init
-$ rosdep update
-$ rosdep install -i --from-path src --rosdistro $ROS_DISTRO --skip-keys=librealsense2 -y
-$ cd ~/turtlebot3_ws && colcon build --symlink-install
-```
-</details>
-
-#### 2.5. その他の必要なROS2パッケージのインストール
+#### 2.3. その他の必要なROS2パッケージのインストール
 
 その他の必要なROS2パッケージをインストールします．
 ```
-$ sudo apt install -y ros-humble-cartographer ros-humble-cartographer-ros ros-humble-navigation2 ros-humble-nav2-bringup ros-humble-dynamixel-sdk ros-humble-ros2-control ros-humble-ros2-controllers ros-humble-gripper-controllers ros-humble-moveit ros-humble-moveit-servo ros-humble-gazebo-*
+$ sudo apt install -y ros-humble-cartographer ros-humble-cartographer-ros ros-humble-navigation2 ros-humble-nav2-bringup ros-humble-dynamixel-sdk ros-humble-ros2-control ros-humble-ros2-controllers ros-humble-gripper-controllers ros-humble-moveit ros-humble-moveit-servo ros-humble-gazebo-* ros-humble-realsense2-camera-msgs ros-humble-realsense2-description
 $ cd ~/turtlebot3_ws/src
 $ git clone -b humble-devel https://github.com/ROBOTIS-JAPAN-GIT/turtlebot3_lime.git
 $ git clone https://github.com/ldrobotSensorTeam/ldlidar_stl_ros2.git
@@ -283,7 +253,7 @@ $ ros2 launch turtlebot3_lime_cartographer cartographer.launch.py
 
 リモートPC側でテレオペを実行します．
 ```
-$ ros2 run turtlebot3_lime_teleop turtlebot3_manipulation_teleop
+$ ros2 run turtlebot3_lime_teleop turtlebot3_lime_teleop
 ```
 
 リモートPC側でマップを保存します．
@@ -341,7 +311,7 @@ $ ros2 launch turtlebot3_lime_cartographer cartographer.launch.py use_sim:=true
 
 テレオペを立ち上げます．
 ```
-ros2 run turtlebot3_lime_teleop turtlebot3_manipulation_teleop
+ros2 run turtlebot3_lime_teleop turtlebot3_lime_teleop
 ```
 
 マップを保存します．
