@@ -16,7 +16,6 @@
 
 #include <algorithm>
 #include <memory>
-
 #include "turtlebot3_manipulation_teleop/turtlebot3_manipulation_teleop.hpp"
 
 // KeyboardReader
@@ -59,8 +58,12 @@ KeyboardServo::KeyboardServo()
   servo_stop_client_ =
     nh_->create_client<std_srvs::srv::Trigger>("/servo_node/stop_servo");
 
+  base_twist_pub_ =
+    nh_->create_publisher<geometry_msgs::msg::Twist>(BASE_TWIST_TOPIC, ROS_QUEUE_SIZE);
   joint_pub_ = nh_->create_publisher<control_msgs::msg::JointJog>(ARM_JOINT_TOPIC, ROS_QUEUE_SIZE);
   client_ = rclcpp_action::create_client<control_msgs::action::GripperCommand>(nh_, "gripper_controller/gripper_cmd");
+
+  cmd_vel_ = geometry_msgs::msg::Twist();
 }
 
 KeyboardServo::~KeyboardServo()
@@ -85,6 +88,14 @@ int KeyboardServo::keyLoop()
   puts("  3/e: Joint3 +/-");
   puts("  4/r: Joint4 +/-");
   puts("Use o|p to open/close the gripper.");
+  puts("");
+  puts("Command Control Keys:");
+  puts("  i: Move up");
+  puts("  k: Move down");
+  puts("  l: Move right");
+  puts("  j: Move left");
+  puts("  space bar: Move stop");
+  puts("---------------------------");
   puts("'ESC' to quit.");
 
   std::thread{std::bind(&KeyboardServo::pub, this)}.detach();
@@ -106,6 +117,41 @@ int KeyboardServo::keyLoop()
     joint_msg_.velocities.clear();
 
     switch (c) {
+      // Command Control Keys
+      case KEYCODE_I:
+        cmd_vel_.linear.x =
+          std::min(cmd_vel_.linear.x + BASE_LINEAR_VEL_STEP, BASE_LINEAR_VEL_MAX);
+        cmd_vel_.linear.y = 0.0;
+        cmd_vel_.linear.z = 0.0;
+        RCLCPP_INFO_STREAM(nh_->get_logger(), "LINEAR VEL : " << cmd_vel_.linear.x);
+        break;
+      case KEYCODE_K:
+        cmd_vel_.linear.x =
+          std::max(cmd_vel_.linear.x - BASE_LINEAR_VEL_STEP, -BASE_LINEAR_VEL_MAX);
+        cmd_vel_.linear.y = 0.0;
+        cmd_vel_.linear.z = 0.0;
+        RCLCPP_INFO_STREAM(nh_->get_logger(), "LINEAR VEL : " << cmd_vel_.linear.x);
+        break;
+      case KEYCODE_J:
+        cmd_vel_.angular.x = 0.0;
+        cmd_vel_.angular.y = 0.0;
+        cmd_vel_.angular.z =
+          std::min(cmd_vel_.angular.z + BASE_ANGULAR_VEL_STEP, BASE_ANGULAR_VEL_MAX);
+        RCLCPP_INFO_STREAM(nh_->get_logger(), "ANGULAR VEL : " << cmd_vel_.angular.z);
+        break;
+      case KEYCODE_L:
+        cmd_vel_.angular.x = 0.0;
+        cmd_vel_.angular.y = 0.0;
+        cmd_vel_.angular.z =
+          std::max(cmd_vel_.angular.z - BASE_ANGULAR_VEL_STEP, -BASE_ANGULAR_VEL_MAX);
+        RCLCPP_INFO_STREAM(nh_->get_logger(), "ANGULAR VEL : " << cmd_vel_.angular.z);
+        break;
+      case KEYCODE_SPACE:
+        cmd_vel_ = geometry_msgs::msg::Twist();
+        RCLCPP_INFO_STREAM(nh_->get_logger(), "STOP base");
+        break;
+
+      // Joint Control Keys
       case KEYCODE_1:
         joint_msg_.joint_names.push_back("joint1");
         joint_msg_.velocities.push_back(ARM_JOINT_VEL);
@@ -155,11 +201,11 @@ int KeyboardServo::keyLoop()
         RCLCPP_INFO_STREAM(nh_->get_logger(), "Joint4 -");
         break;
       case KEYCODE_O:
-        send_goal(0.025);  
+        send_goal(0.025);
         RCLCPP_INFO_STREAM(nh_->get_logger(), "Gripper Open");
         break;
       case KEYCODE_P:
-        send_goal(-0.015); 
+        send_goal(-0.015);
         RCLCPP_INFO_STREAM(nh_->get_logger(), "Gripper Close");
         break;
       case KEYCODE_ESC:
@@ -256,6 +302,7 @@ void KeyboardServo::pub()
       publish_joint_ = false;
       RCLCPP_INFO_STREAM(nh_->get_logger(), "Joint PUB");
     }
+    base_twist_pub_->publish(cmd_vel_);
     rclcpp::sleep_for(std::chrono::milliseconds(10));
   }
 }
