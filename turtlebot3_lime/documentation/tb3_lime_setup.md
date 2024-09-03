@@ -147,8 +147,9 @@ $ sudo apt update
 $ sudo apt install -y libc6:armhf
 $ export OPENCR_PORT=/dev/ttyACM0
 $ export OPENCR_MODEL=lime
+$ cd ~/Downloads/
 $ rm -rf ./opencr_update.tar.bz2
-$ cd ~/Downloads/ && wget https://github.com/ROBOTIS-JAPAN-GIT/OpenCR_jp_custom/releases/download/ros2v1.0.1/opencr_update_jp_custom.tar.bz2
+$ wget https://github.com/ROBOTIS-JAPAN-GIT/OpenCR_jp_custom/releases/download/ros2v1.0.1/opencr_update_jp_custom.tar.bz2
 $ tar -xvf opencr_update_jp_custom.tar.bz2
 $ cd ./opencr_update
 $ ./update.sh $OPENCR_PORT $OPENCR_MODEL.opencr
