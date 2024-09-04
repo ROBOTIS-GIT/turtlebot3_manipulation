@@ -24,7 +24,7 @@ https://github.com/ROBOTIS-GIT/open_manipulator/blob/kinetic-devel/open_manipula
       <collision>
         <origin xyz="0 0 0" rpy="0 0 0"/>
         <geometry>
-          <mesh filename="${meshes_file_direction}/link1.stl" scale="0.001 0.001 0.001"/>
+          <box size="0.05 0.05 0.05"/>
         </geometry>
       </collision>
 
