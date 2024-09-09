@@ -1,25 +1,11 @@
 # TurtleBot3 Friends: Lime
-![TB3 Lime](./tb3_lime_bg.png)
-
-## 実環境での動作検証
-
-|                  実環境                   |                    Rviz                     |
-| :---------------------------------------: | :-----------------------------------------: |
-| ![TB3 Lime GO](./gif/tb3_lime_go_top.gif) | ![TB3 Lime GO rv](./gif/tb3_lime_go_rv.gif) |
-
-|                      実環境                      |                       Rviz                        |
-| :----------------------------------------------: | :-----------------------------------------------: |
-| ![TB3 Lime BACK1](./gif/tb3_lime_back_1_top.gif) | ![TB3 Lime BACK rv](./gif/tb3_lime_back_1_rv.gif) |
-
-|                      実環境                      |                        Rviz                        |
-| :----------------------------------------------: | :------------------------------------------------: |
-| ![TB3 Lime BACK2](./gif/tb3_lime_back_2_top.gif) | ![TB3 Lime BACK2 rv](./gif/tb3_lime_back_2_rv.gif) |
+![TB3 Lime](./img/bg.png)
 
 ## Gazebo環境での動作検証
 
-|              Gazebo環境 + Rviz              | https://github.com/ROBOTIS-JAPAN-GIT/turtlebot3_lime/blob/humble-devel/turtlebot3_lime/documentation/tb3_lime_setup.md#13-intel-realsense-sdk-20%E3%81%AE%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB |
-| :-----------------------------------------: |
-| ![TB3 Lime BACK](./gif/tb3_lime_nav_x5.gif) |
+|                     Gazebo環境 + Rviz                      |
+| :--------------------------------------------------------: |
+| ![moveit_navigation](./img/moveit_navigation.gif?raw=true) |
 
 
 ## セットアップ手順（Quick Start Guide）
@@ -303,7 +289,7 @@ $ ros2 launch turtlebot3_lime_moveit_config servo.launch.py use_sim:=true
 
 #### 4.2. 地図を作る (SLAM)
 
-![cartographer](./gazebo/cartographer.gif?raw=true)
+![cartographer](./img/cartographer.gif?raw=true)
 
 SLAMを立ち上げます．
 ```
@@ -322,7 +308,7 @@ $ ros2 run nav2_map_server map_saver_cli -f ~/map
 
 #### 4.3. Navigation 2
 
-![navigation](./gazebo/navigation.gif?raw=true)
+![navigation](./img/navigation.gif?raw=true)
 
 Navigation 2を実行します．
 ```
@@ -331,7 +317,7 @@ $ ros2 launch turtlebot3_lime_navigation2 navigation2_use_sim_time.launch.py map
 
 #### 4.4. Moveit 2
 
-![moveit](./gazebo/moveit.gif?raw=true)
+![moveit](./img/moveit.gif?raw=true)
 
 Moveit 2を実行します．
 ```
@@ -340,7 +326,7 @@ $ ros2 launch turtlebot3_lime_moveit_config moveit_core.launch.py use_sim:=true
 
 #### 4.5. Navigation 2 と Moveit 2 を同時に実行する
 
-![moveit_navigation](./gazebo/moveit_navigation.gif?raw=true)
+![moveit_navigation](./img/moveit_navigation.gif?raw=true)
 
 以下のコマンドを実行します．
 ```

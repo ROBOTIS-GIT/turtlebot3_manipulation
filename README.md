@@ -1,8 +1,6 @@
 # TurtleBot3 Lime
 
-<img src="https://github.com/ROBOTIS-GIT/emanual/blob/master/assets/images/platform/turtlebot3/lime/tb3_with_opm_logo.png">
-<img src="https://github.com/ROBOTIS-GIT/emanual/blob/master/assets/images/platform/turtlebot3/lime/hardware_setup.png">
-
+![bg](./turtlebot3_lime/documentation/img/bg.png?raw=true)
 
 [セットアップ手順（Quick Start Guide）](./turtlebot3_lime/documentation/tb3_lime_setup.md)
 
