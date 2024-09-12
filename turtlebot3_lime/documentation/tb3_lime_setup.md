@@ -47,7 +47,7 @@ $ sudo apt install -y python3-colcon-common-extensions python3-pip
 ワークスペースを作成します．
 ```
 $ mkdir -p ~/turtlebot3_ws/src
-$ cd ~/turtlebot3_ws && colcon build --symlink-install
+$ cd ~/turtlebot3_ws && colcon build --symlink-install && . install/setup.bash
 ```
 ワークスペースやROS_DOMAINを設定します．
 ```
@@ -99,7 +99,7 @@ $ rosdep update
 一度，ターミナルに入り直してください．
 ```
 $ rosdep install -i --from-path src --rosdistro $ROS_DISTRO --skip-keys=librealsense2 -y
-$ cd ~/turtlebot3_ws && colcon build --symlink-install
+$ cd ~/turtlebot3_ws && colcon build --symlink-install && . install/setup.bash
 ```
 
 #### 1.6. その他の必要なROS2パッケージのインストール
@@ -110,7 +110,7 @@ $ sudo apt install -y ros-humble-cartographer ros-humble-cartographer-ros ros-hu
 $ cd ~/turtlebot3_ws/src
 $ git clone -b humble-devel https://github.com/ROBOTIS-JAPAN-GIT/turtlebot3_lime.git
 $ git clone https://github.com/ldrobotSensorTeam/ldlidar_stl_ros2.git
-$ cd ~/turtlebot3_ws && colcon build --symlink-install
+$ cd ~/turtlebot3_ws && colcon build --symlink-install && . install/setup.bash
 ```
 
 #### 1.7. OpenCRに権限を付与する
@@ -157,7 +157,7 @@ Turtlebot3 Limeのファームウェアが正しくアップロードされた�
     ワークスペースを作成します．
     ```
     $ mkdir -p ~/turtlebot3_ws/src
-    $ cd ~/turtlebot3_ws && colcon build --symlink-install
+    $ cd ~/turtlebot3_ws && colcon build --symlink-install && . install/setup.bash
     ```
     ワークスペースやROS_DOMAINを設定します．
     ```
@@ -193,7 +193,7 @@ Turtlebot3 Limeのファームウェアが正しくアップロードされた�
     ワークスペースを作成します．
     ```
     $ mkdir -p ~/turtlebot3_ws/src
-    $ cd ~/turtlebot3_ws && colcon build --symlink-install
+    $ cd ~/turtlebot3_ws && colcon build --symlink-install && . install/setup.bash
     ```
     ワークスペースやROS_DOMAINを設定します．
     ```
@@ -210,9 +210,8 @@ Turtlebot3 Limeのファームウェアが正しくアップロードされた�
 $ sudo apt install -y ros-humble-cartographer ros-humble-cartographer-ros ros-humble-navigation2 ros-humble-nav2-bringup ros-humble-dynamixel-sdk ros-humble-ros2-control ros-humble-ros2-controllers ros-humble-gripper-controllers ros-humble-moveit ros-humble-moveit-servo ros-humble-gazebo-* ros-humble-realsense2-camera-msgs ros-humble-realsense2-description
 $ cd ~/turtlebot3_ws/src
 $ git clone -b humble-devel https://github.com/ROBOTIS-JAPAN-GIT/turtlebot3_lime.git
-$ git clone https://github.com/ldrobotSensorTeam/ldlidar_stl_ros2.git
 $ git clone -b foxy-devel https://github.com/pal-robotics/realsense_gazebo_plugin.git
-$ cd ~/turtlebot3_ws && colcon build --symlink-install
+$ cd ~/turtlebot3_ws && colcon build --symlink-install && . install/setup.bash
 ```
 
 ### 3. 実機での動かし方
