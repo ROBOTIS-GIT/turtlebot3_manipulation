@@ -23,7 +23,7 @@ https://github.com/ROBOTIS-GIT/turtlebot3/blob/kinetic-devel/turtlebot3_descript
       <minDepth>0.001</minDepth>
       <maxVel>0.1</maxVel>
       <fdir1>1 0 0</fdir1>
-      <material>Gazebo/FlatBlack</material>
+      <material>Gazebo/Green</material>
     </gazebo>
 
     <gazebo reference="${prefix}wheel_right_link">
@@ -34,7 +34,7 @@ https://github.com/ROBOTIS-GIT/turtlebot3/blob/kinetic-devel/turtlebot3_descript
       <minDepth>0.001</minDepth>
       <maxVel>0.1</maxVel>
       <fdir1>1 0 0</fdir1>
-      <material>Gazebo/FlatBlack</material>
+      <material>Gazebo/Green</material>
     </gazebo>
 
     <gazebo reference="${prefix}caster_back_right_link">
