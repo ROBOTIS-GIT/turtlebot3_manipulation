@@ -32,16 +32,16 @@ OpenCR::OpenCR(const uint8_t& id) {
 OpenCR::~OpenCR() {
     send_heartbeat(1);
 
-    std::array<int32_t, 6> tick = {2048, 1331, 3267, 2048, 2687, 2048};
-    set_joints_variables(opencr_control_table.goal_position_joint_1.address, tick);
-    dxl_sdk_wrapper_->write_byte(opencr_control_table.goal_position_write_joints.address, 1);
+    // std::array<int32_t, 6> tick = {2048, 1331, 3267, 2048, 2687, 2048};
+    // set_joints_variables(opencr_control_table.goal_position_joint_1.address, tick);
+    // dxl_sdk_wrapper_->write_byte(opencr_control_table.goal_position_write_joints.address, 1);
 
-    init_gripper();
+    // init_gripper();
 
-    sleep(3);
+    // sleep(3);
 
-    joints_torque(opencr::OFF);
-    wheels_torque(opencr::OFF);
+    // joints_torque(opencr::OFF);
+    // wheels_torque(opencr::OFF);
 }
 
 bool OpenCR::open_port(const std::string& usb_port) {
