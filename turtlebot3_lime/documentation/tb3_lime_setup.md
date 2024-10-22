@@ -168,8 +168,8 @@ Turtlebot3 Limeのファームウェアが正しくアップロードされた�
 
 
 - ROS 2 がインストールされていない場合
-  
     <details>
+  
     <summary><a href="#12-ros-2-humble-のインストール">1.2. ROS 2 Humble のインストール</a>と同様です．</summary>
     <a href="[#12-ros-2-humble-のインストール](https://docs.ros.org/en/humble/Installation/Ubuntu-Install-Debians.html))">ROS 公式のインストールガイド</a>に従って，ROS 2 Humbleをインストールします．
     まず，Ubuntu Universe リポジトリが有効になっていることを確認します．
@@ -207,6 +207,7 @@ Turtlebot3 Limeのファームウェアが正しくアップロードされた�
 
 その他の必要なROS2パッケージをインストールします．
 ```
+$ sudo apt update 
 $ sudo apt install -y ros-humble-cartographer ros-humble-cartographer-ros ros-humble-navigation2 ros-humble-nav2-bringup ros-humble-dynamixel-sdk ros-humble-ros2-control ros-humble-ros2-controllers ros-humble-gripper-controllers ros-humble-moveit ros-humble-moveit-servo ros-humble-gazebo-* ros-humble-realsense2-camera-msgs ros-humble-realsense2-description
 $ cd ~/turtlebot3_ws/src
 $ git clone -b humble-devel https://github.com/ROBOTIS-JAPAN-GIT/turtlebot3_lime.git
@@ -217,7 +218,7 @@ $ cd ~/turtlebot3_ws && colcon build --symlink-install && . install/setup.bash
 ### 3. 実機での動かし方
 
 #### 3.1. セットアップ
-
+p
 この操作は，動かす際に必ず行ってください．
 
 Jetson Orin Nanoにssh接続して，ドライバを立ち上げます．
