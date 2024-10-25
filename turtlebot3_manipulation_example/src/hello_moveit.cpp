@@ -1,3 +1,6 @@
+// Modify the MoveIt tutorial as much as you like using the basic example.
+// Author: Sungho Woo
+
 #include <memory>
 
 #include <rclcpp/rclcpp.hpp>
@@ -29,7 +32,8 @@ auto move_group_interface = MoveGroupInterface(node, "arm");
     return msg;
   }();
   move_group_interface.setPoseTarget(target_pose);
-  move_group_interface.setGoalTolerance(0.01);
+  move_group_interface.setGoalJointTolerance(0.01);
+  move_group_interface.setGoalOrientationTolerance(0.01);
 
   // Create a plan to that target pose
   auto const [success, plan] = [&move_group_interface]{

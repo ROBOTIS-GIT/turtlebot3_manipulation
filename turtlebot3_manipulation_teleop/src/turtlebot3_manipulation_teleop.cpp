@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-// Author: Hye-jong KIM
+// Author: Hye-jong KIM, Sungho Woo
 
 #include <algorithm>
 #include <memory>
