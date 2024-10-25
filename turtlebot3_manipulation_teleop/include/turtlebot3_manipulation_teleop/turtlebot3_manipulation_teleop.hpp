@@ -49,7 +49,7 @@ const double BASE_ANGULAR_VEL_MAX = 1.8;  // rad/s
 const double BASE_ANGULAR_VEL_STEP = 0.1;  // rad/s
 const char BASE_FRAME_ID[] = "link0";
 
-const double ARM_JOINT_VEL = 1.0;  // rad/s
+const double ARM_JOINT_VEL = 10.0;  // rad/s
 
 // A class for reading the key inputs from the terminal
 class KeyboardReader
