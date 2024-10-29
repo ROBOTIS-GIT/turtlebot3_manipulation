@@ -38,7 +38,7 @@ using namespace Qt;
 *****************************************************************************/
 
 MainWindow::MainWindow(int argc, char** argv, QWidget *parent)
-  : QMainWindow(parent), 
+  : QMainWindow(parent),
     qnode(argc,argv)
 {
   ui.setupUi(this); // Calling this incidentally connects all ui's triggers to on_...() callbacks in this class.

@@ -37,14 +37,14 @@ namespace turtlebot3_manipulation_gui {
 ** Implementation
 *****************************************************************************/
 
-QNode::QNode(int argc, char** argv) 
+QNode::QNode(int argc, char** argv)
     :init_argc(argc),
      init_argv(argv)
 {}
 
 QNode::~QNode()
 {
-  if(ros::isStarted()) 
+  if(ros::isStarted())
   {
     ros::shutdown(); // explicitly needed since we use ros::start();
     ros::waitForShutdown();
@@ -55,15 +55,15 @@ QNode::~QNode()
 bool QNode::init()
 {
 	ros::init(init_argc,init_argv,"turtlebot3_manipulation_gui");
-	if ( ! ros::master::check() ) 
+	if ( ! ros::master::check() )
   {
 		return false;
 	}
 	ros::start(); // explicitly needed since our nodehandle is going out of scope.
   ros::NodeHandle n("");
 
-  // Moveit 
-  ros::AsyncSpinner spinner(1); 
+  // Moveit
+  ros::AsyncSpinner spinner(1);
   spinner.start();
 
   // Move group arm
@@ -93,7 +93,7 @@ void QNode::run()
 
 void QNode::updateRobotState()
 {
-  ros::AsyncSpinner spinner(1); 
+  ros::AsyncSpinner spinner(1);
   spinner.start();
 
   std::vector<double> jointValues = move_group_->getCurrentJointValues();
@@ -106,7 +106,7 @@ void QNode::updateRobotState()
   temp_angle.push_back(jointValues2.at(0));
   present_joint_angle_ = temp_angle;
 
-  geometry_msgs::Pose current_pose = move_group_->getCurrentPose().pose;  
+  geometry_msgs::Pose current_pose = move_group_->getCurrentPose().pose;
   std::vector<double> temp_position;
   temp_position.push_back(current_pose.position.x);
   temp_position.push_back(current_pose.position.y);
@@ -126,13 +126,13 @@ std::vector<double> QNode::getPresentKinematicsPosition()
 
 bool QNode::setJointSpacePath(std::vector<double> joint_angle, double path_time)
 {
-  ros::AsyncSpinner spinner(1); 
+  ros::AsyncSpinner spinner(1);
   spinner.start();
 
   // Next get the current set of joint values for the group.
   const robot_state::JointModelGroup* joint_model_group =
     move_group_->getCurrentState()->getJointModelGroup("arm");
-      
+
   moveit::core::RobotStatePtr current_state = move_group_->getCurrentState();
 
   std::vector<double> joint_group_positions;
@@ -158,7 +158,7 @@ bool QNode::setJointSpacePath(std::vector<double> joint_angle, double path_time)
 
 bool QNode::setTaskSpacePath(std::vector<double> kinematics_pose, double path_time)
 {
-  ros::AsyncSpinner spinner(1); 
+  ros::AsyncSpinner spinner(1);
   spinner.start();
 
   // Uncomment below to keep the end-effector parallel to the ground
@@ -199,13 +199,13 @@ bool QNode::setTaskSpacePath(std::vector<double> kinematics_pose, double path_ti
 
 bool QNode::setToolControl(std::vector<double> joint_angle)
 {
-  ros::AsyncSpinner spinner(1); 
+  ros::AsyncSpinner spinner(1);
   spinner.start();
 
   // Next get the current set of joint values for the group.
   const robot_state::JointModelGroup* joint_model_group =
     move_group2_->getCurrentState()->getJointModelGroup("gripper");
-      
+
   moveit::core::RobotStatePtr current_state = move_group2_->getCurrentState();
 
   std::vector<double> joint_group_positions;
@@ -223,6 +223,6 @@ bool QNode::setToolControl(std::vector<double> joint_angle)
   move_group2_->move();
 
   spinner.stop();
-  return true;  
+  return true;
 }
 }  // namespace turtlebot3_manipulation_gui

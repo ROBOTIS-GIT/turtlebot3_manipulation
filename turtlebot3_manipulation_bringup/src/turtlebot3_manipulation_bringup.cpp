@@ -21,13 +21,13 @@
 
 Turtlebot3ManipulationBringup::Turtlebot3ManipulationBringup()
 : nh_(""),
-  arm_action_server_(nh_, 
-    "arm_controller/follow_joint_trajectory", 
-    boost::bind(&Turtlebot3ManipulationBringup::armActionCallback, this, _1), 
+  arm_action_server_(nh_,
+    "arm_controller/follow_joint_trajectory",
+    boost::bind(&Turtlebot3ManipulationBringup::armActionCallback, this, _1),
     false),
-  gripper_action_server_(nh_, 
-    "gripper_controller/follow_joint_trajectory", 
-    boost::bind(&Turtlebot3ManipulationBringup::gripperActionCallback, this, _1), 
+  gripper_action_server_(nh_,
+    "gripper_controller/follow_joint_trajectory",
+    boost::bind(&Turtlebot3ManipulationBringup::gripperActionCallback, this, _1),
     false)
 {
   // Init Publisher

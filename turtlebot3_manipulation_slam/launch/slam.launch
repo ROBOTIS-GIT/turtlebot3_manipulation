@@ -17,13 +17,13 @@
   <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher">
     <param name="publish_frequency" type="double" value="50.0" />
   </node>
-  
+
   <!-- <group ns="$(arg use_robot_name)"> -->
   <!-- Gmapping -->
   <node pkg="laser_filters" type="scan_to_scan_filter_chain" name="laser_filter" output="screen" >
     <rosparam command="load" file="$(find turtlebot3_manipulation_slam)/config/scan_data_filter.yaml" />
   </node>
-  
+
   <node pkg="gmapping" type="slam_gmapping" name="turtlebot3_slam_gmapping" output="screen">
     <!-- <remap from="scan"  to="$(arg scan_topic)"/> -->
 
@@ -63,7 +63,7 @@
   <!-- </group> -->
 
   <!-- rviz -->
-  <group if="$(arg open_rviz)"> 
+  <group if="$(arg open_rviz)">
     <node pkg="rviz" type="rviz" name="rviz" required="true"
           args="-d $(find turtlebot3_manipulation_slam)/rviz/turtlebot3_manipulation_slam.rviz"/>
   </group>
