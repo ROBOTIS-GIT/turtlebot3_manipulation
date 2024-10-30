@@ -6,7 +6,7 @@
      An automatically generated package with all the configuration and launch files for using the turtlebot3_manipulation with the MoveIt! Motion Planning Framework
   </description>
   <author email="jhshim@robotis.com">Ryan Shim</author>
-  <maintainer email="willson@robotis.com">Will Son</maintainer>
+  <maintainer email="pyo@robotis.com">Pyo</maintainer>
 
   <license>BSD</license>
 
