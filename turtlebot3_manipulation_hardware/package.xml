@@ -6,7 +6,7 @@
   <description>
     ROS 2 package for turtlebot3_manipulation_hardware
   </description>
-  <maintainer email="willson@robotis.com">Will Son</maintainer>
+  <maintainer email="pyo@robotis.com">Pyo</maintainer>
   <license>Apache 2.0</license>
   <url type="website">https://emanual.robotis.com/docs/en/platform/turtlebot3/manipulation/</url>
   <url type="repository">https://github.com/ROBOTIS-GIT/turtlebot3_manipulation</url>

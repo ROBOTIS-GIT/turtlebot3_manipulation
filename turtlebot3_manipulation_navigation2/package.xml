@@ -6,7 +6,7 @@
   <description>
     ROS 2 launch scripts for navigation2
   </description>
-  <maintainer email="willson@robotis.com">Will Son</maintainer>
+  <maintainer email="pyo@robotis.com">Pyo</maintainer>
   <license>Apache 2.0</license>
   <author email="thlim@robotis.com">Darby Lim</author>
   <author email="pyo@robotis.com">Pyo</author>
