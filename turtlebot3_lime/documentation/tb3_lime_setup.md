@@ -141,9 +141,6 @@ $ cd ./opencr_update
 $ ./update.sh $OPENCR_PORT $OPENCR_MODEL.opencr
 ```
 
-Turtlebot3 Limeのファームウェアが正しくアップロードされたら，以下のようなメッセージが出力されます(イメージ図)
-![TB3 Lime OpenCR Success Output](/turtlebot3/documentation/tb3_lime_opencr.png)
-
 ### 2. リモートPCの環境設定
 
 #### 2.1. リモートPC のセットアップについて
