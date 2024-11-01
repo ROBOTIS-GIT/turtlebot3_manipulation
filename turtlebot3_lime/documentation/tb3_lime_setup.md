@@ -214,9 +214,9 @@ $ cd ~/turtlebot3_ws && colcon build --symlink-install && . install/setup.bash
 
 ### 3. 実機での動かし方
 
-#### 3.1. セットアップ
+#### 3.1. セットアップ（この操作は，動かす際に必ず行ってください）
 
-この操作は，動かす際に必ず行ってください．
+**必ず，Jetson Orin NanoとリモートPCの時刻を同期してください．両方をインターネットに接続すれば，時刻が同期されます．**
 
 Jetson Orin Nanoにssh接続して，ドライバを立ち上げます．
 ```
@@ -230,7 +230,7 @@ $ ros2 launch turtlebot3_lime_moveit_config servo.launch.py
 
 #### 3.2. 地図を作る (SLAM)
 
-Jetson Orin NanoでSLAMを立ち上げます．
+リモートPC側でSLAMを立ち上げます．
 ```
 $ ros2 launch turtlebot3_lime_cartographer cartographer.launch.py
 ```
@@ -260,12 +260,11 @@ $ ros2 launch turtlebot3_lime_navigation2 navigation2.launch.py map_yaml_file:=$
 $ ros2 launch turtlebot3_lime_moveit_config moveit_core.launch.py
 ```
 
-
 #### 3.5. Navigation 2 と Moveit 2 を同時に実行する
 
 リモートPCで以下のコマンドを実行します．
 ```
-$ ros2 launch turtlebot3_lime_bringup moveit_navigation.launch.py
+$ ros2 launch turtlebot3_lime_bringup moveit_navigation.launch.py map_yaml_file:=$HOME/map.yaml
 ```
 
 ### 4. シミュレーションの動かし方
@@ -327,7 +326,7 @@ $ ros2 launch turtlebot3_lime_moveit_config moveit_core.launch.py use_sim:=true
 
 以下のコマンドを実行します．
 ```
-$ ros2 launch turtlebot3_lime_bringup moveit_navigation_use_sim_time.launch.py
+$ ros2 launch turtlebot3_lime_bringup moveit_navigation_use_sim_time.launch.py map_yaml_file:=$HOME/map.yaml
 ```
 
 
