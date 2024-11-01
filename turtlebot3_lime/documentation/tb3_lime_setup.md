@@ -215,7 +215,7 @@ $ cd ~/turtlebot3_ws && colcon build --symlink-install && . install/setup.bash
 ### 3. 実機での動かし方
 
 #### 3.1. セットアップ
-p
+
 この操作は，動かす際に必ず行ってください．
 
 Jetson Orin Nanoにssh接続して，ドライバを立ち上げます．
