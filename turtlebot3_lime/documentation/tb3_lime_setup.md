@@ -98,6 +98,7 @@ $ rosdep update
 
 一度，ターミナルに入り直してください．
 ```
+$ cd ~/turtlebot3_ws
 $ rosdep install -i --from-path src --rosdistro $ROS_DISTRO --skip-keys=librealsense2 -y
 $ cd ~/turtlebot3_ws && colcon build --symlink-install && . install/setup.bash
 ```
