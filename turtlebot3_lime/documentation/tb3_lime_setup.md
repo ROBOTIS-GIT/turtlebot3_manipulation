@@ -213,6 +213,12 @@ $ git clone -b foxy-devel https://github.com/pal-robotics/realsense_gazebo_plugi
 $ cd ~/turtlebot3_ws && colcon build --symlink-install && . install/setup.bash
 ```
 
+Gazeboのセットアップを毎回読み込むように設定します．
+```
+$ echo 'source /usr/share/gazebo/setup.sh' >> ~/.bashrc
+$ source ~/.bashrc
+```
+
 ### 3. 実機での動かし方
 
 #### 3.1. セットアップ（この操作は，動かす際に必ず行ってください）
