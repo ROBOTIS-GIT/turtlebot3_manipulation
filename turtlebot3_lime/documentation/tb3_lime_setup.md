@@ -230,6 +230,8 @@ Jetson Orin Nanoにssh接続して，ドライバを立ち上げます．
 $ ros2 launch turtlebot3_lime_bringup hardware.launch.py
 ```
 
+**moveit実行中にbringupを終了しないでください．中断する場合は先にmoveitを終了してください．**
+
 リモートPCでドライバを実行します．
 ```
 $ ros2 launch turtlebot3_lime_moveit_config servo.launch.py
@@ -301,7 +303,7 @@ $ ros2 launch turtlebot3_lime_cartographer cartographer.launch.py use_sim:=true
 
 テレオペを立ち上げます．
 ```
-ros2 run turtlebot3_lime_teleop turtlebot3_lime_teleop
+$ ros2 run turtlebot3_lime_teleop turtlebot3_lime_teleop
 ```
 
 マップを保存します．
