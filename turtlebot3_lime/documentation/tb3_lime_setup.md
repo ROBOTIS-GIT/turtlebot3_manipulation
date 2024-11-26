@@ -276,6 +276,13 @@ $ ros2 launch turtlebot3_lime_moveit_config moveit_core.launch.py
 $ ros2 launch turtlebot3_lime_bringup moveit_navigation.launch.py map_yaml_file:=$HOME/map.yaml
 ```
 
+#### 3.6. Realsense D435i のドライバを実行する
+
+Jetson Orin Nanoにssh接続して，ドライバを立ち上げます．
+```
+$ ros2 launch realsense2_camera rs_launch.py
+```
+
 ### 4. シミュレーションの動かし方
 
 #### 4.1. セットアップ
