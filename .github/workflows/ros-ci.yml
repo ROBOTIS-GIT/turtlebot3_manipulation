@@ -37,7 +37,7 @@ jobs:
       - name: Setup directories
         run: mkdir -p ros_ws/src
       - name: checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           path: ros_ws/src
       - name: Setup ROS environment
