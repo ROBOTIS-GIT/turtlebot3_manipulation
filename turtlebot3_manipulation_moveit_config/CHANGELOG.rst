@@ -2,6 +2,11 @@
 Changelog for package turtlebot3_manipulation_moveit_config
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+2.2.0 (2024-12-02)
+------------------
+* Resolved the issue where teleoperation was not functioning on the actual robot
+* Contributors: Sungho Woo
+
 2.1.1 (2022-10-14)
 ------------------
 * Support ROS2 Humble

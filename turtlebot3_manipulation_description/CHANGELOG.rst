@@ -2,6 +2,12 @@
 Changelog for package turtlebot3_manipulation_description
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+2.2.0 (2024-12-02)
+------------------
+* Fixed the intermittent issue of Gazebo not launching
+* Fixed the error log related to the mimic joint.
+* Contributors: Sungho Woo
+
 2.1.1 (2022-10-14)
 ------------------
 * Support ROS2 Humble

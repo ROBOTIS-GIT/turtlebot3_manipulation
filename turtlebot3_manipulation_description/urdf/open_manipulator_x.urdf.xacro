@@ -24,7 +24,7 @@ https://github.com/ROBOTIS-GIT/open_manipulator/blob/kinetic-devel/open_manipula
       <collision>
         <origin xyz="0 0 0" rpy="0 0 0"/>
         <geometry>
-          <mesh filename="${meshes_file_direction}/link1.stl" scale="0.001 0.001 0.001"/>
+          <box size="0.05 0.05 0.05"/>
         </geometry>
       </collision>
 
@@ -206,6 +206,12 @@ https://github.com/ROBOTIS-GIT/open_manipulator/blob/kinetic-devel/open_manipula
                  izz="1.0e-06" />
       </inertial>
     </link>
+
+    <joint name="${prefix}gripper_right_joint_mimic" type="fixed">
+      <parent link="${prefix}link5" />
+      <child link="dummy_mimic_fix" />
+    </joint>
+    <link name="dummy_mimic_fix"/>
 
     <joint name="${prefix}gripper_right_joint" type="prismatic">
       <parent link="${prefix}link5"/>

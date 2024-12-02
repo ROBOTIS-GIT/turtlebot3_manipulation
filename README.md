@@ -2,11 +2,6 @@
 <img src="https://github.com/ROBOTIS-GIT/emanual/blob/master/assets/images/platform/turtlebot3/manipulation/tb3_with_opm_logo.png">
 <img src="https://github.com/ROBOTIS-GIT/emanual/blob/master/assets/images/platform/turtlebot3/manipulation/hardware_setup.png">
 
-## ROS Packages for OpenManipulator with TurtleBot3
-|Version|Kinetic + Ubuntu Xenial|Melodic + Ubuntu Bionic|
-|:---:|:---:|:---:|
-|[![GitHub version](https://badge.fury.io/gh/ROBOTIS-GIT%2Fopen_manipulator_with_tb3.svg)](https://badge.fury.io/gh/ROBOTIS-GIT%2Fopen_manipulator_with_tb3)|[![Build Status](https://travis-ci.org/ROBOTIS-GIT/open_manipulator_with_tb3.svg?branch=kinetic-devel)](https://travis-ci.org/ROBOTIS-GIT/open_manipulator_with_tb3)|[![Build Status](https://travis-ci.org/ROBOTIS-GIT/open_manipulator_with_tb3.svg?branch=melodic-devel)](https://travis-ci.org/ROBOTIS-GIT/open_manipulator_with_tb3)|
-
 ## ROBOTIS e-Manual for OpenManipulator with TurtleBot3
 - [ROBOTIS e-Manual for OpenManipulator with TurtleBot3](http://emanual.robotis.com/docs/en/platform/turtlebot3/manipulation/#manipulation)
 
@@ -45,7 +40,6 @@
 ## Documents and Videos related to OpenManipulator with TurtleBot3
 - [ROBOTIS e-Manual for OpenManipulator](http://emanual.robotis.com/docs/en/platform/openmanipulator/)
 - [ROBOTIS e-Manual for TurtleBot3](http://turtlebot3.robotis.com/)
-- [ROBOTIS e-Manual for ROBOTIS MANIPULATOR-H](http://emanual.robotis.com/docs/en/platform/manipulator_h/introduction/)
 - [ROBOTIS e-Manual for Dynamixel SDK](http://emanual.robotis.com/docs/en/software/dynamixel/dynamixel_sdk/overview/)
 - [ROBOTIS e-Manual for Dynamixel Workbench](http://emanual.robotis.com/docs/en/software/dynamixel/dynamixel_workbench/)
 - [e-Book for TurtleBot3 and OpenManipulator](https://community.robotsource.org/t/download-the-ros-robot-programming-book-for-free/51/)
