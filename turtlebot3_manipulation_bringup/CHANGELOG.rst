@@ -2,6 +2,11 @@
 Changelog for package turtlebot3_manipulation_bringup
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+2.2.0 (2024-12-02)
+------------------
+* Updated maintainer information
+* Contributors: Sungho Woo
+
 2.1.1 (2022-10-14)
 ------------------
 * Support ROS2 Humble
