@@ -12,6 +12,7 @@
   <url type="bugtracker">https://github.com/ros-planning/moveit2/issues</url>
   <url type="repository">https://github.com/ros-planning/moveit2</url>
   <author email="hjkim@robotis.com">Hye-jong KIM</author>
+  <author email="wsh@robotis.com">Sungho Woo</author>
   <buildtool_depend>ament_cmake</buildtool_depend>
 
   <exec_depend>moveit_ros_move_group</exec_depend>

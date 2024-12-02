@@ -10,6 +10,7 @@
   <url type="repository">https://github.com/ROBOTIS-GIT/turtlebot3_manipulation</url>
   <url type="bugtracker">https://github.com/ROBOTIS-GIT/turtlebot3_manipulation/issues</url>
   <author email="hjkim@robotis.com">Hye-jong KIM</author>
+  <author email="wsh@robotis.com">Sungho Woo</author>
 
   <buildtool_depend>ament_cmake</buildtool_depend>
 
