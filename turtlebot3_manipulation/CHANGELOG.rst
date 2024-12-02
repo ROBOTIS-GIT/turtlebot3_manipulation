@@ -8,7 +8,6 @@ Changelog for package turtlebot3_manipulation
 * Resolved the issue where teleoperation was not functioning on the actual robot.
 * Fixed the intermittent issue of Gazebo not launching.
 * Fixed the error log related to the mimic joint.
-* Added a package with examples for robotic arm control using the MoveIt interface.
 * Contributors: Sungho Woo
 
 2.1.1 (2022-10-14)
