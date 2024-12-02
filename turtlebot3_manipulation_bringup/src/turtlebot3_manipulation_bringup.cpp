@@ -21,13 +21,13 @@
 
 Turtlebot3ManipulationBringup::Turtlebot3ManipulationBringup()
 : nh_(""),
-  arm_action_server_(nh_, 
-    "arm_controller/follow_joint_trajectory", 
-    boost::bind(&Turtlebot3ManipulationBringup::armActionCallback, this, _1), 
+  arm_action_server_(nh_,
+    "arm_controller/follow_joint_trajectory",
+    boost::bind(&Turtlebot3ManipulationBringup::armActionCallback, this, _1),
     false),
-  gripper_action_server_(nh_, 
-    "gripper_controller/follow_joint_trajectory", 
-    boost::bind(&Turtlebot3ManipulationBringup::gripperActionCallback, this, _1), 
+  gripper_action_server_(nh_,
+    "gripper_controller/follow_joint_trajectory",
+    boost::bind(&Turtlebot3ManipulationBringup::gripperActionCallback, this, _1),
     false)
 {
   // Init Publisher
@@ -48,7 +48,12 @@ void Turtlebot3ManipulationBringup::armActionCallback(const control_msgs::Follow
 
   uint32_t jnt_tra_pts_size = jnt_tra.points.size();
   const uint8_t POINTS_STEP_SIZE = 10;
-  uint32_t steps = floor((double)jnt_tra_pts_size/(double)POINTS_STEP_SIZE);
+  if(jnt_tra_pts_size == 0){
+    //received empty trajectory
+    arm_action_server_.setAborted();
+    return;
+  }
+  uint32_t steps = jnt_tra_pts_size/POINTS_STEP_SIZE + 1;
 
   for (uint32_t i = 0; i < jnt_tra_pts_size; i = i + steps)
   {
@@ -56,6 +61,14 @@ void Turtlebot3ManipulationBringup::armActionCallback(const control_msgs::Follow
     for (std::vector<uint32_t>::size_type j = 0; j < jnt_tra.points[i].positions.size(); j++)
     {
       jnt_tra_pts.data.push_back(jnt_tra.points[i].positions[j]);
+    }
+  }
+  if((jnt_tra_pts_size-1) % steps){
+    //set last positions
+    jnt_tra_pts.data.push_back(jnt_tra.points[jnt_tra_pts_size-1].time_from_start.toSec());
+    for (std::vector<uint32_t>::size_type j = 0; j < jnt_tra.points[jnt_tra_pts_size-1].positions.size(); j++)
+    {
+      jnt_tra_pts.data.push_back(jnt_tra.points[jnt_tra_pts_size-1].positions[j]);
     }
   }
   joint_trajectory_point_pub_.publish(jnt_tra_pts);

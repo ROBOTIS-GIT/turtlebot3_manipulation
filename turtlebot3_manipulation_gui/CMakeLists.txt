@@ -66,9 +66,9 @@ catkin_package(
   INCLUDE_DIRS include
   CATKIN_DEPENDS
     geometry_msgs
-    roscpp 
-    std_msgs 
-    sensor_msgs 
+    roscpp
+    std_msgs
+    sensor_msgs
     moveit_msgs
     moveit_core
     moveit_ros_planning

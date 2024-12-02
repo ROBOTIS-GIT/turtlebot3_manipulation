@@ -2,6 +2,16 @@
 Changelog for package turtlebot3_manipulation
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+2.0.3 (2024-10-29)
+------------------
+* resolve white color issue on robotic arm in Gazebo
+* Contributors: Wonho Yoon
+
+2.0.3 (2021-12-28)
+------------------
+* fix small trajectory step handling issue(#41)
+* Contributors: nabeya11
+
 2.0.2 (2020-03-06)
 ------------------
 * package name changed from open_manipulator_with_tb3 to turtlebot3_manipulation

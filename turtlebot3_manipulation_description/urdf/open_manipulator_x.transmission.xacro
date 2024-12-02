@@ -46,5 +46,5 @@
 
   <!-- Transmission 6 -->
   <xacro:SimpleTransmissionEffort n="6" joint="gripper_sub" />
-  
+
 </robot>

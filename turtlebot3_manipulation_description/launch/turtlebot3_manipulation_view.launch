@@ -6,14 +6,14 @@
   <!-- send robot urdf to param server -->
   <include file="$(find turtlebot3_manipulation_description)/launch/turtlebot3_manipulation_upload.launch">
     <arg name="model" value="$(arg model)"/>
-  </include> 
+  </include>
 
   <!-- start joint state publisher -->
   <node pkg="joint_state_publisher" type="joint_state_publisher" name="joint_state_publisher">
     <param name="/use_gui" value="$(arg use_gui)"/>
     <rosparam param="source_list">["/joint_states"]</rosparam>
   </node>
-  
+
   <!-- start robot state publisher -->
   <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher"/>
 
