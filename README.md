@@ -2,6 +2,9 @@
 <img src="https://github.com/ROBOTIS-GIT/emanual/blob/master/assets/images/platform/turtlebot3/manipulation/tb3_with_opm_logo.png">
 <img src="https://github.com/ROBOTIS-GIT/emanual/blob/master/assets/images/platform/turtlebot3/manipulation/hardware_setup.png">
 
+- Active Branches: noetic, humble, main
+- Legacy Branches: *-devel
+
 ## ROBOTIS e-Manual for OpenManipulator with TurtleBot3
 - [ROBOTIS e-Manual for OpenManipulator with TurtleBot3](http://emanual.robotis.com/docs/en/platform/turtlebot3/manipulation/#manipulation)
 
