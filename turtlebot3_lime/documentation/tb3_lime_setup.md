@@ -119,7 +119,7 @@ $ cd ~/turtlebot3_ws && colcon build --symlink-install && . install/setup.bash
 OpenCRと通信するために，権限を付与します．
 
 ```
-$ sudo curl -sSL https://raw.githubusercontent.com/ROBOTIS-GIT/turtlebot3/humble-devel/turtlebot3_bringup/script/99-turtlebot3-cdc.rules -o /etc/udev/rules.d/99-turtlebot3-cdc.rules
+$ sudo curl -sSL https://raw.githubusercontent.com/ROBOTIS-GIT/OpenCR/master/99-opencr-cdc.rules -o /etc/udev/rules.d/99-opencr-cdc.rules
 $ sudo udevadm control --reload-rules
 $ sudo udevadm trigger
 ```
