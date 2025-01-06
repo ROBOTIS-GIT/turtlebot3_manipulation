@@ -21,6 +21,7 @@ find_package(nav_msgs REQUIRED)
 find_package(control_msgs REQUIRED)
 find_package(sensor_msgs REQUIRED)
 find_package(std_srvs REQUIRED)
+find_package(rclcpp_action REQUIRED)
 
 add_executable(turtlebot3_lime_teleop src/turtlebot3_lime_teleop.cpp)
 target_include_directories(turtlebot3_lime_teleop PUBLIC
@@ -37,6 +38,7 @@ ament_target_dependencies(
   "control_msgs"
   "sensor_msgs"
   "std_srvs"
+  "rclcpp_action"
 )
 
 install(TARGETS turtlebot3_lime_teleop
