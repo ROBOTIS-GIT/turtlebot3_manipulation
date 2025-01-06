@@ -263,6 +263,24 @@ https://github.com/ROBOTIS-GIT/open_manipulator/blob/kinetic-devel/open_manipula
       <dynamics damping="0.7" friction="1.0"/>
     </joint>
 
+    <!-- Move it 2 not find mimic-->
+    <!-- https://github.com/ROBOTIS-GIT/turtlebot3_lime/issues/66  -->
+    <joint name="${prefix}gripper_right_joint_mimic" type="fixed">
+      <parent link="${prefix}link7" />
+      <child link="dummy_mimic_fix" />
+    </joint>
+    <link name="dummy_mimic_fix"/>
+
+    <joint name="${prefix}gripper_right_joint" type="prismatic">
+      <parent link="${prefix}link7"/>
+      <child link="${prefix}gripper_right_link"/>
+      <origin xyz="0.0 -0.021 0.0707" rpy="0 0 0"/>
+      <axis xyz="0 -1 0"/>
+      <limit velocity="4.8" effort="1" lower="-0.010" upper="0.019" />
+      <mimic joint="${prefix}gripper_left_joint" multiplier="1"/>
+      <dynamics damping="0.7" friction="1.0"/>
+    </joint>
+
     <link name="${prefix}gripper_right_link">
       <visual>
         <origin xyz="0 0 0" rpy="0 0 0"/>
@@ -286,16 +304,6 @@ https://github.com/ROBOTIS-GIT/open_manipulator/blob/kinetic-devel/open_manipula
       </inertial>
     </link>
 
-    <joint name="${prefix}gripper_right_joint" type="prismatic">
-      <parent link="${prefix}link7"/>
-      <child link="${prefix}gripper_right_link"/>
-      <origin xyz="0.0 -0.021 0.0707" rpy="0 0 0"/>
-      <axis xyz="0 -1 0"/>
-      <limit velocity="4.8" effort="1" lower="-0.010" upper="0.019" />
-      <mimic joint="${prefix}gripper_left_joint" multiplier="1"/>
-      <dynamics damping="0.7" friction="1.0"/>
-    </joint>
-
     <joint name="${prefix}end_effector_joint" type="fixed">
       <origin xyz="0.0 0.0 0.115" rpy="0 0 0"/>
       <parent link="${prefix}link7"/>
@@ -317,14 +325,6 @@ https://github.com/ROBOTIS-GIT/open_manipulator/blob/kinetic-devel/open_manipula
         <inertia ixx="1.0e-03" ixy="0.0" ixz="0.0" iyy="1.0e-03" iyz="0.0" izz="1.0e-03" />
       </inertial>
     </link>
-
-    <!-- Move it 2 not find mimic-->
-    <!-- https://github.com/ROBOTIS-GIT/turtlebot3_lime/issues/66  -->
-    <joint name="${prefix}gripper_right_joint_mimic" type="fixed">
-      <parent link="${prefix}link7" />
-      <child link="dummy_mimic_fix" />
-    </joint>
-    <link name="dummy_mimic_fix"/>
 
   </xacro:macro>
 

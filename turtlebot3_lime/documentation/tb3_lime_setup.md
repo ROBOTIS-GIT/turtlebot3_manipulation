@@ -244,7 +244,7 @@ $ ros2 launch turtlebot3_lime_moveit_config servo.launch.py
 $ ros2 launch turtlebot3_lime_cartographer cartographer.launch.py
 ```
 
-リモートPC側でテレオペを実行します．
+リモートPC側でテレオペを実行します．ただし，テレオペでのアーム操作は，実機では未対応です．
 ```
 $ ros2 run turtlebot3_lime_teleop turtlebot3_lime_teleop
 ```
