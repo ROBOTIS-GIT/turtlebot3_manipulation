@@ -96,9 +96,11 @@ int KeyboardServo::keyLoop() {
     puts("  j: Move left");
     puts("  space bar: Move stop");
     puts("---------------------------");
-    puts("'ESC' to quit.");
+    puts("'ESC' to quit.\n");
 
     std::thread{std::bind(&KeyboardServo::pub, this)}.detach();
+
+    RCLCPP_INFO(nh_->get_logger(), "====== command ======\n\n");
 
     bool servoing = true;
     while (servoing) {
@@ -110,7 +112,8 @@ int KeyboardServo::keyLoop() {
             return -1;
         }
 
-        RCLCPP_INFO(nh_->get_logger(), "value: 0x%02X", c);
+        RCLCPP_INFO(nh_->get_logger(), "\x1b[999D\x1b[0K\x1b[3A");
+        RCLCPP_INFO(nh_->get_logger(), "input:[%c] value: 0x%02X", c, c);
 
         // Use read key-press
         joint_msg_.joint_names.clear();
@@ -123,32 +126,32 @@ int KeyboardServo::keyLoop() {
                     std::min(cmd_vel_.linear.x + BASE_LINEAR_VEL_STEP, BASE_LINEAR_VEL_MAX);
                 cmd_vel_.linear.y = 0.0;
                 cmd_vel_.linear.z = 0.0;
-                RCLCPP_INFO_STREAM(nh_->get_logger(), "LINEAR VEL : " << cmd_vel_.linear.x);
+                RCLCPP_INFO_STREAM(nh_->get_logger(), "\x1b[0K" << "LINEAR VEL : " << cmd_vel_.linear.x);
                 break;
             case KEYCODE_K:
                 cmd_vel_.linear.x =
                     std::max(cmd_vel_.linear.x - BASE_LINEAR_VEL_STEP, -BASE_LINEAR_VEL_MAX);
                 cmd_vel_.linear.y = 0.0;
                 cmd_vel_.linear.z = 0.0;
-                RCLCPP_INFO_STREAM(nh_->get_logger(), "LINEAR VEL : " << cmd_vel_.linear.x);
+                RCLCPP_INFO_STREAM(nh_->get_logger(), "\x1b[0K" << "LINEAR VEL : " << cmd_vel_.linear.x);
                 break;
             case KEYCODE_J:
                 cmd_vel_.angular.x = 0.0;
                 cmd_vel_.angular.y = 0.0;
                 cmd_vel_.angular.z =
                     std::min(cmd_vel_.angular.z + BASE_ANGULAR_VEL_STEP, BASE_ANGULAR_VEL_MAX);
-                RCLCPP_INFO_STREAM(nh_->get_logger(), "ANGULAR VEL : " << cmd_vel_.angular.z);
+                RCLCPP_INFO_STREAM(nh_->get_logger(), "\x1b[0K" << "ANGULAR VEL : " << cmd_vel_.angular.z);
                 break;
             case KEYCODE_L:
                 cmd_vel_.angular.x = 0.0;
                 cmd_vel_.angular.y = 0.0;
                 cmd_vel_.angular.z =
                     std::max(cmd_vel_.angular.z - BASE_ANGULAR_VEL_STEP, -BASE_ANGULAR_VEL_MAX);
-                RCLCPP_INFO_STREAM(nh_->get_logger(), "ANGULAR VEL : " << cmd_vel_.angular.z);
+                RCLCPP_INFO_STREAM(nh_->get_logger(), "\x1b[0K" << "ANGULAR VEL : " << cmd_vel_.angular.z);
                 break;
             case KEYCODE_SPACE:
                 cmd_vel_ = geometry_msgs::msg::Twist();
-                RCLCPP_INFO_STREAM(nh_->get_logger(), "STOP base");
+                RCLCPP_INFO_STREAM(nh_->get_logger(), "\x1b[0K" << "STOP base");
                 break;
 
             // Joint Control Keys
@@ -156,88 +159,88 @@ int KeyboardServo::keyLoop() {
                 joint_msg_.joint_names.push_back("joint1");
                 joint_msg_.velocities.push_back(ARM_JOINT_VEL);
                 publish_joint_ = true;
-                RCLCPP_INFO_STREAM(nh_->get_logger(), "Joint1 +");
+                RCLCPP_INFO_STREAM(nh_->get_logger(), "\x1b[0K" << "Joint1 +");
                 break;
             case KEYCODE_2:
                 joint_msg_.joint_names.push_back("joint2");
                 joint_msg_.velocities.push_back(ARM_JOINT_VEL);
                 publish_joint_ = true;
-                RCLCPP_INFO_STREAM(nh_->get_logger(), "Joint2 +");
+                RCLCPP_INFO_STREAM(nh_->get_logger(), "\x1b[0K" << "Joint2 +");
                 break;
             case KEYCODE_3:
                 joint_msg_.joint_names.push_back("joint3");
                 joint_msg_.velocities.push_back(ARM_JOINT_VEL);
                 publish_joint_ = true;
-                RCLCPP_INFO_STREAM(nh_->get_logger(), "Joint3 +");
+                RCLCPP_INFO_STREAM(nh_->get_logger(), "\x1b[0K" << "Joint3 +");
                 break;
             case KEYCODE_4:
                 joint_msg_.joint_names.push_back("joint4");
                 joint_msg_.velocities.push_back(ARM_JOINT_VEL);
                 publish_joint_ = true;
-                RCLCPP_INFO_STREAM(nh_->get_logger(), "Joint4 +");
+                RCLCPP_INFO_STREAM(nh_->get_logger(), "\x1b[0K" << "Joint4 +");
                 break;
             case KEYCODE_5:
                 joint_msg_.joint_names.push_back("joint5");
                 joint_msg_.velocities.push_back(ARM_JOINT_VEL);
                 publish_joint_ = true;
-                RCLCPP_INFO_STREAM(nh_->get_logger(), "Joint5 +");
+                RCLCPP_INFO_STREAM(nh_->get_logger(), "\x1b[0K" << "Joint5 +");
                 break;
             case KEYCODE_6:
                 joint_msg_.joint_names.push_back("joint6");
                 joint_msg_.velocities.push_back(ARM_JOINT_VEL);
                 publish_joint_ = true;
-                RCLCPP_INFO_STREAM(nh_->get_logger(), "Joint6 +");
+                RCLCPP_INFO_STREAM(nh_->get_logger(), "\x1b[0K" << "Joint6 +");
                 break;
             case KEYCODE_Q:
                 joint_msg_.joint_names.push_back("joint1");
                 joint_msg_.velocities.push_back(-ARM_JOINT_VEL);
                 publish_joint_ = true;
-                RCLCPP_INFO_STREAM(nh_->get_logger(), "Joint1 -");
+                RCLCPP_INFO_STREAM(nh_->get_logger(), "\x1b[0K" << "Joint1 -");
                 break;
             case KEYCODE_W:
                 joint_msg_.joint_names.push_back("joint2");
                 joint_msg_.velocities.push_back(-ARM_JOINT_VEL);
                 publish_joint_ = true;
-                RCLCPP_INFO_STREAM(nh_->get_logger(), "Joint2 -");
+                RCLCPP_INFO_STREAM(nh_->get_logger(), "\x1b[0K" << "Joint2 -");
                 break;
             case KEYCODE_E:
                 joint_msg_.joint_names.push_back("joint3");
                 joint_msg_.velocities.push_back(-ARM_JOINT_VEL);
                 publish_joint_ = true;
-                RCLCPP_INFO_STREAM(nh_->get_logger(), "Joint3 -");
+                RCLCPP_INFO_STREAM(nh_->get_logger(), "\x1b[0K" << "Joint3 -");
                 break;
             case KEYCODE_R:
                 joint_msg_.joint_names.push_back("joint4");
                 joint_msg_.velocities.push_back(-ARM_JOINT_VEL);
                 publish_joint_ = true;
-                RCLCPP_INFO_STREAM(nh_->get_logger(), "Joint4 -");
+                RCLCPP_INFO_STREAM(nh_->get_logger(), "\x1b[0K" << "Joint4 -");
                 break;
             case KEYCODE_T:
                 joint_msg_.joint_names.push_back("joint5");
                 joint_msg_.velocities.push_back(-ARM_JOINT_VEL);
                 publish_joint_ = true;
-                RCLCPP_INFO_STREAM(nh_->get_logger(), "Joint5 -");
+                RCLCPP_INFO_STREAM(nh_->get_logger(), "\x1b[0K" << "Joint5 -");
                 break;
             case KEYCODE_Y:
                 joint_msg_.joint_names.push_back("joint6");
                 joint_msg_.velocities.push_back(-ARM_JOINT_VEL);
                 publish_joint_ = true;
-                RCLCPP_INFO_STREAM(nh_->get_logger(), "Joint6 -");
+                RCLCPP_INFO_STREAM(nh_->get_logger(), "\x1b[0K" << "Joint6 -");
                 break;
             case KEYCODE_O:
                 send_goal(0.025);
-                RCLCPP_INFO_STREAM(nh_->get_logger(), "Gripper Open");
+                RCLCPP_INFO_STREAM(nh_->get_logger(), "\x1b[0K" << "Gripper Open");
                 break;
             case KEYCODE_P:
                 send_goal(-0.015);
-                RCLCPP_INFO_STREAM(nh_->get_logger(), "Gripper Close");
+                RCLCPP_INFO_STREAM(nh_->get_logger(), "\x1b[0K" << "Gripper Close");
                 break;
             case KEYCODE_ESC:
-                RCLCPP_INFO_STREAM(nh_->get_logger(), "quit");
+                RCLCPP_INFO_STREAM(nh_->get_logger(), "\x1b[0K" << "quit");
                 servoing = false;
                 break;
             default:
-                RCLCPP_WARN_STREAM(nh_->get_logger(), "Unassigned input : " << c);
+                RCLCPP_WARN_STREAM(nh_->get_logger(), "\x1b[0K" << "Unassigned input : " << c);
                 break;
         }
     }
@@ -253,7 +256,7 @@ void KeyboardServo::send_goal(float position) {
     auto send_goal_options = rclcpp_action::Client<control_msgs::action::GripperCommand>::SendGoalOptions();
     send_goal_options.result_callback = std::bind(&KeyboardServo::goal_result_callback, this, std::placeholders::_1);
 
-    RCLCPP_INFO(nh_->get_logger(), "Sending goal");
+    // RCLCPP_INFO(nh_->get_logger(), "Sending goal");
     client_->async_send_goal(goal_msg, send_goal_options);
 }
 
@@ -317,7 +320,7 @@ void KeyboardServo::pub() {
             joint_msg_.header.frame_id = BASE_FRAME_ID;
             joint_pub_->publish(joint_msg_);
             publish_joint_ = false;
-            RCLCPP_INFO_STREAM(nh_->get_logger(), "Joint PUB");
+            // RCLCPP_INFO_STREAM(nh_->get_logger(), "Joint PUB");
         }
         base_twist_pub_->publish(cmd_vel_);
         rclcpp::sleep_for(std::chrono::milliseconds(10));
