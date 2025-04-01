@@ -11,9 +11,7 @@
   <url type="bugtracker">https://github.com/ROBOTIS-GIT/turtlebot3_manipulation/issues</url>
   <author email="hjkim@robotis.com">Hye-jong KIM</author>
   <author email="wsh@robotis.com">Sungho Woo</author>
-
   <buildtool_depend>ament_cmake</buildtool_depend>
-
   <depend>rclcpp</depend>
   <depend>turtlebot3_manipulation_bringup</depend>
   <depend>turtlebot3_manipulation_moveit_config</depend>
@@ -22,10 +20,6 @@
   <depend>nav_msgs</depend>
   <depend>control_msgs</depend>
   <depend>sensor_msgs</depend>
-
-  <test_depend>ament_lint_auto</test_depend>
-  <test_depend>ament_lint_common</test_depend>
-
   <export>
     <build_type>ament_cmake</build_type>
   </export>
