@@ -2,7 +2,7 @@
 Changelog for package turtlebot3_manipulation_moveit_config
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-2.2.0 (2024-12-02)
+2.2.0 (2025-04-01)
 ------------------
 * Resolved the issue where teleoperation was not functioning on the actual robot
 * Contributors: Sungho Woo
