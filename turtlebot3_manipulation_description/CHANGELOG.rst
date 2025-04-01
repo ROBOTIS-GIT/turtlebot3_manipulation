@@ -2,7 +2,7 @@
 Changelog for package turtlebot3_manipulation_description
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-2.2.0 (2024-12-02)
+2.2.0 (2025-04-01)
 ------------------
 * Fixed the intermittent issue of Gazebo not launching
 * Fixed the error log related to the mimic joint.
@@ -10,7 +10,7 @@ Changelog for package turtlebot3_manipulation_description
 
 2.1.1 (2022-10-14)
 ------------------
-* Support ROS2 Humble
+* Support ROS 2 Humble
 * MoveIt environment configured
 * use ros2_control framework instead of ROBOTIS custom library
 * removed dependency to `turtlebot3_*`` and `open_manipulator` packages
