@@ -92,6 +92,9 @@ private:
   std::vector<double> dxl_positions_;
   std::vector<double> dxl_velocities_;
 
+  std::array<double, 2> dxl_wheel_offsets_;
+  bool init_wheel_offsets_;
+
   std::vector<double> opencr_sensor_states_;
 };
 }  // namespace turtlebot3_manipulation_hardware
