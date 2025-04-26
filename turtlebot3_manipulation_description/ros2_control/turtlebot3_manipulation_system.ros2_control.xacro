@@ -174,7 +174,7 @@ https://github.com/ros-controls/ros2_control_demos/blob/foxy/ros2_control_demo_d
         <command_interface name="position">
           <param name="min">-0.010</param>
           <param name="max">0.019</param>
-        </command_interface>
+        </command_interface> 
         <state_interface name="position">
           <param name="initial_value">0.0</param>
         </state_interface>
