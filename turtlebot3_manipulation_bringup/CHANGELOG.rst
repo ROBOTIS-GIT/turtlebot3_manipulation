@@ -2,6 +2,11 @@
 Changelog for package turtlebot3_manipulation_bringup
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+2.2.1 (2025-05-28)
+------------------
+* Removed the TurtleBot3 Manipulation Gazebo simulation
+* Contributors: ChanHyeong Lee
+
 2.2.0 (2025-04-01)
 ------------------
 * Updated maintainer information
