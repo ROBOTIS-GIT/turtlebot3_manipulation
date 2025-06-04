@@ -30,7 +30,6 @@
   <exec_depend>rviz_default_plugins</exec_depend>
   <exec_depend>tf2_ros</exec_depend>
   <exec_depend>turtlebot3_manipulation_description</exec_depend>
-  <exec_depend>warehouse_ros_mongo</exec_depend>
   <exec_depend>srdfdom</exec_depend>
   <exec_depend>xacro</exec_depend>
   <export>
