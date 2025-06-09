@@ -14,7 +14,6 @@
   <author email="thlim@robotis.com">Darby Lim</author>
   <author email="hjkim@robotis.com">Hye-jong KIM</author>
   <buildtool_depend>ament_cmake</buildtool_depend>
-  <exec_depend>gripper_controllers</exec_depend>
   <exec_depend>robot_state_publisher</exec_depend>
   <exec_depend>ros2_control</exec_depend>
   <exec_depend>ros2_controllers</exec_depend>
