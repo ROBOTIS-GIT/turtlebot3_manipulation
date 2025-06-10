@@ -1,20 +1,35 @@
+// Copyright 2022 ROBOTIS CO., LTD.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
 #ifndef TURTLEBOT3_MANIPULATION_TELEOP__TURTLEBOT3_MANIPULATION_TELEOP_HPP_
 #define TURTLEBOT3_MANIPULATION_TELEOP__TURTLEBOT3_MANIPULATION_TELEOP_HPP_
-
-#include <rclcpp/rclcpp.hpp>
-#include <std_srvs/srv/trigger.hpp>
-#include <geometry_msgs/msg/twist_stamped.hpp>
-#include <control_msgs/msg/joint_jog.hpp>
-#include <control_msgs/msg/gripper_command.hpp>
-#include <control_msgs/action/gripper_command.hpp>
-#include <rclcpp_action/rclcpp_action.hpp>
 
 #include <signal.h>
 #include <stdio.h>
 #include <termios.h>
 #include <unistd.h>
+
 #include <chrono>
 #include <string>
+
+#include <control_msgs/action/gripper_command.hpp>
+#include <control_msgs/msg/gripper_command.hpp>
+#include <control_msgs/msg/joint_jog.hpp>
+#include <geometry_msgs/msg/twist_stamped.hpp>
+#include <rclcpp/rclcpp.hpp>
+#include <rclcpp_action/rclcpp_action.hpp>
+#include <std_srvs/srv/trigger.hpp>
 
 // Define used keys
 #define KEYCODE_1 0x31
@@ -76,6 +91,7 @@ public:
   void start_moveit_servo();
   void stop_moveit_servo();
   void send_goal(float position);
+
 private:
   rclcpp_action::Client<control_msgs::action::GripperCommand>::SharedPtr client_;
 
@@ -95,10 +111,11 @@ private:
 
   bool publish_joint_;
 
-  void goal_result_callback(const rclcpp_action::ClientGoalHandle<control_msgs::action::GripperCommand>::WrappedResult& result)
+  void goal_result_callback(
+    const rclcpp_action::ClientGoalHandle<
+      control_msgs::action::GripperCommand>::WrappedResult & result)
   {
-    switch (result.code)
-    {
+    switch (result.code) {
       case rclcpp_action::ResultCode::SUCCEEDED:
         break;
       case rclcpp_action::ResultCode::ABORTED:

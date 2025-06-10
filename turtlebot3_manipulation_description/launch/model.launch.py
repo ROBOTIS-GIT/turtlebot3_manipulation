@@ -99,7 +99,7 @@ def generate_launch_description():
             output='screen'),
 
         Node(
-            package="joint_state_publisher_gui",
-            executable="joint_state_publisher_gui",
+            package='joint_state_publisher_gui',
+            executable='joint_state_publisher_gui',
             condition=IfCondition(use_gui)),
     ])

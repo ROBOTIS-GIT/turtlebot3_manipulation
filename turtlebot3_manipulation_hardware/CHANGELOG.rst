@@ -2,6 +2,10 @@
 Changelog for package turtlebot3_manipulation_hardware
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+2.2.1 (2025-05-28)
+------------------
+* None
+
 2.2.0 (2025-04-01)
 ------------------
 * Resolved the issue where teleoperation was not functioning on the actual robot
