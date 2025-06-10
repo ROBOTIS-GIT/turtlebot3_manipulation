@@ -2,6 +2,11 @@
 Changelog for package turtlebot3_manipulation
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+2.2.1 (2025-05-28)
+------------------
+* Removed the TurtleBot3 Manipulation Gazebo simulation
+* Contributors: ChanHyeong Lee
+
 2.2.0 (2025-04-01)
 ------------------
 * Added gripper control in teleoperation.

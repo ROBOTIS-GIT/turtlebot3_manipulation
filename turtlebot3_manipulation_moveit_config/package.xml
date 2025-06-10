@@ -2,7 +2,7 @@
 <?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <package format="3">
   <name>turtlebot3_manipulation_moveit_config</name>
-  <version>2.2.0</version>
+  <version>2.2.1</version>
   <description>
      An automatically generated package with all the configuration and launch files for using the turtlebot3_manipulation with the MoveIt Motion Planning Framework
   </description>
@@ -30,7 +30,6 @@
   <exec_depend>rviz_default_plugins</exec_depend>
   <exec_depend>tf2_ros</exec_depend>
   <exec_depend>turtlebot3_manipulation_description</exec_depend>
-  <exec_depend>warehouse_ros_mongo</exec_depend>
   <exec_depend>srdfdom</exec_depend>
   <exec_depend>xacro</exec_depend>
   <export>
