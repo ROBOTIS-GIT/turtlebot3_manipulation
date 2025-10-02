@@ -31,10 +31,10 @@ namespace turtlebot3_manipulation_hardware
 {
 auto logger = rclcpp::get_logger("turtlebot3_manipulation");
 hardware_interface::CallbackReturn TurtleBot3ManipulationSystemHardware::on_init(
-  const hardware_interface::HardwareInfo & info)
+  const hardware_interface::HardwareComponentInterfaceParams & params)
 {
   if (
-    hardware_interface::SystemInterface::on_init(info) !=
+    hardware_interface::SystemInterface::on_init(params) !=
     hardware_interface::CallbackReturn::SUCCESS)
   {
     return hardware_interface::CallbackReturn::ERROR;
