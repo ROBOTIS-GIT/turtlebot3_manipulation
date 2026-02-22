@@ -44,6 +44,7 @@ hardware_interface::CallbackReturn TurtleBot3ManipulationSystemHardware::on_init
   usb_port_ = info_.hardware_parameters["opencr_usb_port"];
   baud_rate_ = stoi(info_.hardware_parameters["opencr_baud_rate"]);
   heartbeat_ = 0;
+  init_wheel_offsets_ = true;
 
   joints_acceleration_[0] = stoi(info_.hardware_parameters["dxl_joints_profile_acceleration"]);
   joints_acceleration_[1] = stoi(info_.hardware_parameters["dxl_joints_profile_acceleration"]);
@@ -225,10 +226,10 @@ hardware_interface::return_type TurtleBot3ManipulationSystemHardware::read(
     RCLCPP_WARN(logger, "Failed to read all control table");
   }
 
-  dxl_positions_[0] = opencr_->get_wheel_positions()[opencr::wheels::LEFT];
+  dxl_positions_[0] = opencr_->get_wheel_positions()[opencr::wheels::LEFT] - dxl_wheel_offsets_[opencr::wheels::LEFT];
   dxl_velocities_[0] = opencr_->get_wheel_velocities()[opencr::wheels::LEFT];
 
-  dxl_positions_[1] = opencr_->get_wheel_positions()[opencr::wheels::RIGHT];
+  dxl_positions_[1] = opencr_->get_wheel_positions()[opencr::wheels::RIGHT] - dxl_wheel_offsets_[opencr::wheels::RIGHT];
   dxl_velocities_[1] = opencr_->get_wheel_velocities()[opencr::wheels::RIGHT];
 
   dxl_positions_[2] = opencr_->get_joint_positions()[opencr::joints::JOINT1];
@@ -286,6 +287,12 @@ hardware_interface::return_type TurtleBot3ManipulationSystemHardware::write(
 
   if (opencr_->set_gripper_position(dxl_gripper_commands_[0]) == false) {
     RCLCPP_ERROR(logger, "Can't control gripper");
+  }
+ 
+  if (init_wheel_offsets_){
+    dxl_wheel_offsets_ = opencr_->get_wheel_positions(); // First time returns all zeros
+    dxl_wheel_offsets_ = opencr_->get_wheel_positions(); // Second time returns the offsets
+    init_wheel_offsets_ = false;
   }
 
   return hardware_interface::return_type::OK;
